@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
-        // Basic client-side validation fallback (in addition to required attrs)
+        // Basic client-side validation fallback 
         if (!data.name || !data.age || !data.doctor || !data.date || !data.time) {
             alert('Please complete all required fields.');
             return;
