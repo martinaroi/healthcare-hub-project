@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Children's Hospital</title>
+  <title>Starlight Children’s Hospital booking</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <header>
-    <h1>Children's Hospital - NAME - </h1>
+    <h1>Starlight Children’s Hospital</h1>
 
     <nav>
       <ul>
@@ -24,8 +24,8 @@
 
   <main>
     <section class="booking">
-      <h2>Book a Visit with a Super Doctor!</h2>
-      <p>Fill in the form below to schedule your appointment. Captain Care and the Hero Team can’t wait to see you!</p>
+  <h2>Book a Visit</h2>
+  <p>Regular check-ups, vaccinations, fever, and more — we’re here to help.</p>
 
   <form id="booking-form" action="#" method="POST">
         <label for="name">Your Name:</label>
@@ -34,14 +34,13 @@
         <label for="age">Your Age:</label>
         <input type="number" id="age" name="age" placeholder="Enter your age" min="0" required />
 
-        <label for="doctor">Choose a Doctor:</label>
+        <label for="doctor">Choose a Department & Hero:</label>
         <select id="doctor" name="doctor" required>
           <option value="">Select a hero</option>
-          <option value="captaincare">Captain Care — Pediatrics</option>
-          <option value="ironbones">Iron Bones — Orthopedics</option>
-          <option value="heartblazer">Heartblazer — Cardiology</option>
-          <option value="starbright">Starbright — Oncology</option>
-          <option value="motionmaster">Motion Master — Rehabilitation</option>
+          <option value="pediatrics-captaincare">PEDIATRICS — Captain Care</option>
+          <option value="cardiology-hearthero">CARDIOLOGY — Heart Hero</option>
+          <option value="orthopedics-ironbones">ORTHOPEDICS — Iron Bones</option>
+          <option value="oncology-starhealer">ONCOLOGY — Star Healer</option>
         </select>
 
         <label for="date">Choose a Date:</label>
@@ -59,7 +58,16 @@
   </main>
 
   <footer>
-    <p>© 2025 Student Project by xxxx & xxxxx</p>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="doctors.html">Doctors</a></li>
+        <li><a href="booking.html">Book Visit</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="doctor-detail.html">Doctors</a></li>        
+      </ul>
+    </nav>
+    <p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
   </footer>
   <script src="script.js"></script>
 </body>
