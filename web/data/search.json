@@ -1,0 +1,52 @@
+[
+  {
+    "type": "doctor",
+    "name": "Captain Care",
+    "specialty": "Pediatrics",
+    "url": "detail_CaptainCare.html"
+  },
+  {
+    "type": "doctor",
+    "name": "Iron Bones",
+    "specialty": "Orthopedics",
+    "url": "detail_IronBone.html"
+  },
+  {
+    "type": "doctor",
+    "name": "Heart Hero",
+    "specialty": "Cardiology",
+    "url": "detail_Heartblazer.html"
+  },
+  {
+    "type": "doctor",
+    "name": "Star Healer",
+    "specialty": "Oncology",
+    "url": "detail_Starbright.html"
+  },
+  {
+    "type": "doctor",
+    "name": "Motion Master",
+    "specialty": "Physiotherapy",
+    "url": "detail_MotionMaster.html"
+  },
+  {
+    "type": "department",
+    "name": "Pediatrics",
+    "url": "doctors.html?department=pediatrics"
+  },
+  {
+    "type": "department",
+    "name": "Orthopedics",
+    "url": "doctors.html?department=orthopedics"
+  },
+  {
+    "type": "department",
+    "name": "Cardiology",
+    "url": "doctors.html?department=cardiology"
+  },
+  {
+    "type": "department",
+    "name": "Oncology",
+    "url": "doctors.html?department=oncology"
+  }
+]
