@@ -1,0 +1,14 @@
+
+
+
+/* Default font (Roboto) */
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 250;
+}
+
+/* Alternative font (Lexend) */
+.lexend-font {
+  font-family: "Lexend", sans-serif;
+  font-weight: 400;
+}
