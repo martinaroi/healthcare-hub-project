@@ -1,7 +1,258 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Progressive enhancement flag
+    document.body.classList.add('js-enhanced');
+    // Make logo link to home across all pages
+    document.querySelectorAll('header img.logo').forEach(img => {
+        if (img.closest('a')) return; // already wrapped
+        const link = document.createElement('a');
+        link.href = 'index.html';
+        link.className = 'logo-link';
+        link.setAttribute('aria-label', 'Go to home');
+        // Insert link before the image and move the image inside it
+        img.parentNode.insertBefore(link, img);
+        link.appendChild(img);
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', String(!expanded));
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // Submenu toggle (e.g., Doctors) for button-based menus
+    document.querySelectorAll('.has-submenu .submenu-toggle').forEach(btn => {
+        const parent = btn.closest('.has-submenu');
+        const submenu = parent?.querySelector('.submenu');
+        if (!submenu) return;
+        const setOpen = (open) => {
+            btn.setAttribute('aria-expanded', String(open));
+            submenu.style.display = open ? (window.matchMedia('(min-width: 1024px)').matches ? 'block' : 'block') : 'none';
+        };
+        // Initialize closed on load (CSS handles hover on desktop as well)
+        setOpen(false);
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = btn.getAttribute('aria-expanded') === 'true';
+            setOpen(!isOpen);
+        });
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!parent.contains(e.target)) setOpen(false);
+        });
+        // Keyboard support: Escape to close
+        parent.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setOpen(false);
+        });
+    });
     // Booking form handling (only if present)
     const form = document.getElementById('booking-form');
     if (form) {
+        // Calendar/time enhancement
+        (function initSchedulePicker() {
+            const picker = document.querySelector('.schedule-picker');
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+            if (!picker || !dateInput || !timeInput) return;
+
+            // Utilities
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            let view = new Date(today.getFullYear(), today.getMonth(), 1);
+            let selectedDate = null;
+            let selectedTime = null;
+
+            const calTitle = picker.querySelector('#cal-title');
+            const grid = picker.querySelector('.cal-grid');
+            const prevBtn = picker.querySelector('.cal-prev');
+            const nextBtn = picker.querySelector('.cal-next');
+            const slotsWrap = picker.querySelector('.slots');
+
+            // Week starts on Monday
+            const weekdays = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+            const defaultSlots = ['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30'];
+            // Per-doctor weekly schedule (Mon=1..Sun=0 for getDay())
+            // Keys match the booking select values
+            const schedules = {
+                'pediatrics-captaincare': {
+                    1: ['09:00','09:30','10:00','10:30','11:00'],
+                    2: ['09:00','09:30','10:00','10:30','11:00'],
+                    3: ['13:00','13:30','14:00','14:30'],
+                    4: ['09:00','09:30','10:00','10:30','11:00'],
+                    5: ['09:00','09:30','10:00']
+                },
+                'cardiology-hearthero': {
+                    1: ['13:00','13:30','14:00','14:30','15:00'],
+                    3: ['09:00','09:30','10:00','10:30'],
+                    4: ['13:00','13:30','14:00','14:30']
+                },
+                'orthopedics-ironbones': {
+                    2: ['09:00','09:30','10:00','10:30','11:00','11:30'],
+                    4: ['09:00','09:30','10:00','10:30']
+                },
+                'oncology-starhealer': {
+                    1: ['10:00','10:30','11:00'],
+                    2: ['10:00','10:30','11:00'],
+                    5: ['13:00','13:30','14:00']
+                }
+            };
+            const doctorSelect = document.getElementById('doctor');
+
+            function fmtDateISO(d) {
+                const y = d.getFullYear();
+                const m = String(d.getMonth()+1).padStart(2,'0');
+                const day = String(d.getDate()).padStart(2,'0');
+                return `${y}-${m}-${day}`;
+            }
+
+            // Enforce minimum date and block weekends on native input as well
+            dateInput.min = fmtDateISO(today);
+            dateInput.addEventListener('change', () => {
+                if (!dateInput.value) return;
+                const d = new Date(dateInput.value + 'T00:00:00');
+                const isWeekend = [0,6].includes(d.getDay());
+                const isPast = d < today;
+                if (isWeekend || isPast) {
+                    alert('Appointments are not available on weekends or past dates. Please choose a weekday.');
+                    dateInput.value = '';
+                    selectedDate = null;
+                    selectedTime = null;
+                    timeInput.value = '';
+                    updateSlots();
+                    renderCalendar();
+                    return;
+                }
+                selectedDate = d;
+                selectedTime = null;
+                timeInput.value = '';
+                updateSlots();
+                renderCalendar();
+            });
+
+            function renderCalendar() {
+                const month = view.getMonth();
+                const year = view.getFullYear();
+                calTitle.textContent = view.toLocaleString(undefined, { month: 'long', year: 'numeric' });
+
+                grid.innerHTML = '';
+                // Weekday headers
+                weekdays.forEach(w => {
+                    const h = document.createElement('div');
+                    h.className = 'weekday';
+                    h.textContent = w;
+                    grid.appendChild(h);
+                });
+
+                const firstDay = new Date(year, month, 1);
+                // getDay(): 0=Sun..6=Sat; convert to Monday-first index (0=Mon..6=Sun)
+                const startWeekday = (firstDay.getDay() + 6) % 7;
+                const daysInMonth = new Date(year, month+1, 0).getDate();
+
+                // Leading blanks
+                for (let i=0; i<startWeekday; i++) {
+                    const blank = document.createElement('div');
+                    grid.appendChild(blank);
+                }
+
+                for (let d=1; d<=daysInMonth; d++) {
+                    const date = new Date(year, month, d);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'day';
+                    btn.textContent = String(d);
+                    const isPast = date < today;
+                    const isWeekend = [0,6].includes(date.getDay());
+                    if (isPast || isWeekend) {
+                        btn.disabled = true;
+                        if (isWeekend) btn.title = 'Weekends not available';
+                    }
+                    if (selectedDate && fmtDateISO(date) === fmtDateISO(selectedDate)) {
+                        btn.classList.add('selected');
+                    }
+                    btn.addEventListener('click', () => {
+                        selectedDate = date;
+                        dateInput.value = fmtDateISO(date);
+                        // Reset previous time selection when changing date
+                        selectedTime = null;
+                        timeInput.value = '';
+                        updateSlots();
+                        renderCalendar();
+                    });
+                    grid.appendChild(btn);
+                }
+            }
+
+            function updateSlots() {
+                slotsWrap.innerHTML = '';
+                const info = document.createElement('div');
+                info.style.gridColumn = '1 / -1';
+                if (!selectedDate) {
+                    info.textContent = 'Pick a date to see available times.';
+                    slotsWrap.appendChild(info);
+                    return;
+                }
+
+                const dateStr = fmtDateISO(selectedDate);
+                // Block weekends entirely
+                const dow = selectedDate.getDay(); // 0=Sun..6=Sat
+                const isWeekend = [0,6].includes(dow);
+                let slots = [];
+                if (!isWeekend) {
+                    const key = doctorSelect?.value || '';
+                    const docSched = schedules[key];
+                    slots = docSched?.[dow] || []; // if no specific schedule that weekday, no slots
+                }
+                if (slots.length === 0) {
+                    info.textContent = 'No times available for this date.';
+                    slotsWrap.appendChild(info);
+                    return;
+                }
+                slots.forEach(t => {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'slot';
+                    b.textContent = t;
+                    if (selectedTime === t) b.classList.add('selected');
+                    b.addEventListener('click', () => {
+                        selectedTime = t;
+                        timeInput.value = t;
+                        // reflect selection
+                        slotsWrap.querySelectorAll('button.slot.selected').forEach(el => el.classList.remove('selected'));
+                        b.classList.add('selected');
+                    });
+                    slotsWrap.appendChild(b);
+                });
+            }
+
+            prevBtn.addEventListener('click', () => {
+                view = new Date(view.getFullYear(), view.getMonth() - 1, 1);
+                renderCalendar();
+            });
+            nextBtn.addEventListener('click', () => {
+                view = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+                renderCalendar();
+            });
+
+            // Initialize
+            renderCalendar();
+            updateSlots();
+
+            // Update when doctor changes
+            if (doctorSelect) {
+                doctorSelect.addEventListener('change', () => {
+                    // Clear previous time if new doctor has different slots
+                    selectedTime = null;
+                    timeInput.value = '';
+                    updateSlots();
+                });
+            }
+        })();
+
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -40,48 +291,148 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Font switching
-    const lexBtn = document.getElementById('lexend-btn');
-    const robotoBtn = document.getElementById('roboto-btn');
-    if (lexBtn) {
-        lexBtn.addEventListener('click', () => {
-            document.body.classList.add('lexend-font');
-        });
-    }
-    if (robotoBtn) {
-        robotoBtn.addEventListener('click', () => {
-            document.body.classList.remove('lexend-font');
+    // Dyslexia font toggle (persistent across pages)
+    const dysToggle = document.getElementById('dyslexia-toggle');
+    const applyDysSetting = (enabled) => {
+        document.body.classList.toggle('dyslexia-font', enabled);
+        if (dysToggle) dysToggle.setAttribute('aria-pressed', String(enabled));
+        // Persist setting
+        try { localStorage.setItem('dyslexiaEnabled', enabled ? '1' : '0'); } catch {}
+    };
+    // Initialize from storage
+    try {
+        const saved = localStorage.getItem('dyslexiaEnabled');
+        if (saved === '1') applyDysSetting(true);
+    } catch {}
+    if (dysToggle) {
+        dysToggle.addEventListener('click', () => {
+            const enabled = !document.body.classList.contains('dyslexia-font');
+            applyDysSetting(enabled);
         });
     }
 
-    // Search functionality (only if elements exist)
+    // Breadcrumbs
+    (function renderBreadcrumbs() {
+        const container = document.querySelector('.breadcrumbs');
+        if (!container) return;
+
+        const file = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+        const trail = [{ name: 'Home', url: 'index.html' }];
+
+        // Page-specific mapping
+        const pageMap = {
+            'index.html': [],
+            'doctors.html': [{ name: 'Doctors' }],
+            'departments.html': [{ name: 'Departments' }],
+            'booking.html': [{ name: 'Book Visit' }],
+            'contact.html': [{ name: 'Contact' }],
+            'search.html': [{ name: 'Search' }],
+            'search-results.html': [{ name: 'Search' }, { name: 'Results' }],
+            'doctor-detail.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Captain Care' }],
+            'detail_captaincare.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Captain Care' }],
+            'detail_ironbone.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Iron Bones' }],
+            'detail_heartblazer.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Heart Hero' }],
+            'detail_heartbalzer.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Heart Hero' }],
+            'detail_starbright.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Star Healer' }]
+        };
+
+        const additions = pageMap[file] ?? [{ name: (document.title || '').replace(/\s+—.*/, '') || 'Current' }];
+        trail.push(...additions);
+
+        // Build markup
+        const ol = document.createElement('ol');
+        trail.forEach((item, idx) => {
+            if (idx > 0) {
+                const sep = document.createElement('li');
+                sep.className = 'sep';
+                sep.textContent = '›';
+                ol.appendChild(sep);
+            }
+            const li = document.createElement('li');
+            if (item.url && idx !== trail.length - 1) {
+                const a = document.createElement('a');
+                a.href = item.url;
+                a.textContent = item.name;
+                li.appendChild(a);
+            } else if (idx === trail.length - 1) {
+                const span = document.createElement('span');
+                span.className = 'current';
+                span.textContent = item.name;
+                li.appendChild(span);
+            } else {
+                li.textContent = item.name;
+            }
+            ol.appendChild(li);
+        });
+
+        container.setAttribute('aria-label', 'Breadcrumb');
+        container.innerHTML = '';
+        container.appendChild(ol);
+    })();
+
+    // Search functionality
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
     const searchResult = document.getElementById('search-results');
+    const fileName = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const isSearchPage = fileName === 'search.html' || fileName === 'search-results.html';
 
-    // If neither input nor results are on the page, skip search setup
+    // If neither input nor results are on the page, skip search setup entirely
     if (!searchInput && !searchResult) return;
 
     let searchData = [];
 
-    // Load JSON index once
-    fetch('data/search.json')
-        .then(response => response.json())
-        .then(data => {
-            searchData = data;
+    // For non-search pages, just wire the redirect and skip fetching data
+    if (!isSearchPage) {
+        // Event listeners for redirect (if elements present)
+        if (searchBtn && searchInput) {
+            const redirectToResults = () => {
+                const q = (searchInput.value || '').trim();
+                if (!q) return;
+                window.location.href = `search.html?q=${encodeURIComponent(q)}`;
+            };
+            searchBtn.addEventListener('click', redirectToResults);
+            searchInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    redirectToResults();
+                }
+            });
+        }
+        // Do not fetch or show errors in headers
+        return;
+    }
 
-            // If there's a query param (?q=...) and we have a results container, auto-run
-            const params = new URLSearchParams(window.location.search);
-            const qParam = params.get('q');
-            if (qParam && searchResult) {
-                performSearch(qParam);
-                if (searchInput) searchInput.value = qParam;
+    // On search pages, load JSON index once, with fallback
+    const loadSearchData = async () => {
+        const tryLoad = async (url) => {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+            return res.json();
+        };
+        try {
+            let data = await tryLoad('data/search-index.json');
+            if (!Array.isArray(data) || data.length === 0) {
+                // Fallback to legacy search.json
+                data = await tryLoad('data/search.json');
             }
-        })
-        .catch(error => {
-            console.error('Error loading search data:', error);
-            if (searchResult) searchResult.innerHTML = '<p>Could not load search data.</p>';
-        });
+            searchData = Array.isArray(data) ? data : [];
+        } catch (err) {
+            console.error('Error loading search data (with fallback):', err);
+            searchData = [];
+        }
+
+        // If there's a query param (?q=...) and we have a results container, auto-run
+        const params = new URLSearchParams(window.location.search);
+        const qParam = params.get('q');
+        if (qParam && searchResult) {
+            performSearch(qParam);
+            if (searchInput) searchInput.value = qParam;
+        } else if (searchResult && searchData.length === 0) {
+            searchResult.innerHTML = '<p>Could not load search data.</p>';
+        }
+    };
+    loadSearchData();
 
     function performSearch(queryFromParam) {
         const query = (queryFromParam ?? (searchInput ? searchInput.value : '')).toLowerCase().trim();
@@ -121,29 +472,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Display filtered results
+        // Display filtered results (internal links only)
         results.forEach(item => {
             const div = document.createElement('div');
             const subtitle = item.specialty ? ` — ${item.specialty}` : item.type ? ` — ${item.type}` : '';
-            div.innerHTML = `<a href="${item.url}">${item.name}</a><span>${subtitle}</span>`;
+            const a = document.createElement('a');
+            a.href = item.url;
+            a.textContent = item.name;
+            const span = document.createElement('span');
+            span.textContent = subtitle;
+            div.appendChild(a);
+            div.appendChild(span);
             searchResult.appendChild(div);
         });
     }
 
-    // Event listeners
-    if (searchBtn && searchInput) {
-        const redirectToResults = () => {
-            const q = (searchInput.value || '').trim();
-            if (!q) return; 
-            window.location.href = `search.html?q=${encodeURIComponent(q)}`;
-        };
-
-        searchBtn.addEventListener('click', redirectToResults);
-        // Search on Enter key
+    // On search pages, typing Enter or clicking Search should (re)render results inline
+    if (searchBtn && searchInput && isSearchPage) {
+        const triggerSearch = () => performSearch();
+        searchBtn.addEventListener('click', triggerSearch);
         searchInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                redirectToResults();
+                triggerSearch();
             }
         });
     }
