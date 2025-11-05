@@ -10,78 +10,126 @@
 
 <body>
   <header>
-  <h1>Starlight Children’s Hospital</h1>
-
+    <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
     <nav>
-      <ul>
+      <ul id="primary-navigation" class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
+        <li class="has-submenu">
+          <a href="doctors.html" aria-haspopup="true" aria-expanded="false">Doctors</a>
+          <ul class="submenu" aria-label="Doctors">
+            <li><a href="doctors.html">All Doctors (Overview)</a></li>
+            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+            <li><a href="detail_Heartblazer.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+            <li><a href="detail_Starbright.html">Star Healer (Oncology)</a></li>
+          </ul>
+        </li>
+        <li><a href="departments.html">Departments</a></li>
         <li><a href="booking.html">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
-        <button id="lexend-btn">Lexend</button>
-        <button id="roboto-btn">Roboto</button>
+        <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
-      <div id ="search-section">
-        <input type ="text" id="search-input" placeholder="Search..." />
-        <button id="search-btn">Search</button>
+      <div id="search-section">
+        <input type="text" id="search-input" placeholder="Search..." />
+        <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
       </div>
     </nav>
   </header>
+  <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
   <main>
-    <section>
-      <h2>Page Title Here</h2>
-      <p>Content will go here...</p>
-    </section>
-        </section class = "departments">
-    <h2>Meet our Superhero Teams</h2>
-        <article class ="grid">
-      <article class = "card">
-        <img src="images/doctor1.jpg" alt="Captain Care" />
-    <h3>PEDIATRICS — Captain Care</h3>
-    <p>Regular check-ups, vaccinations, fever, etc. Heals with kindness and courage.</p>
-  <a href="detail_CaptainCare.html">More about Captain Care</a>
-            </article>
-            <article class = "card">
-        <img src="images/doctor2.jpg" alt="Iron Bones" />
-    <h3>ORTHOPEDICS — IRON BONES</h3>
-    <p>Bones, muscles, injuries. Makes bones as strong as steel.</p>
-    <a href="detail_IronBone.html">Learn about IRON BONES</a>
-            </article>
-            <article class = "card">
-        <img src="images/doctor3.jpg" alt="Heartblazer" />
-    <h3>CARDIOLOGY — Heart Hero</h3>
-    <p>Heart check-ups, ECGs, heart conditions. Super listens to every heartbeat.</p>
-    <a href="detail_Heartblazer.html">Discover Heart Hero</a>
-            </article>
-            <article class = "card">
-        <img src="images/doctor4.jpg" alt="Starbright" />
-    <h3>ONCOLOGY — Star Healer</h3>
-    <p>Cancer care. Uses starlight to help cells grow healthy again.</p>
-  <a href="detail_Starbright.html">Learn about Star Healer</a>
-            </article>
-      <article class = "card" hidden>
-        <img src="images/doctor5.jpg" alt="Motion Master" />
-                <h3>Motion Master</h3>
-                <p>Helps heroes move again after injuries — one step at a time!</p>
-        <a href="detail_MotionMaster.html">More about the Motion Master, the Physiotherapist</a>
-            </article>
-        </article>
-  </main>
+              <section class="doctor-chooser">
+                <h2>Find a Doctor</h2>
 
-  <footer>
-    <nav>
+                <!-- CSS-only picker: radios control which panel is visible -->
+                <input type="radio" id="pick-captain" name="doctor-pick" checked>
+                <label class="doc-option" for="pick-captain">Captain Care</label>
+
+                <input type="radio" id="pick-iron" name="doctor-pick">
+                <label class="doc-option" for="pick-iron">Iron Bones</label>
+
+                <input type="radio" id="pick-heart" name="doctor-pick">
+                <label class="doc-option" for="pick-heart">Heart Hero</label>
+
+                <input type="radio" id="pick-star" name="doctor-pick">
+                <label class="doc-option" for="pick-star">Star Healer</label>
+
+                <div class="doctor-arrows">
+                  <!-- When Captain is selected: Prev goes to Star, Next to Iron -->
+                  <label class="prev prev-from-captain" for="pick-star" aria-label="Previous doctor">‹</label>
+                  <label class="next next-from-captain" for="pick-iron" aria-label="Next doctor">›</label>
+
+                  <!-- When Iron is selected: show Prev (Captain) and Next (Heart) -->
+                  <label class="prev prev-from-iron" for="pick-captain" aria-label="Previous doctor">‹</label>
+                  <label class="next next-from-iron" for="pick-heart" aria-label="Next doctor">›</label>
+
+                  <!-- When Heart is selected: show Prev (Iron) and Next (Star) -->
+                  <label class="prev prev-from-heart" for="pick-iron" aria-label="Previous doctor">‹</label>
+                  <label class="next next-from-heart" for="pick-star" aria-label="Next doctor">›</label>
+
+                  <!-- When Star is selected: Prev (Heart) and Next (Captain) -->
+                  <label class="prev prev-from-star" for="pick-heart" aria-label="Previous doctor">‹</label>
+                  <label class="next next-from-star" for="pick-captain" aria-label="Next doctor">›</label>
+                </div>
+
+                <div class="doctor-panels">
+                  <article id="panel-captain" class="doctor-panel card">
+                    <img src="images/captain_care.png" alt="Captain Care illustration" />
+                    <div>
+                      <h3>Captain Care — Pediatrics</h3>
+                      <p>Pediatrics superhero—watches over young heroes with regular check-ups and vaccinations; heals with kindness and courage.</p>
+                      <p><a href="detail_CaptainCare.html">View full profile</a></p>
+                    </div>
+                  </article>
+
+                  <article id="panel-iron" class="doctor-panel card">
+                    <img src="images/irone_bones.png" alt="Iron Bones illustration" />
+                    <div>
+                      <h3>Iron Bones — Orthopedics</h3>
+                      <p>Bones, muscles, and injury care—making bones as strong as steel.</p>
+                      <p><a href="detail_IronBone.html">View full profile</a></p>
+                    </div>
+                  </article>
+
+                  <article id="panel-heart" class="doctor-panel card">
+                    <img src="images/heart_hero.png" alt="Heart Hero illustration" />
+                    <div>
+                      <h3>Heart Hero — Cardiology</h3>
+                      <p>Heart check-ups and ECGs—super listens to every heartbeat.</p>
+                      <p><a href="detail_Heartblazer.html">View full profile</a></p>
+                    </div>
+                  </article>
+
+                  <article id="panel-star" class="doctor-panel card">
+                    <img src="images/star_hero.png" alt="Star Healer illustration" />
+                    <div>
+                      <h3>Star Healer — Oncology</h3>
+                      <p>Cancer care—uses starlight to help cells grow healthy again.</p>
+                      <p><a href="detail_Starbright.html">View full profile</a></p>
+                    </div>
+                  </article>
+                </div>
+              </section>
+    
+              <hr />
+    
+              <section class = "departments">
+              <h2>Meet our Superhero Teams</h2>
+  <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="doctors.html">Doctors</a></li>
+    <li><a href="departments.html">Departments</a></li>
         <li><a href="booking.html">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
     <p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
   </footer>
-</body>
+  </body>
+  <script src="script.js"></script>
 </html>
