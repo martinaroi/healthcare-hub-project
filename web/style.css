@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 
 
 
@@ -7,8 +9,395 @@ body {
   font-weight: 250;
 }
 
-/* Alternative font (Lexend) */
-.lexend-font {
+/* Dyslexia-friendly font toggle */
+.dyslexia-font {
   font-family: "Lexend", sans-serif;
   font-weight: 400;
 }
+
+.dyslexia-toggle {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  color: #1f2937;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.dyslexia-toggle[aria-pressed="true"] {
+  background: #c7d2fe;
+}
+
+/* Icon-only buttons (e.g., search) */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0; /* square */
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+  color: #1f2937;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+.icon-btn:hover {
+  background: #e0e7ff;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  font-size: 0.9rem;
+  margin: 0.5rem 1rem;
+}
+.breadcrumbs ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.breadcrumbs li { color: #555; }
+.breadcrumbs li a { color: #2563eb; text-decoration: none; }
+.breadcrumbs li a:hover { text-decoration: underline; }
+.breadcrumbs .sep { color: #999; }
+.breadcrumbs .current { color: #111; font-weight: 500; }
+
+/* === Base styles - Mobile === */
+body {
+  margin: 0;
+  padding: 1rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+/* Logo sizing  */
+.logo {
+  font-size: 0.7rem; 
+  line-height: 1;
+}
+
+img.logo {
+  height: 82px; 
+  width: auto;
+  display: block;
+}
+
+/* --- Booking: schedule picker --- */
+.schedule-picker {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 1rem;
+  align-items: start;
+  margin: 1rem 0 2rem;
+}
+.calendar {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+.cal-title { font-weight: 600; }
+.cal-prev, .cal-next {
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+.cal-grid .weekday {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-align: center;
+  padding: 0.25rem 0;
+}
+.cal-grid button.day {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 0.5rem 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cal-grid button.day:hover { border-color: #93c5fd; }
+.cal-grid button.day[disabled] { opacity: 0.45; cursor: not-allowed; }
+.cal-grid button.day.selected { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+.time-slots {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0.75rem;
+}
+.time-slots h3 { margin: 0 0 0.5rem; font-size: 1rem; }
+.slots { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.slots button.slot {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.slots button.slot[disabled] { opacity: 0.45; cursor: not-allowed; }
+.slots button.slot.selected { background: #10b981; color: #fff; border-color: #10b981; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .schedule-picker { grid-template-columns: 1fr; }
+}
+
+/* Hide native inputs when enhanced */
+body.js-enhanced .booking label[for="date"],
+body.js-enhanced #date,
+body.js-enhanced label[for="time"],
+body.js-enhanced #time { display: none; }
+
+.menu-toggle {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-links .submenu-toggle {
+  background: none;
+  border: none;
+  color: #333;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-links .submenu-toggle:after {
+  content: ' \25BE'; /* small down caret */
+  font-size: 0.9em;
+}
+.nav-links .submenu-toggle:hover { color: #111; }
+
+/* Nav submenu (Doctors list) */
+.nav-links .has-submenu { position: relative; }
+.nav-links .has-submenu > a { position: relative; }
+.nav-links .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  margin: 0.25rem 0 0 0;
+  list-style: none;
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 20;
+}
+.nav-links .submenu li { padding: 0; }
+.nav-links .submenu a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: #111827;
+}
+.nav-links .submenu a:hover { background: #f3f4f6; }
+
+/* Show submenu on hover or focus-within (keyboard and mobile tap) */
+@media (min-width: 1024px) {
+  .nav-links .has-submenu:hover > .submenu,
+  .nav-links .has-submenu:focus-within > .submenu { display: block; }
+}
+
+/* In mobile (hamburger) layout, render submenu inline under the parent item */
+@media (max-width: 1023px) {
+  .nav-links .submenu {
+    position: static;
+    display: none;
+    box-shadow: none;
+    border: none;
+    padding-left: 1rem;
+    margin: 0.25rem 0 0 0;
+  }
+  .nav-links .has-submenu:focus-within > .submenu,
+  .nav-links .has-submenu:hover > .submenu { display: block; }
+}
+
+/* When the menu is active */
+.nav-links.active {
+  display: flex;
+}
+
+/* === Desktop (>=1024px) === */
+@media (min-width: 1024px) {
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+  }
+
+  /* keep logo small on desktop too */
+  .logo { font-size: 0.85rem; }
+
+  .menu-toggle {
+  display: none; /* hide hamburger */
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* CSS-only doctor chooser */
+.doctor-chooser { position: relative; }
+.doctor-chooser input[type="radio"] {
+  position: absolute;
+  left: -9999px;
+}
+.doctor-chooser .doc-option {
+  display: inline-block;
+  margin: 0.25rem 0.5rem 0.75rem 0;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #f8fafc;
+  cursor: pointer;
+}
+.doctor-chooser .doc-option:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.doctor-chooser .doctor-panels .doctor-panel { display: none; }
+
+/* Default (first) checked */
+.doctor-chooser #pick-captain:checked ~ .doctor-panels #panel-captain { display: grid; }
+.doctor-chooser #pick-iron:checked    ~ .doctor-panels #panel-iron    { display: grid; }
+.doctor-chooser #pick-heart:checked   ~ .doctor-panels #panel-heart   { display: grid; }
+.doctor-chooser #pick-star:checked    ~ .doctor-panels #panel-star    { display: grid; }
+
+.doctor-chooser .doctor-panel {
+  grid-template-columns: 120px 1fr;
+  gap: 1rem;
+  align-items: start;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+}
+.doctor-chooser .doctor-panel img {
+  width: 120px;
+  height: auto;
+}
+
+/* Arrow controls (CSS-only) */
+.doctor-chooser .doctor-arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: none; /* only labels inside catch clicks */
+}
+.doctor-chooser .doctor-arrows .prev,
+.doctor-chooser .doctor-arrows .next {
+  display: none; /* hidden until a radio state enables it */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.25rem;
+  pointer-events: auto; /* clickable */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.doctor-chooser .doctor-arrows .prev { left: 0; }
+.doctor-chooser .doctor-arrows .next { right: 0; }
+
+.doctor-chooser .doctor-arrows .prev:hover,
+.doctor-chooser .doctor-arrows .next:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  transform: translateY(-50%) rotate(90deg); /* rotate on hover */
+}
+
+@media (max-width: 480px) {
+  .doctor-chooser .doctor-arrows .prev { left: 0.25rem; }
+  .doctor-chooser .doctor-arrows .next { right: 0.25rem; }
+}
+
+/* Highlight the active label using adjacent selector (input + label) */
+.doctor-chooser #pick-captain:checked + label.doc-option {
+  background: #dbeafe; /* blue */
+  border-color: #93c5fd;
+  color: #0f172a;
+  font-weight: 700;
+}
+.doctor-chooser #pick-iron:checked    + label.doc-option {
+  background: #f3f4f6; /* gray */
+  border-color: #d1d5db;
+  color: #111827;
+  font-weight: 700;
+}
+.doctor-chooser #pick-heart:checked   + label.doc-option {
+  background: #ffe4e6; /* pink */
+  border-color: #fecdd3;
+  color: #9f1239;
+  font-weight: 700;
+}
+.doctor-chooser #pick-star:checked    + label.doc-option {
+  background: #fef9c3; /* yellow */
+  border-color: #fde68a;
+  color: #854d0e;
+  font-weight: 700;
+}
+
+/* Show relevant arrows depending on which radio is checked */
+.doctor-chooser #pick-captain:checked ~ .doctor-arrows .next-from-captain { display: block; }
+.doctor-chooser #pick-captain:checked ~ .doctor-arrows .prev-from-captain { display: block; }
+.doctor-chooser #pick-iron:checked    ~ .doctor-arrows .prev-from-iron  { display: block; }
+.doctor-chooser #pick-iron:checked    ~ .doctor-arrows .next-from-iron  { display: block; }
+.doctor-chooser #pick-heart:checked   ~ .doctor-arrows .prev-from-heart { display: block; }
+.doctor-chooser #pick-heart:checked   ~ .doctor-arrows .next-from-heart { display: block; }
+.doctor-chooser #pick-star:checked    ~ .doctor-arrows .prev-from-star  { display: block; }
+.doctor-chooser #pick-star:checked    ~ .doctor-arrows .next-from-star  { display: block; }
