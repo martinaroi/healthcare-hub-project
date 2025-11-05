@@ -14,26 +14,40 @@
 
 <body>
   <header>
-  <h1>Starlight Children’s Hospital</h1>
+  <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
 
+  <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+    ☰
+  </button>
     <nav>
-      <ul>
+      <ul id="primary-navigation" class="nav-links">
+
         <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
+        <li class="has-submenu">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
+          <ul class="submenu" aria-label="Doctors">
+            <li><a href="doctors.html">All Doctors (Overview)</a></li>
+            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+            <li><a href="detail_Heartblazer.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+            <li><a href="detail_Starbright.html">Star Healer (Oncology)</a></li>
+          </ul>
+        </li>
+  <li><a href="departments.html">Departments</a></li>
         <li><a href="booking.html">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
-        <button id="lexend-btn">Lexend</button>
-        <button id="roboto-btn">Roboto</button>
+        <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
       <div id ="search-section">
         <input type ="text" id="search-input" placeholder="Search..." />
-        <button id="search-btn">Search</button>
+  <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
       </div>
     </nav>
   </header>
+  <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
   <main>
     <section>
@@ -58,7 +72,8 @@
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
+  <li><a href="doctors.html">Doctors</a></li>
+  <li><a href="departments.html">Departments</a></li>
         <li><a href="booking.html">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
