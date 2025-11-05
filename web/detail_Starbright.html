@@ -20,16 +20,16 @@
 				<li><a href="contact.html">Contact</a></li>
 			</ul>
 			<div class="font-switcher">
-				<button id="lexend-btn">Lexend</button>
-				<button id="roboto-btn">Roboto</button>
+				<button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
 			</div>
 			<div id ="search-section">
 				<input type ="text" id="search-input" placeholder="Search..." />
-				<button id="search-btn">Search</button>
+				<button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
 				<div id="search-results"></div>
 			</div>
 		</nav>
 	</header>
+	<nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
 	<main>
 			<article class="doctor-detail">
@@ -69,6 +69,16 @@
 				<section class="book-visit">
 					<a href="booking.html" class="button">Book a Visit</a>
 				</section>
+
+						<section class="clinic-schedule">
+							<h3>Clinic Schedule</h3>
+							<ul>
+								<li>Monday: 10:00–11:00</li>
+								<li>Tuesday: 10:00–11:00</li>
+								<li>Friday: 13:00–14:00</li>
+								<li>Weekends: Closed</li>
+							</ul>
+						</section>
 			</article>
 	</main>
 
@@ -83,6 +93,7 @@
 		</nav>
 		<p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
 	</footer>
+	<script src="script.js"></script>
 </body>
 </html>
 
