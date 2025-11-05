@@ -1,0 +1,18 @@
+[
+	{ "type": "page", "name": "Home", "url": "index.html" },
+	{ "type": "page", "name": "Doctors (Overview)", "url": "doctors.html" },
+	{ "type": "page", "name": "Departments", "url": "departments.html" },
+	{ "type": "page", "name": "Book Visit", "url": "booking.html" },
+	{ "type": "page", "name": "Contact", "url": "contact.html" },
+
+	{ "type": "doctor", "name": "Captain Care", "specialty": "Pediatrics", "url": "detail_CaptainCare.html" },
+	{ "type": "doctor", "name": "Iron Bones", "specialty": "Orthopedics", "url": "detail_IronBone.html" },
+	{ "type": "doctor", "name": "Heart Hero", "specialty": "Cardiology", "url": "detail_Heartblazer.html" },
+	{ "type": "doctor", "name": "Star Healer", "specialty": "Oncology", "url": "detail_Starbright.html" },
+
+	{ "type": "department", "name": "Pediatrics", "url": "doctors.html?department=pediatrics" },
+	{ "type": "department", "name": "Orthopedics", "url": "doctors.html?department=orthopedics" },
+	{ "type": "department", "name": "Cardiology", "url": "doctors.html?department=cardiology" },
+	{ "type": "department", "name": "Oncology", "url": "doctors.html?department=oncology" }
+
+]

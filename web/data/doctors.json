@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Captain Care",
+    "department": "Pediatrics",
+    "heroName": "Captain Care",
+    "description": "Pediatrics superhero—watches over young heroes with regular check-ups and vaccinations; heals with kindness and courage."
+  },
+  {
+    "name": "Iron Bones",
+    "department": "Orthopedics",
+    "heroName": "Iron Bones",
+    "description": "Bones, muscles, and injury care—making bones as strong as steel."
+  },
+  {
+    "name": "Heart Hero",
+    "department": "Cardiology",
+    "heroName": "Heart Hero",
+    "description": "Heart check-ups and ECGs—super listens to every heartbeat."
+  },
+  {
+    "name": "Star Healer",
+    "department": "Oncology",
+    "heroName": "Star Healer",
+    "description": "Cancer care—uses starlight to help cells grow healthy again."
+  }
+]
