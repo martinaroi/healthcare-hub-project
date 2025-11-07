@@ -629,3 +629,198 @@ img {
 .doctor-chooser #pick-heart:checked   ~ .doctor-arrows .next-from-heart { display: block; }
 .doctor-chooser #pick-star:checked    ~ .doctor-arrows .prev-from-star  { display: block; }
 .doctor-chooser #pick-star:checked    ~ .doctor-arrows .next-from-star  { display: block; }
+
+/*Star healer and heart hero styling */
+
+:root {
+  --color-heart: #e63946;      /* Heart Hero accent */
+  --color-star: #4f46e5;       /* Star Healer accent */
+  --color-bg-light: #f8fafc;
+  --color-text: #1e293b;
+  --radius-xl: 2rem;
+  --shadow-soft: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Shared layout for all doctor detail pages */
+.doctor-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  background-color: var(--color-bg-light);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doctor-detail:hover {
+  transform: scale(1.01);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Image and caption */
+.doctor-detail figure {
+  margin: 0;
+  text-align: center;
+}
+
+.doctor-detail img {
+  width: 80%;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease;
+}
+
+.doctor-detail img:hover {
+  transform: scale(1.05);
+}
+
+/* Sections inside the article */
+.doctor-detail section {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.doctor-detail h3 {
+  margin-top: 0;
+  font-family: 'Lexend', sans-serif;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Book Visit button */
+.book-visit .button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Color themes by page */
+body.heart-hero .book-visit .button {
+  background-color: var(--color-heart);
+}
+
+body.star-healer .book-visit .button {
+  background-color: var(--color-star);
+}
+
+.book-visit .button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .doctor-detail {
+    padding: 1rem;
+  }
+  .doctor-detail img {
+    width: 100%;
+  }
+}
+
+/* clinic time section */
+
+.schedule {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.schedule:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.schedule h3 {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+
+.schedule ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.schedule li {
+  background-color: var(--color-bg-light);
+  border-left: 4px solid transparent;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Theme-specific accents */
+body.heart-hero .schedule li {
+  border-left-color: var(--color-heart);
+}
+
+body.star-healer .schedule li {
+  border-left-color: var(--color-star);
+}
+
+/* Optional hover highlight */
+body.heart-hero .schedule li:hover {
+  background-color: rgba(230, 57, 70, 0.08);
+}
+
+body.star-healer .schedule li:hover {
+  background-color: rgba(79, 70, 229, 0.08);
+}
+
+/* =====================================
+   THEMED BACKGROUNDS FOR EACH DOCTOR PAGE
+   ===================================== */
+
+/* Base fallback */
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  transition: background 1s ease-in-out;
+}
+
+/* ❤️ Heart Hero theme */
+body.heart-hero {
+  background: radial-gradient(circle at top left,
+    #ffe5e5 0%, 
+    #ffb6b9 40%, 
+    #f5d0d0 100%);
+  background-attachment: fixed;
+}
+
+/* 💜 Star Healer theme */
+body.star-healer {
+  background: radial-gradient(circle at top right,
+    #d6ccff 0%, 
+    #a78bfa 40%, 
+    #4f46e5 100%);
+  background-attachment: fixed;
+}
+
+/* Optional: add a subtle overlay shimmer for depth */
+body.star-healer::before,
+body.heart-hero::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+  pointer-events: none;
+  z-index: -1;
+}
