@@ -36,6 +36,76 @@
     <section class="booking">
   <h2>Book a Visit</h2>
   <p>Regular check-ups, vaccinations, fever, and more — we’re here to help.</p>
+  
+  <form id="booking-form" action="#" method="POST">
+  <!-- Patient details first -->
+  <fieldset class="patient-details">
+    <legend>Patient Details</legend>
+    <div class="form-row">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required />
+    </div>
+    <div class="form-row">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" placeholder="YYYY-MM-DD" required />
+    </div>
+  </fieldset>
+
+  <!-- Visual doctor picker (syncs with the select) -->
+  <div class="doctor-picker" role="radiogroup" aria-label="Choose your doctor">
+    <label class="doc-card" data-value="pediatrics-captaincare" tabindex="0">
+      <div class="inner">
+        <div class="face front">
+          <strong>Captain Care</strong>
+          <span>Pediatrics</span>
+        </div>
+        <div class="face back">
+          <img src="images/captain_care.png" alt="Captain Care (Pediatrics)" />
+          <em>Captain Care</em>
+        </div>
+      </div>
+      <input type="radio" name="doc-card" aria-label="Captain Care" />
+    </label>
+    <label class="doc-card" data-value="cardiology-hearthero" tabindex="0">
+      <div class="inner">
+        <div class="face front">
+          <strong>Heart Hero</strong>
+          <span>Cardiology</span>
+        </div>
+        <div class="face back">
+          <img src="images/heart_hero.png" alt="Heart Hero (Cardiology)" />
+          <em>Heart Hero</em>
+        </div>
+      </div>
+      <input type="radio" name="doc-card" aria-label="Heart Hero" />
+    </label>
+    <label class="doc-card" data-value="orthopedics-ironbones" tabindex="0">
+      <div class="inner">
+        <div class="face front">
+          <strong>Iron Bones</strong>
+          <span>Orthopedics</span>
+        </div>
+        <div class="face back">
+          <img src="images/irone_bones.png" alt="Iron Bones (Orthopedics)" />
+          <em>Iron Bones</em>
+        </div>
+      </div>
+      <input type="radio" name="doc-card" aria-label="Iron Bones" />
+    </label>
+    <label class="doc-card" data-value="oncology-starhealer" tabindex="0">
+      <div class="inner">
+        <div class="face front">
+          <strong>Star Healer</strong>
+          <span>Oncology</span>
+        </div>
+        <div class="face back">
+          <img src="images/star_healer.png" alt="Star Healer (Oncology)" />
+          <em>Star Healer</em>
+        </div>
+      </div>
+      <input type="radio" name="doc-card" aria-label="Star Healer" />
+    </label>
+  </div>
   <!-- Enhanced date+time picker (progressive enhancement) -->
   <div class="schedule-picker" aria-label="Choose appointment date and time">
     <div class="calendar" aria-live="polite">
@@ -55,24 +125,8 @@
       </div>
     </div>
   </div>
-
-
-
-  <form id="booking-form" action="#" method="POST">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name" required />
-
-        <label for="age">Your Age:</label>
-        <input type="number" id="age" name="age" placeholder="Enter your age" min="0" required />
-
-        <label for="doctor">Choose a Department & Hero:</label>
-        <select id="doctor" name="doctor" required>
-          <option value="">Select a hero</option>
-          <option value="pediatrics-captaincare">PEDIATRICS — Captain Care</option>
-          <option value="cardiology-hearthero">CARDIOLOGY — Heart Hero</option>
-          <option value="orthopedics-ironbones">ORTHOPEDICS — Iron Bones</option>
-          <option value="oncology-starhealer">ONCOLOGY — Star Healer</option>
-        </select>
+  <!-- Hidden doctor value populated by card selection -->
+  <input type="hidden" id="doctor" name="doctor" />
 
   <!-- Native inputs kept for accessibility/fallback; hidden when JS enhances -->
   <label for="date">Choose a Date:</label>
@@ -81,13 +135,22 @@
   <label for="time">Choose a Time:</label>
   <input type="time" id="time" name="time" required />
 
-        <label for="message">Additional Message:</label>
-        <textarea id="message" name="message" placeholder="Optional message for the doctor"></textarea>
+        <div class="message-box">
+          <label for="message">Additional message <span class="optional">(optional)</span></label>
+          <p id="message-help" class="message-help">Share any context, symptoms, or preferences you'd like your doctor to know.</p>
+          <textarea id="message" name="message" rows="3" maxlength="300" aria-describedby="message-help message-count" placeholder="E.g., child has had a fever since Tuesday and is allergic to penicillin."></textarea>
+          <div class="message-meta">
+            <span id="message-count" class="message-counter">0 / 300</span>
+          </div>
+        </div>
 
-        <button type="submit">Book Appointment</button>
-      </form>
+  <button type="submit" id="book-submit" class="btn-primary">Book Appointment</button>
+  </form>
     </section>
   </main>
+
+  <!-- Star fireworks overlay -->
+  <div id="star-fireworks" class="star-fireworks" aria-hidden="true"></div>
 
   <footer>
     <nav>
