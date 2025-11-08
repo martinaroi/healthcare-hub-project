@@ -20,9 +20,9 @@
           <ul class="submenu" aria-label="Doctors">
             <li><a href="doctors.html">All Doctors (Overview)</a></li>
             <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
-            <li><a href="detail_Heartblazer.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
             <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
-            <li><a href="detail_Starbright.html">Star Healer (Oncology)</a></li>
+            <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
           </ul>
         </li>
         <li><a href="departments.html">Departments</a></li>
@@ -42,37 +42,65 @@
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
   <main>
-    <section>
+    <section class="departments">
       <h2>Departments</h2>
-      <article class="grid">
-        <article class="card">
+      <div class="departments-list">
+        <article class="department-card" id="dept-pediatrics">
           <img src="images/captain_care.png" alt="Pediatrics department icon" />
           <h3>Pediatrics</h3>
           <p>Captain Care looks after babies, kids, and teens to make sure they grow strong and healthy. From fun check-ups and brave vaccinations to helping when you catch a cold — Captain Care is always ready with a smile and a stethoscope!</p>
+          <ul class="specialties" aria-label="Pediatrics specialties">
+            <li>Growth & development check-ups</li>
+            <li>Vaccinations & immunization advice</li>
+            <li>Fever, cough & sore throat care</li>
+            <li>Nutrition & healthy habits guidance</li>
+            <li>School and sports readiness exams</li>
+          </ul>
           <a href="detail_CaptainCare.html">Go to Doctor — Captain Care</a>
         </article>
 
-        <article class="card">
+        <article class="department-card" id="dept-cardiology">
           <img src="images/cardiology.png" alt="Cardiology department icon" />
           <h3>Cardiology</h3>
           <p>Heart Hero is the protector of every heartbeat! With special tools that can listen deep inside your chest, Heart Hero makes sure your heart keeps thumping happily — whether you’re running, laughing, or dreaming.</p>
-          <a href="detail_Heartblazer.html">Go to Doctor — Heart Hero</a>
+          <ul class="specialties" aria-label="Cardiology specialties">
+            <li>Heart rhythm & beat monitoring</li>
+            <li>Heart murmurs & congenital checks</li>
+            <li>Activity & exercise safety guidance</li>
+            <li>Chest pain & shortness of breath evaluation</li>
+            <li>Echo & ultrasound heart imaging</li>
+          </ul>
+          <a href="detail_HeartHero.html">Go to Doctor — Heart Hero</a>
         </article>
 
-        <article class="card">
+        <article class="department-card" id="dept-orthopedics">
           <img src="images/orthopedics.png" alt="Orthopedics department icon" />
           <h3>Orthopedics</h3>
           <p>Iron Bones helps kids get back on their feet after falls, sprains, or broken bones. With super knowledge of muscles and joints, Iron Bones makes sure every little hero can climb, jump, and play again in no time!</p>
+          <ul class="specialties" aria-label="Orthopedics specialties">
+            <li>Broken bones & fracture care</li>
+            <li>Sprains, strains & sports injuries</li>
+            <li>Joint & muscle pain relief</li>
+            <li>Growth plate & alignment tracking</li>
+            <li>Rehab exercises & safe movement tips</li>
+          </ul>
           <a href="detail_IronBone.html">Go to Doctor — Iron Bones</a>
         </article>
 
-        <article class="card">
+        <article class="department-card" id="dept-oncology">
           <img src="images/star_hero.png" alt="Oncology department icon" />
           <h3>Oncology</h3>
           <p>Star Healer brings hope and courage to kids who are fighting big illnesses like cancer. With gentle care, bright smiles, and a little bit of starlight magic, Star Healer helps every child feel stronger each day.</p>
-          <a href="detail_Starbright.html">Go to Doctor — Star Healer</a>
+          <ul class="specialties" aria-label="Oncology specialties">
+            <li>Cancer diagnosis & treatment plans</li>
+            <li>Blood tests & lab monitoring</li>
+            <li>Comfort & symptom management</li>
+            <li>Therapy coordination & support</li>
+            <li>Long-term strength & recovery follow-up</li>
+          </ul>
+          <a href="detail_StarHealer.html">Go to Doctor — Star Healer</a>
         </article>
-      </article>
+      </div>
     </section>
 
     <p style="margin-top:1rem;"><a href="doctors.html">See all doctors</a></p>
