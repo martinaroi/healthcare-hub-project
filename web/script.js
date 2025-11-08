@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     5: ['13:00','13:30','14:00']
                 }
             };
-            const doctorSelect = document.getElementById('doctor');
+            const doctorInput = document.getElementById('doctor');
 
             function fmtDateISO(d) {
                 const y = d.getFullYear();
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isWeekend = [0,6].includes(dow);
                 let slots = [];
                 if (!isWeekend) {
-                    const key = doctorSelect?.value || '';
+                    const key = doctorInput?.value || '';
                     const docSched = schedules[key];
                     slots = docSched?.[dow] || []; // if no specific schedule that weekday, no slots
                 }
@@ -242,15 +242,70 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             updateSlots();
 
-            // Update when doctor changes
-            if (doctorSelect) {
-                doctorSelect.addEventListener('change', () => {
-                    // Clear previous time if new doctor has different slots
-                    selectedTime = null;
-                    timeInput.value = '';
-                    updateSlots();
+            // Expose a function to refresh slots when doctor changes via card picker
+            window.__refreshSlotsForDoctor = () => {
+                selectedTime = null;
+                if (timeInput) timeInput.value = '';
+                updateSlots();
+            };
+        })();
+
+        // Optional message UX: auto-resize and counter
+        (function initMessageEnhancements() {
+            const ta = document.getElementById('message');
+            const counter = document.getElementById('message-count');
+            if (!ta || !counter) return;
+            const max = parseInt(ta.getAttribute('maxlength') || '300', 10);
+            const updateCounter = () => {
+                const len = ta.value.length;
+                counter.textContent = `${len} / ${max}`;
+            };
+            const autoResize = () => {
+                ta.style.height = 'auto';
+                ta.style.height = Math.min(220, Math.max(44, ta.scrollHeight)) + 'px';
+            };
+            ta.addEventListener('input', () => { updateCounter(); autoResize(); });
+            // Initialize on load
+            updateCounter();
+            autoResize();
+        })();
+
+        // Doctor card picker sync
+        (function initDoctorPicker() {
+            const picker = document.querySelector('.doctor-picker');
+            const hiddenInput = document.getElementById('doctor');
+            if (!picker || !hiddenInput) return;
+            const cards = Array.from(picker.querySelectorAll('.doc-card'));
+
+            function setActive(value) {
+                cards.forEach(c => {
+                    const match = c.getAttribute('data-value') === value;
+                    c.classList.toggle('selected', match);
+                    const radio = c.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = match;
                 });
+                if (hiddenInput.value !== value) {
+                    hiddenInput.value = value;
+                    if (typeof window.__refreshSlotsForDoctor === 'function') window.__refreshSlotsForDoctor();
+                }
             }
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const val = card.getAttribute('data-value');
+                    if (val) setActive(val);
+                });
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const val = card.getAttribute('data-value');
+                        if (val) setActive(val);
+                    }
+                });
+            });
+
+            // If a value was pre-filled (unlikely), reflect it
+            if (hiddenInput.value) setActive(hiddenInput.value);
         })();
 
         form.addEventListener('submit', async (event) => {
@@ -260,12 +315,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = Object.fromEntries(formData.entries());
 
             // Basic client-side validation fallback 
-            if (!data.name || !data.age || !data.doctor || !data.date || !data.time) {
+            if (!data.name || !data.dob || !data.doctor || !data.date || !data.time) {
                 alert('Please complete all required fields.');
                 return;
             }
 
             try {
+                // Disable button during submit
+                const submitBtn = document.getElementById('book-submit');
+                if (submitBtn) submitBtn.disabled = true;
                 const response = await fetch('/submit-appointment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -275,18 +333,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If no backend exists yet, treat non-OK as success in demo mode
                 if (!response.ok) {
                     console.warn('No backend connected; simulating success.');
+                    triggerStarFireworks();
                     alert('Appointment booked successfully!');
                     form.reset();
+                    // Reset any dynamic UI states
+                    if (typeof window.__refreshSlotsForDoctor === 'function') window.__refreshSlotsForDoctor();
+                    if (submitBtn) submitBtn.disabled = false;
                     return;
                 }
 
                 const result = await response.json().catch(() => ({}));
+                triggerStarFireworks();
                 alert('Appointment booked successfully!');
                 form.reset();
                 console.log('Booking result:', result);
+                if (submitBtn) submitBtn.disabled = false;
             } catch (error) {
                 console.error('Error:', error);
                 alert('There was an error booking your appointment. Please try again.');
+                const submitBtn = document.getElementById('book-submit');
+                if (submitBtn) submitBtn.disabled = false;
             }
         });
     }
@@ -331,9 +397,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'doctor-detail.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Captain Care' }],
             'detail_captaincare.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Captain Care' }],
             'detail_ironbone.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Iron Bones' }],
-            'detail_heartblazer.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Heart Hero' }],
-            'detail_heartbalzer.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Heart Hero' }],
-            'detail_starbright.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Star Healer' }]
+            'detail_hearthero.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Heart Hero' }],
+            'detail_starhealer.html': [{ name: 'Doctors', url: 'doctors.html' }, { name: 'Star Healer' }]
         };
 
         const additions = pageMap[file] ?? [{ name: (document.title || '').replace(/\s+—.*/, '') || 'Current' }];
@@ -499,3 +564,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Simple star fireworks animation
+function triggerStarFireworks() {
+    const container = document.getElementById('star-fireworks');
+    if (!container) return;
+    // Clear any existing nodes
+    container.innerHTML = '';
+
+    const bursts = 26; // number of main stars
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 3; // a bit higher than center
+    for (let i = 0; i < bursts; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const angle = (Math.PI * 2 * i) / bursts + (Math.random() * 0.4 - 0.2);
+        const distance = 160 + Math.random() * 160;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        const size = 14 + Math.random() * 12;
+        const startLeft = centerX - size / 2;
+        const startTop = centerY - size / 2;
+        star.style.left = startLeft + 'px';
+        star.style.top = startTop + 'px';
+        star.style.setProperty('--tx', tx + 'px');
+        star.style.setProperty('--ty', ty + 'px');
+        star.style.setProperty('--size', size + 'px');
+        container.appendChild(star);
+        star.addEventListener('animationend', () => star.remove());
+
+        // Sparks around star origin
+        const sparkCount = 6 + Math.floor(Math.random() * 4);
+        for (let s = 0; s < sparkCount; s++) {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            const sa = Math.random() * Math.PI * 2;
+            const sd = 30 + Math.random() * 40;
+            const sx = Math.cos(sa) * sd;
+            const sy = Math.sin(sa) * sd;
+            spark.style.left = (centerX - 3) + 'px';
+            spark.style.top = (centerY - 3) + 'px';
+            spark.style.setProperty('--sx', sx + 'px');
+            spark.style.setProperty('--sy', sy + 'px');
+            container.appendChild(spark);
+            spark.addEventListener('animationend', () => spark.remove());
+        }
+    }
+}
