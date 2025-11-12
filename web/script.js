@@ -1,6 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Progressive enhancement flag
     document.body.classList.add('js-enhanced');
+
+    // Booking storage helpers
+    function getBookedSlots(doctor, date) {
+        try {
+            const key = `bookings_${doctor}_${date}`;
+            const stored = localStorage.getItem(key);
+            return stored ? JSON.parse(stored) : [];
+        } catch {
+            return [];
+        }
+    }
+
+    function addBooking(doctor, date, time) {
+        try {
+            const key = `bookings_${doctor}_${date}`;
+            const slots = getBookedSlots(doctor, date);
+            if (!slots.includes(time)) {
+                slots.push(time);
+                localStorage.setItem(key, JSON.stringify(slots));
+            }
+        } catch (err) {
+            console.error('Failed to save booking:', err);
+        }
+    }
+
+    // Make these functions globally accessible for the booking form
+    window.__getBookedSlots = getBookedSlots;
+    window.__addBooking = addBooking;
+
     // Make logo link to home across all pages
     document.querySelectorAll('header img.logo').forEach(img => {
         if (img.closest('a')) return; // already wrapped
@@ -80,25 +109,25 @@ document.addEventListener('DOMContentLoaded', () => {
             // Keys match the booking select values
             const schedules = {
                 'pediatrics-captaincare': {
-                    1: ['09:00','09:30','10:00','10:30','11:00'],
-                    2: ['09:00','09:30','10:00','10:30','11:00'],
-                    3: ['13:00','13:30','14:00','14:30'],
-                    4: ['09:00','09:30','10:00','10:30','11:00'],
-                    5: ['09:00','09:30','10:00']
+                    1: ['09:00','09:30','10:00','10:30','11:00'], // Monday
+                    2: ['09:00','09:30','10:00','10:30','11:00'], // Tuesday
+                    3: ['13:00','13:30','14:00','14:30'],         // Wednesday
+                    4: ['09:00','09:30','10:00','10:30','11:00'], // Thursday
+                    5: ['09:00','09:30','10:00']                  // Friday
                 },
                 'cardiology-hearthero': {
-                    1: ['13:00','13:30','14:00','14:30','15:00'],
-                    3: ['09:00','09:30','10:00','10:30'],
-                    4: ['13:00','13:30','14:00','14:30']
+                    1: ['13:00','13:30','14:00','14:30','15:00'], // Monday
+                    3: ['09:00','09:30','10:00','10:30'],         // Wednesday
+                    4: ['13:00','13:30','14:00','14:30']          // Thursday
                 },
                 'orthopedics-ironbones': {
-                    2: ['09:00','09:30','10:00','10:30','11:00','11:30'],
-                    4: ['09:00','09:30','10:00','10:30']
+                    2: ['09:00','09:30','10:00','10:30','11:00','11:30'], // Tuesday
+                    4: ['09:00','09:30','10:00','10:30']                  // Thursday
                 },
                 'oncology-starhealer': {
-                    1: ['10:00','10:30','11:00'],
-                    2: ['10:00','10:30','11:00'],
-                    5: ['13:00','13:30','14:00']
+                    1: ['13:00','13:30','14:00','14:30','15:00'], // Monday
+                    3: ['09:00','09:30','10:00','10:30'],         // Wednesday
+                    4: ['13:00','13:30','14:00','14:30']          // Thursday
                 }
             };
             const doctorInput = document.getElementById('doctor');
@@ -167,10 +196,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.textContent = String(d);
                     const isPast = date < today;
                     const isWeekend = [0,6].includes(date.getDay());
+                    const dayOfWeek = date.getDay(); // 0=Sun..6=Sat
+                    
+                    // Check if selected doctor has availability on this day
+                    const doctorKey = doctorInput?.value || '';
+                    const hasAvailability = doctorKey && schedules[doctorKey] && schedules[doctorKey][dayOfWeek] && schedules[doctorKey][dayOfWeek].length > 0;
+                    
                     if (isPast || isWeekend) {
                         btn.disabled = true;
                         if (isWeekend) btn.title = 'Weekends not available';
+                    } else if (doctorKey && !hasAvailability) {
+                        // Doctor selected but no availability this day
+                        btn.classList.add('no-availability');
+                        btn.title = 'Selected doctor not available this day';
+                    } else if (doctorKey && hasAvailability) {
+                        // Doctor has availability - color code it
+                        btn.classList.add('has-availability');
+                        btn.title = 'Doctor available - click to see times';
                     }
+                    
                     if (selectedDate && fmtDateISO(date) === fmtDateISO(selectedDate)) {
                         btn.classList.add('selected');
                     }
@@ -212,19 +256,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     slotsWrap.appendChild(info);
                     return;
                 }
+
+                // Get booked slots from localStorage
+                const bookedSlots = window.__getBookedSlots ? window.__getBookedSlots(doctorInput?.value || '', dateStr) : [];
+
                 slots.forEach(t => {
                     const b = document.createElement('button');
                     b.type = 'button';
                     b.className = 'slot';
                     b.textContent = t;
-                    if (selectedTime === t) b.classList.add('selected');
-                    b.addEventListener('click', () => {
-                        selectedTime = t;
-                        timeInput.value = t;
-                        // reflect selection
-                        slotsWrap.querySelectorAll('button.slot.selected').forEach(el => el.classList.remove('selected'));
-                        b.classList.add('selected');
-                    });
+                    
+                    // Check if this slot is already booked
+                    const isBooked = bookedSlots.includes(t);
+                    if (isBooked) {
+                        b.classList.add('unavailable');
+                        b.disabled = true;
+                        b.title = 'This time is already booked';
+                    } else {
+                        if (selectedTime === t) b.classList.add('selected');
+                        b.addEventListener('click', () => {
+                            selectedTime = t;
+                            timeInput.value = t;
+                            // reflect selection
+                            slotsWrap.querySelectorAll('button.slot.selected').forEach(el => el.classList.remove('selected'));
+                            b.classList.add('selected');
+                        });
+                    }
                     slotsWrap.appendChild(b);
                 });
             }
@@ -333,6 +390,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If no backend exists yet, treat non-OK as success in demo mode
                 if (!response.ok) {
                     console.warn('No backend connected; simulating success.');
+                    
+                    // Save booking to localStorage
+                    if (window.__addBooking) {
+                        window.__addBooking(data.doctor, data.date, data.time);
+                    }
+                    
                     triggerStarFireworks();
                     alert('Appointment booked successfully!');
                     form.reset();
@@ -343,6 +406,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const result = await response.json().catch(() => ({}));
+                
+                // Save booking to localStorage on successful backend response too
+                if (window.__addBooking) {
+                    window.__addBooking(data.doctor, data.date, data.time);
+                }
+                
                 triggerStarFireworks();
                 alert('Appointment booked successfully!');
                 form.reset();
