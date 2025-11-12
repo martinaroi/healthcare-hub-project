@@ -35,7 +35,19 @@
   <main>
     <section class="booking">
   <h2>Book a Visit</h2>
-  <p>Regular check-ups, vaccinations, fever, and more — we’re here to help.</p>
+  <p>Regular check-ups, vaccinations, fever, and more — we're here to help.</p>
+  
+  <!-- Important disclaimer -->
+  <div class="booking-disclaimer">
+    <h3>⚠️ Important Notice</h3>
+    <p><strong>This booking system is for regular check-ups and planned appointments only.</strong></p>
+    <p>In urgent cases or emergencies, please:</p>
+    <ul>
+      <li><strong>Call our 24/7 Hotline:</strong> <a href="tel:+11234567890">+1 (123) 456-7890</a></li>
+      <li><strong>Or dial emergency services:</strong> <a href="tel:911">911</a></li>
+    </ul>
+    <p class="disclaimer-note">For chest pain, difficulty breathing, severe injuries, or any life-threatening situation, do not wait — seek immediate emergency care.</p>
+  </div>
   
   <form id="booking-form" action="#" method="POST">
   <!-- Patient details first -->
@@ -49,6 +61,12 @@
       <label for="dob">Date of Birth</label>
       <input type="date" id="dob" name="dob" placeholder="YYYY-MM-DD" required />
     </div>
+    <div class="form-row checkbox-row">
+      <label for="first-time" class="checkbox-label">
+        <input type="checkbox" id="first-time" name="firstTime" value="yes" />
+        <span>First time patient?</span>
+      </label>
+    </div>
   </fieldset>
 
   <!-- Visual doctor picker (syncs with the select) -->
@@ -60,7 +78,7 @@
           <span>Pediatrics</span>
         </div>
         <div class="face back">
-          <img src="images/captain_care.png" alt="Captain Care (Pediatrics)" />
+          <img src="images/pediatrics.png" alt="Captain Care (Pediatrics)" />
           <em>Captain Care</em>
         </div>
       </div>
@@ -99,7 +117,7 @@
           <span>Oncology</span>
         </div>
         <div class="face back">
-          <img src="images/star_healer.png" alt="Star Healer (Oncology)" />
+          <img src="images/oncology.png" alt="Star Healer (Oncology)" />
           <em>Star Healer</em>
         </div>
       </div>
