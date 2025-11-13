@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2563eb" />
-  <title>Starlight Children’s Hospital</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Starlight Children's Hospital</title>
+  <link rel="stylesheet" href="style.css?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -13,18 +13,21 @@
 </head>
 
 <body>
-  <header>
-  <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
+  <header class="main-header">
+    <div class="header-container">
+  <img src="images/starlight_hospital.png" alt="Starlight Children's Hospital Logo" class="logo" />
 
   <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
     ☰
   </button>
-    <nav>
+      
+      <nav class="main-nav">
       <ul id="primary-navigation" class="nav-links">
 
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="departments.html" class="nav-link">Departments</a></li>
         <li class="has-submenu">
-          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
+          <a href="doctors.html" class="nav-link">Doctors</a>
           <ul class="submenu" aria-label="Doctors">
             <li><a href="doctors.html">All Doctors (Overview)</a></li>
             <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
@@ -33,26 +36,44 @@
               <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
           </ul>
         </li>
-  <li><a href="departments.html">Departments</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
-        <li><a href="contact.html">Contact</a></li>
+  <li><a href="booking.html" class="nav-link">Appointments</a></li>
       </ul>
-      <div class="font-switcher">
-        <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
+      </nav>
+      
+      <div class="header-actions">
+        <button id="dyslexia-toggle" class="dyslexia-toggle icon-button" aria-pressed="false" title="Toggle Dyslexia Font">
+          T
+        </button>
+        <a href="contact.html" class="btn-call">
+          📞 Call Us
+        </a>
+        <a href="booking.html" class="btn-book">
+          📅 Book Visit
+        </a>
       </div>
-      <div id ="search-section">
-        <input type ="text" id="search-input" placeholder="Search..." />
-  <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
-        <div id="search-results"></div>
-      </div>
-    </nav>
+    </div>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
   <main>
     <section>
-  <h2>Welcome to the Starlight Children’s Hospital</h2>
-      <img src="images/team_up.png" alt="Starlight Children’s Hospital Team" />
+      <!-- Left column - Hero content -->
+      <div class="hero-content">
+        <div class="hero-badge">Where Every Child is a Hero!</div>
+        <h2 class="hero-heading">Super Care for Super Kids!</h2>
+        <p class="hero-text">At Starlight Children's Hospital, we believe every child has superpowers! Our team of caring doctors and nurses are here to help your little heroes shine brighter every day.</p>
+        <div class="hero-buttons">
+          <a href="contact.html" class="btn-emergency">Emergency Care</a>
+          <a href="departments.html" class="btn-departments">Our Departments</a>
+        </div>
+      </div>
+      
+      <!-- Right column - Hero image -->
+      <div class="hero-image">
+        <img src="images/team_up.png" alt="Starlight Children's Hospital Team - Super Hero Kids" />
+      </div>
+    </section>
+    
     <section>
             <h3>About Us</h3>
             <p>We are dedicated to providing the best health care for your children.</p>
@@ -65,7 +86,7 @@
                 <li>Health Check-ups</li>
                 <li>Emergency Care</li>
             </ul>
-
+    </section>
   </main>
 
   <footer>
