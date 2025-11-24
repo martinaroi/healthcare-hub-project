@@ -17,7 +17,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="doctors.html">Doctors</a></li>
         <li><a href="departments.html">Departments</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
+        <li><a href="booking.html" aria-current="page">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
@@ -72,9 +72,10 @@
   <!-- Visual doctor picker (syncs with the select) -->
   <div class="doctor-picker" role="radiogroup" aria-label="Choose your doctor">
     <label class="doc-card" data-value="pediatrics-captaincare" tabindex="0">
+      <input type="radio" id="doctor-captaincare" name="doctor" value="pediatrics-captaincare" aria-labelledby="name-captaincare" required />
       <div class="inner">
         <div class="face front">
-          <strong>Captain Care</strong>
+          <strong id="name-captaincare">Captain Care</strong>
           <span>Pediatrics</span>
         </div>
         <div class="face back">
@@ -82,12 +83,12 @@
           <em>Captain Care</em>
         </div>
       </div>
-      <input type="radio" name="doc-card" aria-label="Captain Care" />
     </label>
     <label class="doc-card" data-value="cardiology-hearthero" tabindex="0">
+      <input type="radio" id="doctor-hearthero" name="doctor" value="cardiology-hearthero" aria-labelledby="name-hearthero" />
       <div class="inner">
         <div class="face front">
-          <strong>Heart Hero</strong>
+          <strong id="name-hearthero">Heart Hero</strong>
           <span>Cardiology</span>
         </div>
         <div class="face back">
@@ -95,12 +96,12 @@
           <em>Heart Hero</em>
         </div>
       </div>
-      <input type="radio" name="doc-card" aria-label="Heart Hero" />
     </label>
     <label class="doc-card" data-value="orthopedics-ironbones" tabindex="0">
+      <input type="radio" id="doctor-ironbones" name="doctor" value="orthopedics-ironbones" aria-labelledby="name-ironbones" />
       <div class="inner">
         <div class="face front">
-          <strong>Iron Bones</strong>
+          <strong id="name-ironbones">Iron Bones</strong>
           <span>Orthopedics</span>
         </div>
         <div class="face back">
@@ -108,12 +109,12 @@
           <em>Iron Bones</em>
         </div>
       </div>
-      <input type="radio" name="doc-card" aria-label="Iron Bones" />
     </label>
     <label class="doc-card" data-value="oncology-starhealer" tabindex="0">
+      <input type="radio" id="doctor-starhealer" name="doctor" value="oncology-starhealer" aria-labelledby="name-starhealer" />
       <div class="inner">
         <div class="face front">
-          <strong>Star Healer</strong>
+          <strong id="name-starhealer">Star Healer</strong>
           <span>Oncology</span>
         </div>
         <div class="face back">
@@ -121,7 +122,6 @@
           <em>Star Healer</em>
         </div>
       </div>
-      <input type="radio" name="doc-card" aria-label="Star Healer" />
     </label>
   </div>
   <!-- Enhanced date+time picker (progressive enhancement) -->
@@ -143,8 +143,7 @@
       </div>
     </div>
   </div>
-  <!-- Hidden doctor value populated by card selection -->
-  <input type="hidden" id="doctor" name="doctor" />
+  <!-- Note: radio inputs above provide the `doctor` form value for accessibility and submission -->
 
   <!-- Native inputs kept for accessibility/fallback; hidden when JS enhances -->
   <label for="date">Choose a Date:</label>
