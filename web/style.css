@@ -1317,3 +1317,1140 @@ header nav {
     display: flex !important;
   }
 }
+/* ===========================
+   REAL HERO SECTION STYLING
+   =========================== */
+main {
+    background: none;
+    box-shadow: none;
+    padding-top: 0;
+}
+
+/* Center ALL homepage content */
+main > section:first-of-type {
+    max-width: 1250px;
+    margin: 2rem auto;
+    padding: 3rem 3rem;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* Title centered like the reference */
+main h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 1.2rem;
+}
+
+/* Main hero image container */
+main img {
+    width: 95%;
+    max-width: 750px;
+    margin: 1.5rem auto;
+    border-radius: 25px;
+    display: block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* Center the About and Services text */
+main section {
+    text-align: center;
+}
+
+/* “About Us” and “Our Services” headings */
+main h3 {
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    color: #1e3a8a;
+}
+
+/* Services list styled like Google style cards */
+main ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+main ul li {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+/* CLEAN TOP HEADER */
+header {
+    background: #ffffff;
+    border-bottom: 4px solid #f5d96d;
+    padding: 15px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Navigation items aligned horizontally */
+.nav-links {
+    display: flex !important;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Hide bullets */
+.nav-links li {
+    list-style: none;
+}
+
+/* Make links professional */
+.nav-links a, .submenu-toggle {
+    color: #1e3a8a;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.nav-links a:hover {
+    color: #2563eb;
+}
+/* ---------------- EXQUISITE PROFESSIONAL HEADER ---------------- */
+
+header {
+    width: 100%;
+    padding: 18px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-bottom: 4px solid #ffd84d;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* Logo */
+.logo {
+    width: 150px;
+}
+
+/* NAVIGATION WRAPPER */
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* MAIN NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAV TEXT (Home, Doctors, Departments...) */
+.nav-links a,
+.submenu-toggle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.nav-links a:hover,
+.submenu-toggle:hover {
+    color: #2563eb;
+}
+
+/* ---------------- DROPDOWN ---------------- */
+.has-submenu {
+    position: relative;
+}
+
+.submenu {
+    position: absolute;
+    display: none;
+    top: 110%;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    list-style: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    min-width: 180px;
+}
+
+.has-submenu:hover .submenu {
+    display: block;
+}
+
+.submenu li {
+    margin: 0.7rem 0;
+}
+
+.submenu li a {
+    color: #1e3a8a;
+}
+
+.submenu li a:hover {
+    color: #2563eb;
+}
+
+/* ---------------- SEARCH + BUTTONS ---------------- */
+#search-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Search input */
+#search-input {
+    padding: 8px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    width: 180px;
+    transition: 0.2s;
+}
+
+#search-input:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+/* Search button */
+#search-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+#search-btn:hover {
+    background: #1e3a8a;
+}
+
+/* Dyslexia toggle button */
+#dyslexia-toggle {
+    background: #e2e8f0;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+#dyslexia-toggle:hover {
+    background: #cbd5e1;
+}
+
+/* ---------------- MOBILE ---------------- */
+@media (max-width: 900px) {
+
+    /* Hamburger visible */
+    .menu-toggle {
+        display: block;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Hide nav links */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: white;
+        padding: 1rem;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: absolute;
+        right: 2rem;
+        top: 80px;
+        width: 220px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+}
+/* ============================================
+   DOCTOR PAGE — FULL MODERN REDESIGN
+   ============================================ */
+
+/* Center the entire doctor section container */
+main section,
+.find-doctor-wrapper {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+}
+
+/* Page title */
+.find-doctor-wrapper h2,
+main h2 {
+    text-align: center !important;
+    font-size: 2.2rem;
+    color: #1e3a8a;
+    font-weight: 700;
+    margin-bottom: 1.8rem;
+}
+
+/* --- Tabs (Captain Care, Iron Bones, etc.) --- */
+.doctor-tabs,
+main .doctor-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.doctor-tabs button,
+main .doctor-tabs button {
+    padding: 10px 20px;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 30px;
+    font-weight: 600;
+    color: #1e3a8a;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.doctor-tabs button:hover,
+.doctor-tabs .active {
+    background: #2563eb !important;
+    color: white !important;
+    border-color: #2563eb;
+}
+
+/* --- Doctor card slider container --- */
+.doctor-card-container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Doctor image */
+.doctor-card-container img {
+    width: 110px;
+    height: 110px;
+    border-radius: 20px;
+    background: #fef9e8;
+    padding: 15px;
+}
+
+/* Doctor text */
+.doctor-card-container h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 0.5rem;
+}
+
+.doctor-card-container p {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 650px;
+    color: #444;
+}
+
+/* "View full profile" button */
+.doctor-card-container a {
+    display: inline-block;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+/* Arrows */
+.doctor-arrow {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.doctor-arrow:hover {
+    background: #2563eb;
+    color: white;
+}
+/* ============================================
+   DEPARTMENTS PAGE — GRADIENT UPGRADE (OPTION C)
+   ============================================ */
+
+/* ---- Section Background Gradient ---- */
+.departments-hero {
+    background: linear-gradient(135deg, #ffdf7f, #f07be6, #8bc6ff);
+    padding: 4rem 1rem;
+    text-align: center;
+    color: white;
+    border-radius: 0 0 35px 35px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 3rem;
+}
+
+.departments-hero h2 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.departments-hero p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+/* ---- Card Container ---- */
+.department-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* ---- Base Card Styling ---- */
+.department-card {
+    background: white;
+    border-radius: 22px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.department-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* ---- Card Icon Styling ---- */
+.department-card .icon-box {
+    width: 90px;
+    height: 90px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.department-card img {
+    width: 55px;
+    height: 55px;
+}
+
+/* ======================================
+   COLOUR THEMES PER DEPARTMENT CARD
+   ====================================== */
+
+/* --- Oncology (Star Healer) --- */
+.department-oncology {
+    background: linear-gradient(to bottom, #fff6ff, #ffe6ff);
+    border-color: #ffb3ff;
+}
+
+.department-oncology .icon-box {
+    background: #ffd6ff;
+}
+
+/* --- Pediatric Orthopedics (Iron Bones) --- */
+.department-ortho {
+    background: linear-gradient(to bottom, #eef7ff, #d8ecff);
+    border-color: #8fc9ff;
+}
+
+.department-ortho .icon-box {
+    background: #cfe8ff;
+}
+
+/* --- Cardiology (Heart Hero) --- */
+.department-cardiology {
+    background: linear-gradient(to bottom, #ffecec, #ffd3d3);
+    border-color: #ff8f8f;
+}
+
+.department-cardiology .icon-box {
+    background: #ffcccc;
+}
+
+/* --- General Pediatrics (Captain Care) --- */
+.department-general {
+    background: linear-gradient(to bottom, #fff7e5, #ffedc5);
+    border-color: #ffcc66;
+}
+
+.department-general .icon-box {
+    background: #ffe9b3;
+}
+
+/* ---- Learn More Button ---- */
+.department-card a {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.4rem;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.department-card a:hover {
+    background: #1d4ed8;
+}
+/* -----------------------------------------------------
+   BOOK A VISIT — FULL BEAUTIFICATION PASS
+-------------------------------------------------------*/
+
+/* Page container */
+.booking-page main {
+    max-width: 950px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+/* Main heading */
+.booking-page h1,
+.booking-page h2 {
+    text-align: center;
+    color: #1e3a8a;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+/* Subtitle */
+.booking-subtext {
+    text-align: center;
+    color: #475569;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+/* Warning Box */
+.warning-box {
+    background: linear-gradient(to right,#fff7d1,#ffe9b0);
+    border-left: 6px solid #fbbf24;
+    padding: 1.5rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    color: #7c5200;
+    margin-bottom: 2rem;
+}
+
+.warning-box strong {
+    font-size: 1.1rem;
+    color: #b45309;
+}
+
+/* Form Container */
+.booking-form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-top: 2rem;
+}
+
+/* Labels */
+.booking-form label {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Inputs */
+.booking-form input,
+.booking-form textarea,
+.booking-form select {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid #d0d7e2;
+    background: #f8fafc;
+    font-size: 1rem;
+}
+
+.booking-form input:focus,
+.booking-form textarea:focus {
+    outline: none;
+    border-color: #60a5fa;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(96,165,250,0.3);
+}
+
+/* Doctor Selection */
+.doctor-select-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.4rem 0;
+}
+
+.doctor-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #e5e7eb;
+    transition: 0.2s;
+}
+
+.doctor-card:hover {
+    border-color: #60a5fa;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.doctor-card.selected {
+    border-color: #2563eb;
+    background: #eff6ff;
+    box-shadow: 0 5px 15px rgba(37,99,235,0.15);
+}
+
+/* Calendar Card */
+.calendar-card {
+    margin-top: 2rem;
+    border-radius: 18px;
+    padding: 1rem;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.calendar-card table {
+    width: 100%;
+    text-align: center;
+}
+
+.calendar-card th {
+    padding: 0.7rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.calendar-card td {
+    padding: 0.7rem;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.calendar-card td:hover {
+    background: #e0f2fe;
+}
+
+.calendar-card td.selected {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* Time slots */
+.time-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-top: 2rem;
+}
+
+.time-slot {
+    padding: 10px 14px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    margin: 6px 0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.time-slot:hover {
+    background: #dbeafe;
+}
+
+.time-slot.selected {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* Submit Button */
+.booking-submit {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: #2563eb;
+    border-radius: 14px;
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.booking-submit:hover {
+    background: #1e40af;
+}
+/* ==========================================================
+   BOOKING PAGE — BEAUTIFUL FULL REDESIGN
+   ========================================================== */
+
+/* Main container */
+.booking-page {
+    max-width: 950px;
+    margin: 3rem auto;
+    padding: 2rem 1.5rem;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+}
+
+/* Page heading */
+.booking-page h2 {
+    text-align: center;
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 0.5rem;
+}
+
+.booking-page p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #475569;
+    margin-bottom: 1.5rem;
+}
+
+/* ==============================
+   WARNING / NOTICE BOX
+   ============================== */
+.warning-box {
+    background: linear-gradient(135deg, #fff4d2, #ffe8b5);
+    border-left: 6px solid #fbbf24;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 2.5rem;
+}
+
+.warning-box h3 {
+    color: #b45309;
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+}
+
+.warning-box a {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.disclaimer-note {
+    font-size: 0.95rem;
+    margin-top: 0.6rem;
+    color: #7c5200;
+}
+
+/* ==============================
+   FORM WRAPPER
+   ============================== */
+.booking-form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    margin-bottom: 2.5rem;
+}
+
+.booking-form legend {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    padding-bottom: 0.3rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+}
+
+.booking-form label {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.4rem;
+}
+
+/* Inputs */
+.booking-form input[type="text"],
+.booking-form input[type="date"],
+.booking-form input[type="time"],
+.booking-form textarea {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #d0d7e2;
+    background: #f8fafc;
+    font-size: 1rem;
+    transition: 0.2s;
+}
+
+.booking-form input:focus,
+.booking-form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.25);
+}
+
+/* ==============================
+   DOCTOR PICKER (cards)
+   ============================== */
+.doctor-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+}
+
+.doc-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1rem;
+    border: 2px solid #e5e7eb;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+.doc-card:hover {
+    border-color: #60a5fa;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+    transform: translateY(-5px);
+}
+
+/* Hide the actual radio button */
+.doc-card input[type="radio"] {
+    display: none;
+}
+
+/* Selected state */
+.doc-card input[type="radio"]:checked + .inner,
+.doc-card.selected {
+    border-color: #2563eb;
+    box-shadow: 0 6px 20px rgba(37,99,235,0.20);
+    background: #eff6ff;
+}
+
+/* Inner flippable faces */
+.doc-card .inner {
+    text-align: center;
+}
+
+.doc-card .face strong {
+    display: block;
+    font-size: 1.2rem;
+    color: #1e3a8a;
+}
+
+.doc-card .face span {
+    display: block;
+    margin-top: 0.2rem;
+    color: #475569;
+}
+
+.doc-card .face img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 0.4rem;
+}
+
+/* ==============================
+   SCHEDULE PICKER (calendar + time)
+   ============================== */
+.schedule-picker {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+}
+
+.calendar {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    align-items: center;
+}
+
+.cal-header button {
+    background: #2563eb;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.2s;
+}
+
+.cal-header button:hover {
+    background: #1e40af;
+}
+
+.cal-title {
+    font-weight: 700;
+    color: #1e3a8a;
+    font-size: 1.1rem;
+}
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.cal-grid button {
+    padding: 12px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cal-grid button:hover {
+    background: #dbeafe;
+}
+
+.cal-grid .selected {
+    background: #2563eb;
+    color: white;
+}
+
+/* TIME SLOTS */
+.time-slots {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+}
+
+.time-slots h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #1e3a8a;
+    font-size: 1.3rem;
+}
+
+.slots {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+}
+
+.slots button {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #f1f5f9;
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 1rem;
+}
+
+.slots button:hover {
+    background: #dbeafe;
+}
+
+.slots .selected {
+    background: #2563eb;
+    color: white;
+    box-shadow: 0 3px 10px rgba(37,99,235,0.25);
+}
+
+/* ==============================
+   MESSAGE BOX
+   ============================== */
+.message-box {
+    margin-top: 2rem;
+}
+
+.message-box textarea {
+    width: 100%;
+}
+
+.message-counter {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* ==============================
+   SUBMIT BUTTON
+   ============================== */
+#book-submit,
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.2rem;
+    border-radius: 16px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: 0.25s;
+}
+
+#book-submit:hover {
+    background: #1e40af;
+    transform: translateY(-3px);
+}
+/* ------------------------- */
+/* THEMED DOCTOR CARDS COLORS */
+/* ------------------------- */
+
+/* Base card styling */
+.doc-card {
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  background: white;
+  border: 4px solid transparent;
+}
+
+.doc-card .inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.doc-card .face.front strong {
+  font-size: 1.2rem;
+  color: #08396d;
+}
+
+.doc-card .face.front span {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* On hover */
+.doc-card:hover {
+  transform: translateY(-4px);
+}
+
+/* On checked/selected */
+.doc-card input[type="radio"]:checked + .inner,
+.doc-card input[type="radio"]:checked ~ .inner {
+  transform: scale(1.03);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------- */
+/* CAPTAIN CARE — Pediatrics (Yellow Theme) */
+/* ------------------------------------------------------- */
+.doc-card[data-value="pediatrics-captaincare"] {
+  border-color: #ffdd66;
+  background: #fff7d9;
+  box-shadow: 0 0 10px rgba(255, 205, 0, 0.25);
+}
+
+.doc-card[data-value="pediatrics-captaincare"]:hover {
+  box-shadow: 0 0 15px rgba(255, 205, 0, 0.35);
+}
+
+.doc-card[data-value="pediatrics-captaincare"] input:checked + .inner {
+  background: #ffeb99;
+  border-radius: 14px;
+}
+
+/* ------------------------------------------------------- */
+/* HEART HERO — Cardiology (Pink/Red Theme) */
+/* ------------------------------------------------------- */
+.doc-card[data-value="cardiology-hearthero"] {
+  border-color: #ff9bb3;
+  background: #ffe5ec;
+  box-shadow: 0 0 10px rgba(255, 150, 170, 0.25);
+}
+
+.doc-card[data-value="cardiology-hearthero"]:hover {
+  box-shadow: 0 0 15px rgba(255, 120, 150, 0.35);
+}
+
+.doc-card[data-value="cardiology-hearthero"] input:checked + .inner {
+  background: #ffd1dc;
+  border-radius: 14px;
+}
+
+/* ------------------------------------------------------- */
+/* IRON BONES — Orthopedics (Blue Theme) */
+/* ------------------------------------------------------- */
+.doc-card[data-value="orthopedics-ironbones"] {
+  border-color: #9bcaff;
+  background: #e8f3ff;
+  box-shadow: 0 0 10px rgba(100, 165, 255, 0.25);
+}
+
+.doc-card[data-value="orthopedics-ironbones"]:hover {
+  box-shadow: 0 0 15px rgba(80, 145, 255, 0.35);
+}
+
+.doc-card[data-value="orthopedics-ironbones"] input:checked + .inner {
+  background: #d4e8ff;
+  border-radius: 14px;
+}
+
+/* ------------------------------------------------------- */
+/* STAR HEALER — Oncology (Purple Theme) */
+/* ------------------------------------------------------- */
+.doc-card[data-value="oncology-starhealer"] {
+  border-color: #c7a6ff;
+  background: #f2e8ff;
+  box-shadow: 0 0 10px rgba(170, 140, 255, 0.25);
+}
+
+.doc-card[data-value="oncology-starhealer"]:hover {
+  box-shadow: 0 0 15px rgba(150, 120, 255, 0.35);
+}
+
+.doc-card[data-value="oncology-starhealer"] input:checked + .inner {
+  background: #e6d7ff;
+  border-radius: 14px;
+}
