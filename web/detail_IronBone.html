@@ -5,76 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2563eb" />
   <title>Doctor Name — Specialty</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <header class="main-header">
-    <div class="header-container">
-      <img src="images/starlight_hospital.png" alt="Starlight Children's Hospital Logo" class="logo" />
-      
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
-      
-      <nav class="main-nav">
-        <ul id="primary-navigation" class="nav-links">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="departments.html" class="nav-link">Departments</a></li>
-          <li class="has-submenu">
-            <a href="doctors.html" class="nav-link active">Doctors</a>
-            <ul class="submenu" aria-label="Doctors">
-              <li><a href="doctors.html">All Doctors (Overview)</a></li>
-              <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
-              <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
-              <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
-              <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
-            </ul>
-          </li>
-          <li><a href="booking.html" class="nav-link">Appointments</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-actions">
-        <button id="dyslexia-toggle" class="icon-button" aria-pressed="false">T</button>
-        <a href="contact.html" class="btn-call">📞 Call Us</a>
-        <a href="booking.html" class="btn-book">📅 Book Visit</a>
+  <header>
+  <h1>Starlight Children’s Hospital</h1>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="doctors.html">Doctors</a></li>
+        <li><a href="booking.html">Book Visit</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="font-switcher">
+        <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
-    </div>
+      <div id ="search-section">
+        <input type ="text" id="search-input" placeholder="Search..." />
+  <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
+        <div id="search-results"></div>
+      </div>
+    </nav>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
   <main>
     <article class="doctor-detail">
-        <header class="main-header">
-    <div class="header-container">
-      <img src="images/starlight_hospital.png" alt="Starlight Children's Hospital Logo" class="logo" />
-      
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
-      
-      <nav class="main-nav">
-        <ul id="primary-navigation" class="nav-links">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="departments.html" class="nav-link">Departments</a></li>
-          <li class="has-submenu">
-            <a href="doctors.html" class="nav-link active">Doctors</a>
-            <ul class="submenu" aria-label="Doctors">
-              <li><a href="doctors.html">All Doctors (Overview)</a></li>
-              <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
-              <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
-              <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
-              <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
-            </ul>
-          </li>
-          <li><a href="booking.html" class="nav-link">Appointments</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-actions">
-        <button id="dyslexia-toggle" class="icon-button" aria-pressed="false">T</button>
-        <a href="contact.html" class="btn-call">📞 Call Us</a>
-        <a href="booking.html" class="btn-book">📅 Book Visit</a>
-      </div>
-    </div>
-  </header>
+      <header>
+        <h2>Doctor Name</h2>
+        <p>Specialty — Short friendly tagline goes here.</p>
+      </header>
 
       <figure>
         <img src="images/REPLACE_ME.jpg" alt="Doctor Name illustration" />

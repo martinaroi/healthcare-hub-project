@@ -4,182 +4,192 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2563eb" />
-  <title>Starlight Children's Hospital booking</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <title>Starlight Children’s Hospital — Book a Visit</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <header class="main-header">
-    <div class="header-container">
-      <img src="images/starlight_hospital.png" alt="Starlight Children's Hospital Logo" class="logo" />
-      
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
-      
-      <nav class="main-nav">
-        <ul id="primary-navigation" class="nav-links">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="departments.html" class="nav-link">Departments</a></li>
-          <li class="has-submenu">
-            <a href="doctors.html" class="nav-link">Doctors</a>
-            <ul class="submenu" aria-label="Doctors">
-              <li><a href="doctors.html">All Doctors (Overview)</a></li>
-              <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
-              <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
-              <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
-              <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
-            </ul>
-          </li>
-          <li><a href="booking.html" class="nav-link active">Appointments</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-actions">
-        <button id="dyslexia-toggle" class="icon-button" aria-pressed="false">T</button>
-        <a href="contact.html" class="btn-call">📞 Call Us</a>
-        <a href="booking.html" class="btn-book">📅 Book Visit</a>
+
+  <!-- HEADER -->
+  <header>
+    <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+
+    <nav>
+      <ul id="primary-navigation" class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="doctors.html">Doctors</a></li>
+        <li><a href="departments.html">Departments</a></li>
+        <li><a href="booking.html" aria-current="page">Book Visit</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="font-switcher">
+        <button id="dyslexia-toggle" class="dyslexia-toggle">Dyslexia</button>
       </div>
-    </div>
+
+      <div id="search-section">
+        <input type="text" id="search-input" placeholder="Search..." />
+        <button id="search-btn" class="icon-btn">🔍</button>
+        <div id="search-results"></div>
+      </div>
+    </nav>
   </header>
+
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
-  <main>
+  <!-- MAIN CONTENT -->
+  <main class="booking-page">
+
     <section class="booking">
-  <h2>Book a Visit</h2>
-  <p>Regular check-ups, vaccinations, fever, and more — we're here to help.</p>
-  
-  <!-- Important disclaimer -->
-  <div class="booking-disclaimer">
-    <h3>⚠️ Important Notice</h3>
-    <p><strong>This booking system is for regular check-ups and planned appointments only.</strong></p>
-    <p>In urgent cases or emergencies, please:</p>
-    <ul>
-      <li><strong>Call our 24/7 Hotline:</strong> <a href="tel:+11234567890">+1 (123) 456-7890</a></li>
-      <li><strong>Or dial emergency services:</strong> <a href="tel:911">911</a></li>
-    </ul>
-    <p class="disclaimer-note">For chest pain, difficulty breathing, severe injuries, or any life-threatening situation, do not wait — seek immediate emergency care.</p>
-  </div>
-  
-  <form id="booking-form" action="#" method="POST">
-  <!-- Patient details first -->
-  <fieldset class="patient-details">
-    <legend>Patient Details</legend>
-    <div class="form-row">
-      <label for="name">Your Name</label>
-      <input type="text" id="name" name="name" placeholder="Enter your name" required />
-    </div>
-    <div class="form-row">
-      <label for="dob">Date of Birth</label>
-      <input type="date" id="dob" name="dob" placeholder="YYYY-MM-DD" required />
-    </div>
-    <div class="form-row checkbox-row">
-      <label for="first-time" class="checkbox-label">
-        <input type="checkbox" id="first-time" name="firstTime" value="yes" />
-        <span>First time patient?</span>
-      </label>
-    </div>
-  </fieldset>
 
-  <!-- Visual doctor picker (syncs with the select) -->
-  <div class="doctor-picker" role="radiogroup" aria-label="Choose your doctor">
-    <label class="doc-card" data-value="pediatrics-captaincare" tabindex="0">
-      <div class="inner">
-        <div class="face front">
-          <strong>Captain Care</strong>
-          <span>Pediatrics</span>
-        </div>
-        <div class="face back">
-          <img src="images/pediatrics.png" alt="Captain Care (Pediatrics)" />
-          <em>Captain Care</em>
-        </div>
-      </div>
-      <input type="radio" name="doc-card" aria-label="Captain Care" />
-    </label>
-    <label class="doc-card" data-value="cardiology-hearthero" tabindex="0">
-      <div class="inner">
-        <div class="face front">
-          <strong>Heart Hero</strong>
-          <span>Cardiology</span>
-        </div>
-        <div class="face back">
-          <img src="images/heart_hero.png" alt="Heart Hero (Cardiology)" />
-          <em>Heart Hero</em>
-        </div>
-      </div>
-      <input type="radio" name="doc-card" aria-label="Heart Hero" />
-    </label>
-    <label class="doc-card" data-value="orthopedics-ironbones" tabindex="0">
-      <div class="inner">
-        <div class="face front">
-          <strong>Iron Bones</strong>
-          <span>Orthopedics</span>
-        </div>
-        <div class="face back">
-          <img src="images/irone_bones.png" alt="Iron Bones (Orthopedics)" />
-          <em>Iron Bones</em>
-        </div>
-      </div>
-      <input type="radio" name="doc-card" aria-label="Iron Bones" />
-    </label>
-    <label class="doc-card" data-value="oncology-starhealer" tabindex="0">
-      <div class="inner">
-        <div class="face front">
-          <strong>Star Healer</strong>
-          <span>Oncology</span>
-        </div>
-        <div class="face back">
-          <img src="images/oncology.png" alt="Star Healer (Oncology)" />
-          <em>Star Healer</em>
-        </div>
-      </div>
-      <input type="radio" name="doc-card" aria-label="Star Healer" />
-    </label>
-  </div>
-  <!-- Enhanced date+time picker (progressive enhancement) -->
-  <div class="schedule-picker" aria-label="Choose appointment date and time">
-    <div class="calendar" aria-live="polite">
-      <div class="cal-header">
-        <button type="button" class="cal-prev" aria-label="Previous month">‹</button>
-        <div class="cal-title" id="cal-title">Month YYYY</div>
-        <button type="button" class="cal-next" aria-label="Next month">›</button>
-      </div>
-      <div class="cal-grid" role="grid" aria-labelledby="cal-title">
-        <!-- JS will render weekday headers and day buttons here -->
-      </div>
-    </div>
-    <div class="time-slots">
-      <h3>Times</h3>
-      <div class="slots" role="listbox" aria-label="Available time slots">
-        <!-- JS will render time buttons based on selected date -->
-      </div>
-    </div>
-  </div>
-  <!-- Hidden doctor value populated by card selection -->
-  <input type="hidden" id="doctor" name="doctor" />
+      <h2>Book a Visit</h2>
+      <p>Regular check-ups, vaccinations, fever, and more — we're here to help.</p>
 
-  <!-- Native inputs kept for accessibility/fallback; hidden when JS enhances -->
-  <label for="date">Choose a Date:</label>
-  <input type="date" id="date" name="date" required />
+      <!-- IMPORTANT DISCLAIMER -->
+      <div class="warning-box">
+        <h3>⚠️ Important Notice</h3>
+        <p><strong>This booking system is for regular check-ups and planned appointments only.</strong></p>
+        <p>In urgent cases or emergencies, please:</p>
+        <ul>
+          <li><strong>Call our 24/7 Hotline:</strong> <a href="tel:+11234567890">+1 (123) 456-7890</a></li>
+          <li><strong>Or dial emergency services:</strong> <a href="tel:911">911</a></li>
+        </ul>
+        <p class="disclaimer-note">
+          For chest pain, difficulty breathing, severe injuries, or any life-threatening situation, do not wait — seek immediate emergency care.
+        </p>
+      </div>
 
-  <label for="time">Choose a Time:</label>
-  <input type="time" id="time" name="time" required />
+      <!-- FORM WRAPPER -->
+      <form id="booking-form" action="#" method="POST" class="booking-form">
 
+        <!-- PATIENT DETAILS -->
+        <fieldset class="patient-details">
+          <legend>Patient Details</legend>
+
+          <div class="form-row">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required />
+          </div>
+
+          <div class="form-row">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required />
+          </div>
+
+          <div class="form-row checkbox-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="first-time" name="firstTime" value="yes" />
+              First time patient?
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- DOCTOR PICKER -->
+        <div class="doctor-picker" role="radiogroup" aria-label="Choose your doctor">
+
+          <label class="doc-card" data-value="pediatrics-captaincare" tabindex="0">
+            <input type="radio" name="doctor" value="pediatrics-captaincare" required />
+            <div class="inner">
+              <div class="face front">
+                <strong>Captain Care</strong>
+                <span>Pediatrics</span>
+              </div>
+              <div class="face back">
+                <img src="images/pediatrics.png" alt="Pediatrics" />
+                <em>Captain Care</em>
+              </div>
+            </div>
+          </label>
+
+          <label class="doc-card">
+            <input type="radio" name="doctor" value="cardiology-hearthero" />
+            <div class="inner">
+              <div class="face front">
+                <strong>Heart Hero</strong>
+                <span>Cardiology</span>
+              </div>
+              <div class="face back">
+                <img src="images/heart_hero.png" alt="Cardiology" />
+                <em>Heart Hero</em>
+              </div>
+            </div>
+          </label>
+
+          <label class="doc-card">
+            <input type="radio" name="doctor" value="orthopedics-ironbones" />
+            <div class="inner">
+              <div class="face front">
+                <strong>Iron Bones</strong>
+                <span>Orthopedics</span>
+              </div>
+              <div class="face back">
+                <img src="images/irone_bones.png" alt="Orthopedics" />
+                <em>Iron Bones</em>
+              </div>
+            </div>
+          </label>
+
+          <label class="doc-card">
+            <input type="radio" name="doctor" value="oncology-starhealer" />
+            <div class="inner">
+              <div class="face front">
+                <strong>Star Healer</strong>
+                <span>Oncology</span>
+              </div>
+              <div class="face back">
+                <img src="images/oncology.png" alt="Oncology" />
+                <em>Star Healer</em>
+              </div>
+            </div>
+          </label>
+
+        </div>
+
+        <!-- SCHEDULE PICKER -->
+        <div class="schedule-picker">
+
+          <div class="calendar">
+            <div class="cal-header">
+              <button type="button" class="cal-prev">‹</button>
+              <div class="cal-title" id="cal-title">Month YYYY</div>
+              <button type="button" class="cal-next">›</button>
+            </div>
+
+            <div class="cal-grid"></div>
+          </div>
+
+          <div class="time-slots">
+            <h3>Times</h3>
+            <div class="slots"></div>
+          </div>
+
+        </div>
+
+        <!-- FALLBACK NATIVE INPUTS -->
+        <label for="date">Choose a Date:</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="time">Choose a Time:</label>
+        <input type="time" id="time" name="time" required />
+
+        <!-- MESSAGE BOX -->
         <div class="message-box">
           <label for="message">Additional message <span class="optional">(optional)</span></label>
-          <p id="message-help" class="message-help">Share any context, symptoms, or preferences you'd like your doctor to know.</p>
-          <textarea id="message" name="message" rows="3" maxlength="300" aria-describedby="message-help message-count" placeholder="E.g., child has had a fever since Tuesday and is allergic to penicillin."></textarea>
+          <textarea id="message" name="message" rows="3" maxlength="300"></textarea>
           <div class="message-meta">
             <span id="message-count" class="message-counter">0 / 300</span>
           </div>
         </div>
 
-  <button type="submit" id="book-submit" class="btn-primary">Book Appointment</button>
-  </form>
+        <button type="submit" id="book-submit" class="btn-primary">Book Appointment</button>
+
+      </form>
+
     </section>
   </main>
 
-  <!-- Star fireworks overlay -->
-  <div id="star-fireworks" class="star-fireworks" aria-hidden="true"></div>
-
+  <!-- FOOTER -->
   <footer>
     <nav>
       <ul>
@@ -191,6 +201,7 @@
     </nav>
     <p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

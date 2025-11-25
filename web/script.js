@@ -44,28 +44,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
-    if (menuToggle && mainNav) {
+    const navLinks = document.querySelector('.nav-links');
+    if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
             const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
             menuToggle.setAttribute('aria-expanded', String(!expanded));
-            mainNav.classList.toggle('active');
+            navLinks.classList.toggle('active');
         });
     }
 
-    // Mobile submenu toggle for link-based navigation
-    document.querySelectorAll('.has-submenu > .nav-link').forEach(link => {
-        const parent = link.closest('.has-submenu');
+    // Submenu toggle (e.g., Doctors) for button-based menus
+    document.querySelectorAll('.has-submenu .submenu-toggle').forEach(btn => {
+        const parent = btn.closest('.has-submenu');
         const submenu = parent?.querySelector('.submenu');
         if (!submenu) return;
-        
-        // Add click handler for mobile
-        link.addEventListener('click', (e) => {
-            // Only prevent default on mobile
-            if (window.matchMedia('(max-width: 768px)').matches) {
-                e.preventDefault();
-                parent.classList.toggle('active');
-            }
+        const setOpen = (open) => {
+            btn.setAttribute('aria-expanded', String(open));
+            submenu.style.display = open ? (window.matchMedia('(min-width: 1024px)').matches ? 'block' : 'block') : 'none';
+        };
+        // Initialize closed on load (CSS handles hover on desktop as well)
+        setOpen(false);
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = btn.getAttribute('aria-expanded') === 'true';
+            setOpen(!isOpen);
+        });
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!parent.contains(e.target)) setOpen(false);
+        });
+        // Keyboard support: Escape to close
+        parent.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setOpen(false);
         });
     });
     // Booking form handling (only if present)

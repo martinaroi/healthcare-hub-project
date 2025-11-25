@@ -4,41 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2563eb" />
-  <title>Starlight Children's Hospital — Departments</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <title>Starlight Children’s Hospital — Departments</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <header class="main-header">
-    <div class="header-container">
-      <img src="images/starlight_hospital.png" alt="Starlight Children's Hospital Logo" class="logo" />
-      
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
-      
-      <nav class="main-nav">
-        <ul id="primary-navigation" class="nav-links">
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="departments.html" class="nav-link active">Departments</a></li>
-          <li class="has-submenu">
-            <a href="doctors.html" class="nav-link">Doctors</a>
-            <ul class="submenu" aria-label="Doctors">
-              <li><a href="doctors.html">All Doctors (Overview)</a></li>
-              <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
-              <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
-              <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
-              <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
-            </ul>
-          </li>
-          <li><a href="booking.html" class="nav-link">Appointments</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-actions">
-        <button id="dyslexia-toggle" class="icon-button" aria-pressed="false">T</button>
-        <a href="contact.html" class="btn-call">📞 Call Us</a>
-        <a href="booking.html" class="btn-book">� Book Visit</a>
+  <header>
+    <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
+    <nav>
+      <ul id="primary-navigation" class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="has-submenu">
+          <a href="doctors.html" aria-haspopup="true" aria-expanded="false">Doctors</a>
+          <ul class="submenu" aria-label="Doctors">
+            <li><a href="doctors.html">All Doctors (Overview)</a></li>
+            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+            <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+            <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
+          </ul>
+        </li>
+        <li><a href="departments.html">Departments</a></li>
+        <li><a href="booking.html">Book Visit</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="font-switcher">
+        <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
-    </div>
+      <div id="search-section">
+        <input type="text" id="search-input" placeholder="Search..." />
+        <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
+        <div id="search-results"></div>
+      </div>
+    </nav>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
@@ -46,7 +45,8 @@
     <section class="departments">
       <h2>Departments</h2>
       <div class="departments-list">
-        <article class="department-card" id="dept-pediatrics">
+        <article class="department-card department-general" id="dept-pediatrics">
+>
           <img src="images/pediatrics.png" alt="Pediatrics department icon" />
           <h3>Pediatrics</h3>
           <p>Captain Care looks after babies, kids, and teens to make sure they grow strong and healthy. From fun check-ups and brave vaccinations to helping when you catch a cold — Captain Care is always ready with a smile and a stethoscope!</p>
@@ -60,7 +60,8 @@
           <a href="detail_CaptainCare.html">Go to Doctor — Captain Care</a>
         </article>
 
-        <article class="department-card" id="dept-cardiology">
+        <article class="department-card department-cardiology" id="dept-cardiology">
+
           <img src="images/cardiology.png" alt="Cardiology department icon" />
           <h3>Cardiology</h3>
           <p>Heart Hero is the protector of every heartbeat! With special tools that can listen deep inside your chest, Heart Hero makes sure your heart keeps thumping happily — whether you’re running, laughing, or dreaming.</p>
@@ -74,7 +75,8 @@
           <a href="detail_HeartHero.html">Go to Doctor — Heart Hero</a>
         </article>
 
-        <article class="department-card" id="dept-orthopedics">
+        <article class="department-card department-ortho" id="dept-orthopedics">
+
           <img src="images/orthopedics.png" alt="Orthopedics department icon" />
           <h3>Orthopedics</h3>
           <p>Iron Bones helps kids get back on their feet after falls, sprains, or broken bones. With super knowledge of muscles and joints, Iron Bones makes sure every little hero can climb, jump, and play again in no time!</p>
@@ -88,7 +90,8 @@
           <a href="detail_IronBone.html">Go to Doctor — Iron Bones</a>
         </article>
 
-        <article class="department-card" id="dept-oncology">
+        <article class="department-card department-oncology" id="dept-oncology">
+
           <img src="images/oncology.png" alt="Oncology department icon" />
           <h3>Oncology</h3>
           <p>Star Healer brings hope and courage to kids who are fighting big illnesses like cancer. With gentle care, bright smiles, and a little bit of starlight magic, Star Healer helps every child feel stronger each day.</p>
