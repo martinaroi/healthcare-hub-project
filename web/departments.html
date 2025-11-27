@@ -11,12 +11,15 @@
 <body>
   <header>
     <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
+
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+      ☰
+    </button>
     <nav>
       <ul id="primary-navigation" class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li class="has-submenu">
-          <a href="doctors.html" aria-haspopup="true" aria-expanded="false">Doctors</a>
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
           <ul class="submenu" aria-label="Doctors">
             <li><a href="doctors.html">All Doctors (Overview)</a></li>
             <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
@@ -26,7 +29,6 @@
           </ul>
         </li>
         <li><a href="departments.html">Departments</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
@@ -37,17 +39,25 @@
         <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
       </div>
+      <div class="header-actions">
+        <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
+      </div>
     </nav>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
-  <main>
-    <section class="departments">
+  <main class="departments-page">
+    <section class="departments-hero">
       <h2>Departments</h2>
-      <div class="departments-list">
+      <p>Explore the specialist teams keeping our young patients healthy, brave, and ready for every adventure.</p>
+    </section>
+
+    <section aria-label="Hospital departments">
+      <div class="department-grid">
         <article class="department-card department-general" id="dept-pediatrics">
->
-          <img src="images/pediatrics.png" alt="Pediatrics department icon" />
+          <div class="icon-box" aria-hidden="true">
+            <img src="images/pediatrics.png" alt="" />
+          </div>
           <h3>Pediatrics</h3>
           <p>Captain Care looks after babies, kids, and teens to make sure they grow strong and healthy. From fun check-ups and brave vaccinations to helping when you catch a cold — Captain Care is always ready with a smile and a stethoscope!</p>
           <ul class="specialties" aria-label="Pediatrics specialties">
@@ -57,12 +67,13 @@
             <li>Nutrition & healthy habits guidance</li>
             <li>School and sports readiness exams</li>
           </ul>
-          <a href="detail_CaptainCare.html">Go to Doctor — Captain Care</a>
+          <a class="department-link" href="detail_CaptainCare.html">Meet Captain Care</a>
         </article>
 
         <article class="department-card department-cardiology" id="dept-cardiology">
-
-          <img src="images/cardiology.png" alt="Cardiology department icon" />
+          <div class="icon-box" aria-hidden="true">
+            <img src="images/cardiology.png" alt="" />
+          </div>
           <h3>Cardiology</h3>
           <p>Heart Hero is the protector of every heartbeat! With special tools that can listen deep inside your chest, Heart Hero makes sure your heart keeps thumping happily — whether you’re running, laughing, or dreaming.</p>
           <ul class="specialties" aria-label="Cardiology specialties">
@@ -72,12 +83,13 @@
             <li>Chest pain & shortness of breath evaluation</li>
             <li>Echo & ultrasound heart imaging</li>
           </ul>
-          <a href="detail_HeartHero.html">Go to Doctor — Heart Hero</a>
+          <a class="department-link" href="detail_HeartHero.html">Meet Heart Hero</a>
         </article>
 
         <article class="department-card department-ortho" id="dept-orthopedics">
-
-          <img src="images/orthopedics.png" alt="Orthopedics department icon" />
+          <div class="icon-box" aria-hidden="true">
+            <img src="images/orthopedics.png" alt="" />
+          </div>
           <h3>Orthopedics</h3>
           <p>Iron Bones helps kids get back on their feet after falls, sprains, or broken bones. With super knowledge of muscles and joints, Iron Bones makes sure every little hero can climb, jump, and play again in no time!</p>
           <ul class="specialties" aria-label="Orthopedics specialties">
@@ -87,12 +99,13 @@
             <li>Growth plate & alignment tracking</li>
             <li>Rehab exercises & safe movement tips</li>
           </ul>
-          <a href="detail_IronBone.html">Go to Doctor — Iron Bones</a>
+          <a class="department-link" href="detail_IronBone.html">Meet Iron Bones</a>
         </article>
 
         <article class="department-card department-oncology" id="dept-oncology">
-
-          <img src="images/oncology.png" alt="Oncology department icon" />
+          <div class="icon-box" aria-hidden="true">
+            <img src="images/oncology.png" alt="" />
+          </div>
           <h3>Oncology</h3>
           <p>Star Healer brings hope and courage to kids who are fighting big illnesses like cancer. With gentle care, bright smiles, and a little bit of starlight magic, Star Healer helps every child feel stronger each day.</p>
           <ul class="specialties" aria-label="Oncology specialties">
@@ -102,24 +115,57 @@
             <li>Therapy coordination & support</li>
             <li>Long-term strength & recovery follow-up</li>
           </ul>
-          <a href="detail_StarHealer.html">Go to Doctor — Star Healer</a>
+          <a class="department-link" href="detail_StarHealer.html">Meet Star Healer</a>
         </article>
       </div>
     </section>
 
-    <p style="margin-top:1rem;"><a href="doctors.html">See all doctors</a></p>
+    <p class="departments-footer-link"><a href="doctors.html">See all doctors</a></p>
   </main>
 
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-hero-text">Making healthcare heroic for kids since 2000. Where every child is a superhero!</p>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="departments.html">Departments</a></li>
+          <li><a href="doctors.html">Doctors</a></li>
+          <li><a href="booking.html">Appointments</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Our Departments</h4>
+        <ul class="footer-list">
+          <li><a href="departments.html#dept-pediatrics">Pediatrics</a></li>
+          <li><a href="departments.html#dept-cardiology">Cardiology</a></li>
+          <li><a href="departments.html#dept-orthopedics">Orthopedics</a></li>
+          <li><a href="departments.html#dept-oncology">Oncology</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-list footer-contact">
+          <li><a href="tel:+11234567890">Call: +1 (123) 456-7890</a></li>
+          <li><a href="mailto:care@starlighthospital.org">Email: care@starlighthospital.org</a></li>
+          <li>Visit: 123 Nova Star Way, Prague</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-middle">
+      <p class="footer-legal">© 2025 Starlight Children's Hospital. Concept student project created for learning and inspiration.</p>
+      <p class="footer-credits">Crafted with care by <strong>Aleyna T.</strong>, <strong>Zoe K.</strong>, and <strong>Martina R.</strong>.</p>
+    </div>
+    <nav class="footer-bottom" aria-label="Legal links">
+      <a href="#">Privacy Policy</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Terms of Service</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Accessibility</a>
     </nav>
-    <p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
   </footer>
   <script src="script.js"></script>
 </body>
