@@ -45,12 +45,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const navContainer = menuToggle ? menuToggle.closest('header')?.querySelector('nav') : null;
     if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
-            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', String(!expanded));
-            navLinks.classList.toggle('active');
+            const isOpen = navLinks.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            if (navContainer) navContainer.classList.toggle('is-open', isOpen);
         });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.matchMedia('(max-width: 900px)').matches) {
+                    navLinks.classList.remove('open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    if (navContainer) navContainer.classList.remove('is-open');
+                }
+            });
+        });
+
+        const mobileQuery = window.matchMedia('(max-width: 900px)');
+        const handleBreakpointChange = (event) => {
+            if (!event.matches) {
+                navLinks.classList.remove('open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                if (navContainer) navContainer.classList.remove('is-open');
+            }
+        };
+
+        if (typeof mobileQuery.addEventListener === 'function') {
+            mobileQuery.addEventListener('change', handleBreakpointChange);
+        } else if (typeof mobileQuery.addListener === 'function') {
+            mobileQuery.addListener(handleBreakpointChange);
+        }
     }
 
     // Submenu toggle (e.g., Doctors) for button-based menus
@@ -130,7 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     4: ['13:00','13:30','14:00','14:30']          // Thursday
                 }
             };
-            const doctorInput = document.getElementById('doctor');
+            const doctorRadios = Array.from(document.querySelectorAll('.doctor-picker input[type="radio"]'));
+            const getSelectedDoctor = () => doctorRadios.find(radio => radio.checked)?.value || '';
 
             function fmtDateISO(d) {
                 const y = d.getFullYear();
@@ -162,6 +189,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateSlots();
                 renderCalendar();
             });
+
+            function handleDoctorChange() {
+                selectedTime = null;
+                if (timeInput) timeInput.value = '';
+                updateSlots();
+                renderCalendar();
+            }
 
             function renderCalendar() {
                 const month = view.getMonth();
@@ -199,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dayOfWeek = date.getDay(); // 0=Sun..6=Sat
                     
                     // Check if selected doctor has availability on this day
-                    const doctorKey = doctorInput?.value || '';
+                    const doctorKey = getSelectedDoctor();
                     const hasAvailability = doctorKey && schedules[doctorKey] && schedules[doctorKey][dayOfWeek] && schedules[doctorKey][dayOfWeek].length > 0;
                     
                     if (isPast || isWeekend) {
@@ -245,10 +279,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Block weekends entirely
                 const dow = selectedDate.getDay(); // 0=Sun..6=Sat
                 const isWeekend = [0,6].includes(dow);
+                const doctorKey = getSelectedDoctor();
+                if (!doctorKey) {
+                    info.textContent = 'Select a doctor to see available times.';
+                    slotsWrap.appendChild(info);
+                    return;
+                }
                 let slots = [];
                 if (!isWeekend) {
-                    const key = doctorInput?.value || '';
-                    const docSched = schedules[key];
+                    const docSched = schedules[doctorKey];
                     slots = docSched?.[dow] || []; // if no specific schedule that weekday, no slots
                 }
                 if (slots.length === 0) {
@@ -258,7 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Get booked slots from localStorage
-                const bookedSlots = window.__getBookedSlots ? window.__getBookedSlots(doctorInput?.value || '', dateStr) : [];
+                const bookedSlots = (doctorKey && window.__getBookedSlots)
+                    ? window.__getBookedSlots(doctorKey, dateStr)
+                    : [];
 
                 slots.forEach(t => {
                     const b = document.createElement('button');
@@ -301,9 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Expose a function to refresh slots when doctor changes via card picker
             window.__refreshSlotsForDoctor = () => {
-                selectedTime = null;
-                if (timeInput) timeInput.value = '';
-                updateSlots();
+                handleDoctorChange();
             };
         })();
 
@@ -330,39 +369,44 @@ document.addEventListener('DOMContentLoaded', () => {
         // Doctor card picker sync
         (function initDoctorPicker() {
             const picker = document.querySelector('.doctor-picker');
-            const hiddenInput = document.getElementById('doctor');
-            if (!picker || !hiddenInput) return;
+            if (!picker) return;
             const cards = Array.from(picker.querySelectorAll('.doc-card'));
 
-            function setActive(value) {
-                cards.forEach(c => {
-                    const match = c.getAttribute('data-value') === value;
-                    c.classList.toggle('selected', match);
-                    const radio = c.querySelector('input[type="radio"]');
-                    if (radio) radio.checked = match;
+            const refreshSelected = () => {
+                cards.forEach(card => {
+                    const radio = card.querySelector('input[type="radio"]');
+                    card.classList.toggle('selected', !!(radio && radio.checked));
                 });
-                if (hiddenInput.value !== value) {
-                    hiddenInput.value = value;
-                    if (typeof window.__refreshSlotsForDoctor === 'function') window.__refreshSlotsForDoctor();
-                }
-            }
+            };
 
             cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const val = card.getAttribute('data-value');
-                    if (val) setActive(val);
+                const radio = card.querySelector('input[type="radio"]');
+                if (!radio) return;
+                if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+
+                radio.addEventListener('change', () => {
+                    refreshSelected();
+                    if (typeof window.__refreshSlotsForDoctor === 'function') window.__refreshSlotsForDoctor();
                 });
                 card.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        const val = card.getAttribute('data-value');
-                        if (val) setActive(val);
+                        radio.checked = true;
+                        radio.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 });
             });
 
-            // If a value was pre-filled (unlikely), reflect it
-            if (hiddenInput.value) setActive(hiddenInput.value);
+            picker.addEventListener('change', refreshSelected);
+
+            const parentForm = picker.closest('form');
+            if (parentForm) {
+                parentForm.addEventListener('reset', () => {
+                    setTimeout(refreshSelected, 0);
+                });
+            }
+
+            refreshSelected();
         })();
 
         form.addEventListener('submit', async (event) => {
@@ -429,16 +473,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dyslexia font toggle (persistent across pages)
     const dysToggle = document.getElementById('dyslexia-toggle');
     const applyDysSetting = (enabled) => {
-        document.body.classList.toggle('dyslexia-font', enabled);
-        if (dysToggle) dysToggle.setAttribute('aria-pressed', String(enabled));
+        const isEnabled = Boolean(enabled);
+        document.body.classList.toggle('dyslexia-font', isEnabled);
+        if (dysToggle) dysToggle.setAttribute('aria-pressed', String(isEnabled));
         // Persist setting
-        try { localStorage.setItem('dyslexiaEnabled', enabled ? '1' : '0'); } catch {}
+        try { localStorage.setItem('dyslexiaEnabled', isEnabled ? '1' : '0'); } catch {}
     };
     // Initialize from storage
     try {
         const saved = localStorage.getItem('dyslexiaEnabled');
-        if (saved === '1') applyDysSetting(true);
-    } catch {}
+        applyDysSetting(saved === '1');
+    } catch {
+        applyDysSetting(false);
+    }
     if (dysToggle) {
         dysToggle.addEventListener('click', () => {
             const enabled = !document.body.classList.contains('dyslexia-font');
@@ -504,12 +551,304 @@ document.addEventListener('DOMContentLoaded', () => {
         container.appendChild(ol);
     })();
 
+    // Air quality widget
+    (function initAirQualityCard() {
+        const summary = document.getElementById('aq-summary');
+        const details = document.getElementById('aq-details');
+        const refreshBtn = document.getElementById('aq-refresh');
+        const updatedStamp = document.getElementById('aq-updated');
+        if (!summary || !details || !refreshBtn) return;
+
+        const DEFAULT_LOCATION = {
+            label: 'Prague, CZ',
+            latitude: 50.0755,
+            longitude: 14.4378
+        };
+
+        const STATUS_LEVELS = [
+            { max: 12, status: 'Good', color: 'green', kidMsg: "Captain Care says: great day to play outside!" },
+            { max: 35.4, status: 'Moderate', color: 'yellow', kidMsg: 'Captain Care says: kiddos with asthma should take it easy.' },
+            { max: 55.4, status: 'Unhealthy for Sensitive Groups', color: 'orange', kidMsg: 'Captain Care says: if you have breathing troubles, play indoors today.' },
+            { max: 150.4, status: 'Unhealthy', color: 'red', kidMsg: 'Captain Care says: the air is rough today—indoor adventures only.' },
+            { max: 250.4, status: 'Very Unhealthy', color: 'purple', kidMsg: 'Captain Care says: best to stay inside with filtered air if you can.' },
+            { max: Infinity, status: 'Hazardous', color: 'maroon', kidMsg: 'Captain Care says: stay indoors and keep windows closed!' }
+        ];
+
+        const setUpdatedStamp = (text) => {
+            if (updatedStamp) {
+                updatedStamp.textContent = text;
+            }
+        };
+
+        const setLoadingState = (isLoading) => {
+            summary.setAttribute('aria-busy', String(isLoading));
+            refreshBtn.disabled = isLoading;
+            refreshBtn.classList.toggle('is-loading', isLoading);
+        };
+
+        const renderError = (msg) => {
+            summary.innerHTML = `<span class="aq-error">⚠️ ${msg}</span>`;
+            details.classList.add('hidden');
+            details.innerHTML = '';
+            setUpdatedStamp('Last updated: —');
+        };
+
+        const describePm25 = (value) => {
+            if (value == null || Number.isNaN(value)) {
+                return { status: 'Info', color: 'gray', kidMsg: 'Captain Care says: no fresh data right now—check back soon!' };
+            }
+            const record = STATUS_LEVELS.find(level => value <= level.max) ?? STATUS_LEVELS[STATUS_LEVELS.length - 1];
+            return record;
+        };
+
+        const formatMetricValue = (rawValue, rawUnit) => {
+            const value = Number(rawValue);
+            const unit = rawUnit ? ` ${rawUnit}` : '';
+            if (Number.isFinite(value)) {
+                const precision = Math.abs(value) < 10 ? 1 : 0;
+                return `${value.toFixed(precision)}${unit}`.trim();
+            }
+            if (rawValue == null || rawValue === '') return '—';
+            return `${rawValue}${unit}`.trim();
+        };
+
+        const fetchAndRender = async () => {
+            setLoadingState(true);
+            summary.innerHTML = '<span class="aq-loading">Loading...</span>';
+            details.classList.add('hidden');
+            details.innerHTML = '';
+            setUpdatedStamp('Last updated: —');
+            try {
+                const aqUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${DEFAULT_LOCATION.latitude}&longitude=${DEFAULT_LOCATION.longitude}&hourly=pm2_5,pm10,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,us_aqi`;
+                const response = await fetch(aqUrl, { cache: 'no-store' });
+                if (!response.ok) throw new Error(`Air quality request failed with status ${response.status}`);
+
+                const data = await response.json();
+                const times = data?.hourly?.time;
+                if (!Array.isArray(times) || times.length === 0) {
+                    renderError('No air quality timeline available for Prague.');
+                    return;
+                }
+
+                const idx = times.length - 1;
+                const observationTime = times[idx];
+                const parsedTime = new Date(observationTime);
+                const formattedTime = Number.isNaN(parsedTime.getTime())
+                    ? 'Just updated'
+                    : parsedTime.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+                const pm25Value = Number(data?.hourly?.pm2_5?.[idx]);
+                const { status, color, kidMsg } = describePm25(pm25Value);
+                const units = data?.hourly_units ?? {};
+
+                summary.innerHTML = `
+                    <span class="aq-status aq-status--${color}">${status}</span>
+                    <span class="aq-kidmsg">${kidMsg}</span>
+                `;
+
+                const metrics = [
+                    { key: 'us_aqi', label: 'US AQI' },
+                    { key: 'pm2_5', label: 'PM2.5' },
+                    { key: 'pm10', label: 'PM10' },
+                    { key: 'ozone', label: 'Ozone' },
+                    { key: 'nitrogen_dioxide', label: 'NO2' },
+                    { key: 'sulphur_dioxide', label: 'SO2' },
+                    { key: 'carbon_monoxide', label: 'CO' }
+                ];
+
+                const detailRows = [
+                    `<div class="aq-detail-item"><span class="aq-param">Location</span><span class="aq-value">${DEFAULT_LOCATION.label}</span></div>`
+                ];
+
+                metrics.forEach(metric => {
+                    const series = data?.hourly?.[metric.key];
+                    if (!Array.isArray(series)) return;
+                    const rawValue = series[idx];
+                    const formatted = formatMetricValue(rawValue, units[metric.key]);
+                    if (formatted === '—') return;
+                    detailRows.push(`<div class="aq-detail-item"><span class="aq-param">${metric.label}</span><span class="aq-value">${formatted}</span></div>`);
+                });
+
+                detailRows.push(`<div class="aq-detail-item aq-detail-item--timestamp"><span class="aq-param">Updated</span><span class="aq-value">${formattedTime}</span></div>`);
+
+                details.innerHTML = detailRows.join('');
+                details.classList.remove('hidden');
+                setUpdatedStamp(`Last updated: ${formattedTime}`);
+            } catch (error) {
+                console.error('Error fetching air quality data:', error);
+                const message = error instanceof Error ? error.message : 'Error loading air quality data.';
+                renderError(message);
+            } finally {
+                setLoadingState(false);
+            }
+        };
+
+        refreshBtn.addEventListener('click', fetchAndRender);
+
+        // Initial load for Prague
+        fetchAndRender();
+    })();
+
     // Search functionality
-    const searchInput = document.getElementById('search-input');
-    const searchBtn = document.getElementById('search-btn');
-    const searchResult = document.getElementById('search-results');
+    const headerSearchInput = document.getElementById('search-input');
+    const headerSearchBtn = document.getElementById('search-btn');
+    const headerSearchSection = document.getElementById('search-section');
+    const headerSearchResult = document.getElementById('search-results');
+    const pageSearchInput = document.getElementById('search-page-input');
+    const pageSearchBtn = document.getElementById('search-page-btn');
+    const pageSearchResult = document.getElementById('search-page-results');
+
+    if (headerSearchSection && headerSearchBtn && headerSearchInput) {
+        headerSearchSection.classList.add('is-collapsed');
+        headerSearchBtn.setAttribute('aria-expanded', 'false');
+
+        const runHeaderSearch = () => {
+            goToSearchResults(headerSearchInput.value);
+        };
+
+        const expandHeaderSearch = () => {
+            headerSearchSection.classList.remove('is-collapsed');
+            headerSearchBtn.setAttribute('aria-expanded', 'true');
+            headerSearchInput.focus();
+        };
+
+        const collapseHeaderSearch = () => {
+            if (headerSearchSection.classList.contains('is-collapsed')) return;
+            if (headerSearchInput.value) return;
+            headerSearchSection.classList.add('is-collapsed');
+            headerSearchBtn.setAttribute('aria-expanded', 'false');
+        };
+
+        headerSearchBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (headerSearchSection.classList.contains('is-collapsed')) {
+                expandHeaderSearch();
+                return;
+            }
+            runHeaderSearch();
+        });
+
+        headerSearchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                collapseHeaderSearch();
+                headerSearchInput.blur();
+                return;
+            }
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                runHeaderSearch();
+            }
+        });
+
+        headerSearchInput.addEventListener('blur', () => {
+            setTimeout(() => {
+                collapseHeaderSearch();
+            }, 120);
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!headerSearchSection.contains(event.target) && !headerSearchInput.value) {
+                collapseHeaderSearch();
+            }
+        });
+    }
+
+    const searchInput = pageSearchInput || headerSearchInput;
+    const searchBtn = pageSearchBtn || headerSearchBtn;
+    const searchResult = pageSearchResult || headerSearchResult;
+
     const fileName = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
     const isSearchPage = fileName === 'search.html' || fileName === 'search-results.html';
+    
+        const goToSearchResults = (value) => {
+            const trimmed = (value ?? '').trim();
+            if (!trimmed) return;
+            window.location.href = `search.html?q=${encodeURIComponent(trimmed)}`;
+        };
+
+        function initMobileSearchOverlay() {
+            if (!headerSearchBtn) return;
+            if (document.querySelector('.mobile-search-fab')) return;
+
+            const fab = document.createElement('button');
+            fab.type = 'button';
+            fab.className = 'mobile-search-fab';
+            fab.setAttribute('aria-label', 'Open search');
+            fab.innerHTML = '<span aria-hidden="true">🔍</span>';
+
+            const panel = document.createElement('div');
+            panel.className = 'mobile-search-panel';
+            const mobileInputId = 'mobile-search-input';
+            panel.innerHTML = `
+                <form class="mobile-search-form" novalidate>
+                    <div class="mobile-search-panel__header">
+                        <h2 class="mobile-search-panel__title">Search</h2>
+                        <button type="button" class="mobile-search-dismiss" aria-label="Close search">Close</button>
+                    </div>
+                    <label class="mobile-search-label" for="${mobileInputId}">Search doctors or departments</label>
+                    <div class="mobile-search-controls">
+                        <input id="${mobileInputId}" type="search" autocomplete="off" placeholder="Type to search" />
+                        <button type="submit" class="mobile-search-submit">Search</button>
+                    </div>
+                </form>
+            `;
+
+            const form = panel.querySelector('.mobile-search-form');
+            const mobileInput = panel.querySelector(`#${mobileInputId}`);
+            const dismissBtn = panel.querySelector('.mobile-search-dismiss');
+
+            const openPanel = () => {
+                if (window.innerWidth > 900) return;
+                panel.classList.add('is-open');
+                document.body.classList.add('search-panel-open');
+                const existingValue = (searchInput?.value ?? headerSearchInput?.value ?? '');
+                if (existingValue) mobileInput.value = existingValue;
+                setTimeout(() => mobileInput.focus(), 80);
+            };
+
+            const closePanel = () => {
+                panel.classList.remove('is-open');
+                document.body.classList.remove('search-panel-open');
+            };
+
+            fab.addEventListener('click', openPanel);
+            dismissBtn?.addEventListener('click', () => {
+                closePanel();
+            });
+
+            form?.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const value = (mobileInput.value || '').trim();
+                if (!value) {
+                    mobileInput.focus();
+                    return;
+                }
+                goToSearchResults(value);
+                closePanel();
+            });
+
+            panel.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closePanel();
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                if (window.innerWidth > 900) return;
+                if (!panel.classList.contains('is-open')) return;
+                if (panel.contains(event.target) || event.target === fab) return;
+                closePanel();
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 900) closePanel();
+            });
+
+            document.body.appendChild(panel);
+            document.body.appendChild(fab);
+        }
+
+        initMobileSearchOverlay();
 
     // If neither input nor results are on the page, skip search setup entirely
     if (!searchInput && !searchResult) return;
@@ -518,22 +857,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // For non-search pages, just wire the redirect and skip fetching data
     if (!isSearchPage) {
-        // Event listeners for redirect (if elements present)
-        if (searchBtn && searchInput) {
-            const redirectToResults = () => {
-                const q = (searchInput.value || '').trim();
-                if (!q) return;
-                window.location.href = `search.html?q=${encodeURIComponent(q)}`;
-            };
-            searchBtn.addEventListener('click', redirectToResults);
-            searchInput.addEventListener('keypress', (event) => {
+        if (
+            searchBtn &&
+            searchInput &&
+            !(headerSearchInput && headerSearchBtn && searchInput === headerSearchInput && searchBtn === headerSearchBtn)
+        ) {
+            searchBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                if (searchInput) goToSearchResults(searchInput.value);
+            });
+
+            searchInput.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
-                    redirectToResults();
+                    goToSearchResults(searchInput.value);
                 }
             });
         }
-        // Do not fetch or show errors in headers
         return;
     }
 
@@ -563,7 +903,18 @@ document.addEventListener('DOMContentLoaded', () => {
             performSearch(qParam);
             if (searchInput) searchInput.value = qParam;
         } else if (searchResult && searchData.length === 0) {
-            searchResult.innerHTML = '<p>Could not load search data.</p>';
+            const errorState = document.createElement('div');
+            errorState.className = 'search-state search-state--error';
+            const titleEl = document.createElement('p');
+            titleEl.className = 'search-state__title';
+            titleEl.textContent = 'Search is temporarily unavailable.';
+            const detailEl = document.createElement('p');
+            detailEl.className = 'search-state__detail';
+            detailEl.textContent = 'Please try again later or contact support.';
+            errorState.appendChild(titleEl);
+            errorState.appendChild(detailEl);
+            searchResult.innerHTML = '';
+            searchResult.appendChild(errorState);
         }
     };
     loadSearchData();
@@ -572,12 +923,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const query = (queryFromParam ?? (searchInput ? searchInput.value : '')).toLowerCase().trim();
         if (!searchResult) return; // Nowhere to render
         searchResult.innerHTML = '';
+        searchResult.classList.remove('search-has-results');
+
+        const renderState = (title, detail, modifier = '') => {
+            const wrapper = document.createElement('div');
+            wrapper.className = `search-state${modifier ? ' ' + modifier : ''}`.trim();
+            if (title) {
+                const titleEl = document.createElement('p');
+                titleEl.className = 'search-state__title';
+                titleEl.textContent = title;
+                wrapper.appendChild(titleEl);
+            }
+            if (detail) {
+                const detailEl = document.createElement('p');
+                detailEl.className = 'search-state__detail';
+                detailEl.textContent = detail;
+                wrapper.appendChild(detailEl);
+            }
+            searchResult.appendChild(wrapper);
+            return wrapper;
+        };
+
         if (!query) {
-            searchResult.innerHTML = '<p>Please enter a search term.</p>';
+            renderState('Start typing to search.', 'We will surface doctors, departments, and services that match.');
             return;
         }
 
-        // Filter items that include the query in name or specialty
+        // Filter items that include the query in name, specialty, or type
         const results = searchData.filter(item =>
             item.name?.toLowerCase().includes(query) ||
             item.specialty?.toLowerCase().includes(query) ||
@@ -592,33 +964,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.specialty?.toLowerCase().includes(first)
             );
             if (suggestions.length > 0) {
-                const p = document.createElement('p');
-                p.textContent = 'No exact matches found. Did you mean:';
-                searchResult.appendChild(p);
+                const suggestionBlock = renderState('No exact matches found.', 'Here are a few similar results you might like.', 'search-state--suggestions');
+                const list = document.createElement('ul');
+                list.className = 'search-suggestions';
                 suggestions.forEach(item => {
-                    const div = document.createElement('div');
-                    div.innerHTML = `<a href="${item.url}">${item.name}</a> - ${item.specialty || item.type || ''}`;
-                    searchResult.appendChild(div);
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = item.url;
+                    link.textContent = item.name;
+                    li.appendChild(link);
+                    const meta = item.specialty || item.type;
+                    if (meta) {
+                        const metaSpan = document.createElement('span');
+                        metaSpan.className = 'search-suggestion__meta';
+                        metaSpan.textContent = meta;
+                        li.appendChild(metaSpan);
+                    }
+                    list.appendChild(li);
                 });
+                suggestionBlock.appendChild(list);
             } else {
-                searchResult.innerHTML = '<p>No results found.</p>';
+                renderState('No results found.', 'Try adjusting your spelling or searching for a broader term.');
             }
             return;
         }
 
-        // Display filtered results (internal links only)
+        const grid = document.createElement('div');
+        grid.className = 'search-results-grid';
+        searchResult.appendChild(grid);
+
         results.forEach(item => {
-            const div = document.createElement('div');
-            const subtitle = item.specialty ? ` — ${item.specialty}` : item.type ? ` — ${item.type}` : '';
-            const a = document.createElement('a');
-            a.href = item.url;
-            a.textContent = item.name;
-            const span = document.createElement('span');
-            span.textContent = subtitle;
-            div.appendChild(a);
-            div.appendChild(span);
-            searchResult.appendChild(div);
+            const card = document.createElement('article');
+            card.className = 'search-card';
+
+            const titleLink = document.createElement('a');
+            titleLink.href = item.url;
+            titleLink.className = 'search-card__title';
+            titleLink.textContent = item.name;
+            card.appendChild(titleLink);
+
+            const metaText = item.specialty || item.type;
+            if (metaText) {
+                const meta = document.createElement('span');
+                meta.className = 'search-card__meta';
+                meta.textContent = metaText;
+                card.appendChild(meta);
+            }
+
+            const description = item.description || item.summary;
+            if (description) {
+                const excerpt = document.createElement('p');
+                excerpt.className = 'search-card__excerpt';
+                excerpt.textContent = description;
+                card.appendChild(excerpt);
+            }
+
+            grid.appendChild(card);
         });
+
+        searchResult.classList.add('search-has-results');
     }
 
     // On search pages, typing Enter or clicking Search should (re)render results inline
@@ -680,3 +1084,6 @@ function triggerStarFireworks() {
         }
     }
 }
+// --- AIR QUALITY (OpenAQ) ---
+
+
