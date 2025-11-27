@@ -9,93 +9,237 @@
   
 </head>
 
-<body>
+<body class="doctor-page--captain">
   <header>
-  <h1>Starlight Children’s Hospital</h1>
+    <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
 
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+      ☰
+    </button>
     <nav>
-      <ul>
+      <ul id="primary-navigation" class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
+        <li class="has-submenu">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
+          <ul class="submenu" aria-label="Doctors">
+            <li><a href="doctors.html">All Doctors (Overview)</a></li>
+            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+            <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+            <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
+          </ul>
+        </li>
+        <li><a href="departments.html">Departments</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
         <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
-      <div id ="search-section">
-        <input type ="text" id="search-input" placeholder="Search..." />
-  <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
+      <div id="search-section">
+        <input type="text" id="search-input" placeholder="Search..." />
+        <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
       </div>
     </nav>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
-  <main>
-    <article class="doctor-detail">
-      <header>
-        <h2>Doctor Name</h2>
-        <p>Specialty — Short friendly tagline goes here.</p>
-      </header>
-
-      <figure>
-        <img src="images/pediatrics.png" alt="Doctor Name illustration" />
-        <figcaption>Doctor Name, Specialty</figcaption>
+  <main class="doctor-page doctor-page--captain">
+    <section class="doctor-page__hero doctor-page__card">
+      <div class="doctor-page__hero-copy">
+        <p class="doctor-page__hero-eyebrow">Pediatric Wellness</p>
+        <h2>Captain Care</h2>
+        <p>
+          Specialist in turning checkups into missions. Captain Care celebrates curiosity, shares
+          bite-sized health wins, and makes sure every young hero leaves ready for the next adventure.
+        </p>
+        <div class="doctor-page__hero-actions">
+          <a href="booking.html" class="doctor-page__cta-btn" aria-label="Book a visit with Captain Care">⭐ Book Your Mission</a>
+          <a href="departments.html#dept-pediatrics" class="doctor-page__cta-secondary">Explore Pediatrics</a>
+        </div>
+      </div>
+      <figure class="doctor-page__hero-figure">
+        <img src="images/captain_care.png" alt="Illustration of Captain Care" />
+        <figcaption>Captain Care, Pediatric Wellness Specialist</figcaption>
       </figure>
+    </section>
 
-      <section class="bio">
-        <h3>About</h3>
-        <p>TODO: Write a short bio describing the doctor, their approach, and how they help kids.</p>
-      </section>
+    <section class="doctor-page__about doctor-page__card">
+      <h3>About Captain Care</h3>
+      <p>
+        Captain Care answers every question with imagination and practical tips. From the moment families
+        step into the Wellness Bay, she transforms vitals checks into “hero diagnostics” and shares simple
+        habits that keep young bodies strong. Parents love that follow-up plans are colourful, clear, and easy
+        to put on the fridge.
+      </p>
+      <div class="doctor-page__badge-list" aria-label="Captain Care specialties">
+        <span class="doctor-page__badge">Nutrition coaching</span>
+        <span class="doctor-page__badge">Growth tracking</span>
+        <span class="doctor-page__badge">Family goal-setting</span>
+      </div>
+    </section>
 
-      <section class="department">
-        <h3>Department</h3>
-        <p>TODO: Describe the department and what it focuses on.</p>
-      </section>
+    <section class="doctor-page__department doctor-page__card">
+      <h3>Pediatric Wellness Bay</h3>
+      <p>
+        This department focuses on prevention, healthy routines, and milestone celebrations. Captain Care works
+        alongside child-life specialists, therapists, and dietitians to create custom “mission plans” that make
+        practicing good habits fun at home and at school.
+      </p>
+      <p class="doctor-page__note">Preferred for ages 4–15. Sibling appointments available on select afternoons.</p>
+    </section>
 
-      <section class="fun-fact">
-        <h3>Fun Facts for Kids</h3>
-        <ul>
-          <li>TODO: Add a fun kid-friendly fact.</li>
-          <li>TODO: Add another fun fact.</li>
-          <li>TODO: Add one more fun fact.</li>
-        </ul>
-      </section>
+    <section class="doctor-page__funfacts doctor-page__card">
+      <h3>Fun Facts</h3>
+      <ul>
+        <li>Her stethoscope plays a gentle launch sound when brave heartbeats stay steady.</li>
+        <li>The exam room lights change to match the “mission mood” kids choose for the visit.</li>
+        <li>She hands out hydration badges for decorating reusable water bottles.</li>
+      </ul>
+    </section>
 
-      <section class="tips">
-        <h3>Tips</h3>
-        <p>TODO: Share a helpful tip for kids and families.</p>
-      </section>
+    <section class="doctor-page__tips doctor-page__card">
+      <h3>Home Base Tips</h3>
+      <ul>
+        <li>Pick one habit mission per week—hydration, bedtime, or movement—and celebrate the win.</li>
+        <li>Use “two positive words” before meals to encourage adventurous tasting.</li>
+        <li>Keep a “hero log” to track mood, energy, and questions for the next visit.</li>
+      </ul>
+    </section>
 
-      <section class="book-visit">
-        <a href="booking.html" class="button">Book a Visit</a>
-      </section>
+    <section class="doctor-page__schedule doctor-page__card">
+      <h3>Clinic Schedule</h3>
+      <ul>
+        <li>
+          <span class="doctor-page__schedule-day">Monday</span>
+          <span class="doctor-page__schedule-hours">09:00–11:00</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Tuesday</span>
+          <span class="doctor-page__schedule-hours">09:00–11:00</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Wednesday</span>
+          <span class="doctor-page__schedule-hours">13:00–14:30</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Thursday</span>
+          <span class="doctor-page__schedule-hours">09:00–11:00</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Friday</span>
+          <span class="doctor-page__schedule-hours">09:00–10:00</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Weekend</span>
+          <span class="doctor-page__schedule-status is-closed">Closed</span>
+        </li>
+      </ul>
+    </section>
 
-      <section class="clinic-schedule">
-        <h3>Clinic Schedule</h3>
-        <ul>
-          <li>Monday: 09:00–11:00</li>
-          <li>Tuesday: 09:00–11:00</li>
-          <li>Wednesday: 13:00–14:30</li>
-          <li>Thursday: 09:00–11:00</li>
-          <li>Friday: 09:00–10:00</li>
-          <li>Weekends: Closed</li>
-        </ul>
-      </section>
-    </article>
+    <section class="doctor-feature-grid" data-theme="captain" aria-labelledby="captain-care-experience">
+      <h3 id="captain-care-experience">Hero Prep Hangar</h3>
+      <p class="doctor-feature-subtitle">
+        Interactive pods guide families through movement, calm breathing, and nutrition swaps so every kid leaves
+        feeling stronger than when they arrived.
+      </p>
+      <div class="doctor-feature-grid__layout">
+        <article class="doctor-feature-card doctor-feature-card--wide">
+          <h4>Mission Briefing Wall</h4>
+          <p>Animated panels explain each step of the visit so kids always know what is coming next.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Launch Pad Warmups</h4>
+          <p>Quick balance and stretching games ease nerves and show off new skills.</p>
+        </article>
+        <article class="doctor-feature-card doctor-feature-card--tall">
+          <h4>Growth Galaxy Tracker</h4>
+          <p>Light-up height and strength markers celebrate milestones with cheers and badges.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Fuel Swap Station</h4>
+          <p>Snack samples and recipe cards help swap sugary treats for power foods.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Family Co-Pilot Desk</h4>
+          <p>Parents explore sleep routines, hydration goals, and screen-time swaps with quick guides.</p>
+        </article>
+        <article class="doctor-feature-card doctor-feature-card--wide">
+          <h4>Confidence Runway</h4>
+          <p>Kids practice superhero poses while hearing how strong choices keep their bodies mission-ready.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Calm Capsule Corner</h4>
+          <p>Noise-canceling headphones and breathing bubbles guide short relaxation resets.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Tele-Visit Portal</h4>
+          <p>Schedule virtual check-ins for mission updates without leaving home base.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Hero Journal Station</h4>
+          <p>Kids log energy levels, favorite activities, and questions for the next adventure.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="doctor-page__cta doctor-page__card">
+      <h3>Ready for Launch?</h3>
+      <p>Bring along your favorite comfort item, a filled water bottle, and your hero journal. Captain Care will guide
+        the rest!</p>
+      <div class="doctor-page__cta-actions">
+        <a href="booking.html" class="doctor-page__cta-btn">Schedule a Visit</a>
+        <a href="contact.html" class="doctor-page__cta-secondary">Call the Nurse Line</a>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-hero-text">Making healthcare heroic for kids since 2000. Where every child is a superhero!</p>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="departments.html">Departments</a></li>
+          <li><a href="doctors.html">Doctors</a></li>
+          <li><a href="booking.html">Appointments</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Our Departments</h4>
+        <ul class="footer-list">
+          <li><a href="departments.html#dept-pediatrics">Pediatrics</a></li>
+          <li><a href="departments.html#dept-cardiology">Cardiology</a></li>
+          <li><a href="departments.html#dept-orthopedics">Orthopedics</a></li>
+          <li><a href="departments.html#dept-oncology">Oncology</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-list footer-contact">
+          <li><a href="tel:+11234567890">Call: +1 (123) 456-7890</a></li>
+          <li><a href="mailto:care@starlighthospital.org">Email: care@starlighthospital.org</a></li>
+          <li>Visit: 123 Nova Star Way, Prague</li>
+        </ul>
+      </div>
+    </div>
+        <div class="footer-middle">
+          <p class="footer-legal">© 2025 Starlight Children's Hospital. Concept student project created for learning and inspiration.</p>
+          <p class="footer-credits">Crafted with care by <strong>Aleyna T.</strong>, <strong>Zoe K.</strong>, and <strong>Martina R.</strong>.</p>
+        </div>
+    <nav class="footer-bottom" aria-label="Legal links">
+      <a href="#">Privacy Policy</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Terms of Service</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Accessibility</a>
     </nav>
-    <p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
   </footer>
   <script src="script.js"></script>
 </body>
