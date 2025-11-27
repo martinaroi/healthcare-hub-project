@@ -10,28 +10,38 @@
 
 <body>
 
-  <!-- HEADER -->
   <header>
     <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
 
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+      ☰
+    </button>
     <nav>
       <ul id="primary-navigation" class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
+        <li class="has-submenu">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
+          <ul class="submenu" aria-label="Doctors">
+            <li><a href="doctors.html">All Doctors (Overview)</a></li>
+            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+            <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+            <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
+          </ul>
+        </li>
         <li><a href="departments.html">Departments</a></li>
-        <li><a href="booking.html" aria-current="page">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-
       <div class="font-switcher">
-        <button id="dyslexia-toggle" class="dyslexia-toggle">Dyslexia</button>
+        <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
-
       <div id="search-section">
         <input type="text" id="search-input" placeholder="Search..." />
-        <button id="search-btn" class="icon-btn">🔍</button>
+        <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
       </div>
     </nav>
   </header>
@@ -102,7 +112,7 @@
             </div>
           </label>
 
-          <label class="doc-card">
+          <label class="doc-card" data-value="cardiology-hearthero" tabindex="0">
             <input type="radio" name="doctor" value="cardiology-hearthero" />
             <div class="inner">
               <div class="face front">
@@ -116,7 +126,7 @@
             </div>
           </label>
 
-          <label class="doc-card">
+          <label class="doc-card" data-value="orthopedics-ironbones" tabindex="0">
             <input type="radio" name="doctor" value="orthopedics-ironbones" />
             <div class="inner">
               <div class="face front">
@@ -130,7 +140,7 @@
             </div>
           </label>
 
-          <label class="doc-card">
+          <label class="doc-card" data-value="oncology-starhealer" tabindex="0">
             <input type="radio" name="doctor" value="oncology-starhealer" />
             <div class="inner">
               <div class="face front">
@@ -189,17 +199,49 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-hero-text">Making healthcare heroic for kids since 2000. Where every child is a superhero!</p>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="departments.html">Departments</a></li>
+          <li><a href="doctors.html">Doctors</a></li>
+          <li><a href="booking.html">Appointments</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Our Departments</h4>
+        <ul class="footer-list">
+          <li><a href="departments.html#dept-pediatrics">Pediatrics</a></li>
+          <li><a href="departments.html#dept-cardiology">Cardiology</a></li>
+          <li><a href="departments.html#dept-orthopedics">Orthopedics</a></li>
+          <li><a href="departments.html#dept-oncology">Oncology</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-list footer-contact">
+          <li><a href="tel:+11234567890">Call: +1 (123) 456-7890</a></li>
+          <li><a href="mailto:care@starlighthospital.org">Email: care@starlighthospital.org</a></li>
+          <li>Visit: 123 Nova Star Way, Prague</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-middle">
+      <p class="footer-legal">© 2025 Starlight Children's Hospital. Concept student project created for learning and inspiration.</p>
+      <p class="footer-credits">Crafted with care by <strong>Aleyna T.</strong>, <strong>Zoe K.</strong>, and <strong>Martina R.</strong>.</p>
+    </div>
+    <nav class="footer-bottom" aria-label="Legal links">
+      <a href="#">Privacy Policy</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Terms of Service</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Accessibility</a>
     </nav>
-    <p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
   </footer>
 
   <script src="script.js"></script>
