@@ -45,12 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const navContainer = menuToggle ? menuToggle.closest('header')?.querySelector('nav') : null;
+    const pageHeader = menuToggle ? menuToggle.closest('header') : null;
+    const navContainer = pageHeader ? pageHeader.querySelector('nav') : null;
     if (menuToggle && navLinks) {
         menuToggle.addEventListener('click', () => {
             const isOpen = navLinks.classList.toggle('open');
             menuToggle.setAttribute('aria-expanded', String(isOpen));
             if (navContainer) navContainer.classList.toggle('is-open', isOpen);
+            document.body.classList.toggle('nav-open', isOpen);
+            if (pageHeader) pageHeader.classList.toggle('nav-open', isOpen);
         });
 
         navLinks.querySelectorAll('a').forEach(link => {
@@ -59,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     navLinks.classList.remove('open');
                     menuToggle.setAttribute('aria-expanded', 'false');
                     if (navContainer) navContainer.classList.remove('is-open');
+                    document.body.classList.remove('nav-open');
+                    if (pageHeader) pageHeader.classList.remove('nav-open');
                 }
             });
         });
@@ -69,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 navLinks.classList.remove('open');
                 menuToggle.setAttribute('aria-expanded', 'false');
                 if (navContainer) navContainer.classList.remove('is-open');
+                document.body.classList.remove('nav-open');
+                if (pageHeader) pageHeader.classList.remove('nav-open');
             }
         };
 
@@ -630,7 +637,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                const idx = times.length - 1;
+                const now = Date.now();
+                let idx = times.length - 1;
+                for (let i = times.length - 1; i >= 0; i -= 1) {
+                    const candidate = new Date(times[i]);
+                    if (!Number.isNaN(candidate.getTime()) && candidate.getTime() <= now) {
+                        idx = i;
+                        break;
+                    }
+                }
+
                 const observationTime = times[idx];
                 const parsedTime = new Date(observationTime);
                 const formattedTime = Number.isNaN(parsedTime.getTime())
@@ -640,8 +656,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const { status, color, kidMsg } = describePm25(pm25Value);
                 const units = data?.hourly_units ?? {};
 
+                const decorativeBadge = {
+                    green: '🟢',
+                    yellow: '🟡',
+                    orange: '🟠',
+                    red: '🔴',
+                    purple: '🟣',
+                    maroon: '🛑',
+                    gray: '⚪'
+                }[color] ?? '🟦';
+
                 summary.innerHTML = `
-                    <span class="aq-status aq-status--${color}">${status}</span>
+                    <div class="aq-status-block">
+                        <span class="aq-status-icon" aria-hidden="true">${decorativeBadge}</span>
+                        <div class="aq-status-text">
+                            <span class="aq-status-label aq-status--${color}">${status}</span>
+                            <span class="aq-status-time">${formattedTime}</span>
+                        </div>
+                    </div>
                     <span class="aq-kidmsg">${kidMsg}</span>
                 `;
 
@@ -692,14 +724,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerSearchInput = document.getElementById('search-input');
     const headerSearchBtn = document.getElementById('search-btn');
     const headerSearchSection = document.getElementById('search-section');
+    const headerSearchForm = headerSearchSection ? headerSearchSection.querySelector('form') : null;
     const headerSearchResult = document.getElementById('search-results');
     const pageSearchInput = document.getElementById('search-page-input');
     const pageSearchBtn = document.getElementById('search-page-btn');
     const pageSearchResult = document.getElementById('search-page-results');
+    const pageSearchForm = document.getElementById('search-page-form');
+    const searchResultsCount = document.querySelector('[data-search-count]');
+    const searchClearBtn = document.querySelector('[data-search-clear]');
+    const searchChips = Array.from(document.querySelectorAll('.search-chip'));
 
     if (headerSearchSection && headerSearchBtn && headerSearchInput) {
-        headerSearchSection.classList.add('is-collapsed');
-        headerSearchBtn.setAttribute('aria-expanded', 'false');
+        const mobileSearchQuery = window.matchMedia('(max-width: 900px)');
+
+        const updateSearchVisibility = (event) => {
+            const isMobile = event ? event.matches : mobileSearchQuery.matches;
+            if (isMobile) {
+                headerSearchSection.classList.add('is-collapsed');
+                headerSearchBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                headerSearchSection.classList.remove('is-collapsed');
+                headerSearchBtn.setAttribute('aria-expanded', 'true');
+            }
+        };
+
+        updateSearchVisibility();
+
+        if (typeof mobileSearchQuery.addEventListener === 'function') {
+            mobileSearchQuery.addEventListener('change', updateSearchVisibility);
+        } else if (typeof mobileSearchQuery.addListener === 'function') {
+            mobileSearchQuery.addListener(updateSearchVisibility);
+        }
 
         const runHeaderSearch = () => {
             goToSearchResults(headerSearchInput.value);
@@ -712,6 +767,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const collapseHeaderSearch = () => {
+            if (!mobileSearchQuery.matches) return;
             if (headerSearchSection.classList.contains('is-collapsed')) return;
             if (headerSearchInput.value) return;
             headerSearchSection.classList.add('is-collapsed');
@@ -738,6 +794,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 runHeaderSearch();
             }
         });
+
+        if (headerSearchForm) {
+            headerSearchForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                if (headerSearchSection.classList.contains('is-collapsed')) {
+                    expandHeaderSearch();
+                    return;
+                }
+                runHeaderSearch();
+            });
+        }
 
         headerSearchInput.addEventListener('blur', () => {
             setTimeout(() => {
@@ -855,6 +922,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let searchData = [];
 
+    const setActiveChip = (value) => {
+        if (!searchChips.length) return;
+        const normalized = (value || '').toLowerCase();
+        searchChips.forEach(chip => {
+            const chipValue = (chip.dataset.searchValue || chip.textContent || '').toLowerCase();
+            chip.classList.toggle('is-active', normalized !== '' && chipValue === normalized);
+        });
+    };
+
+    const updateResultsMeta = (displayQuery, totalResults) => {
+        if (!searchResultsCount) return;
+        const hasQuery = !!displayQuery;
+        if (!hasQuery) {
+            searchResultsCount.textContent = 'Start typing to explore our care network.';
+            if (searchClearBtn) searchClearBtn.classList.remove('is-visible');
+            return;
+        }
+
+        if (totalResults > 0) {
+            const plural = totalResults === 1 ? 'match' : 'matches';
+            searchResultsCount.textContent = `Found ${totalResults} ${plural} for "${displayQuery}".`;
+        } else {
+            searchResultsCount.textContent = `No matches for "${displayQuery}".`;
+        }
+
+        if (searchClearBtn) searchClearBtn.classList.add('is-visible');
+    };
+
     // For non-search pages, just wire the redirect and skip fetching data
     if (!isSearchPage) {
         if (
@@ -875,6 +970,33 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         return;
+    }
+
+    if (searchClearBtn) {
+        searchClearBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (searchInput) {
+                searchInput.value = '';
+            }
+            setActiveChip('');
+            updateResultsMeta('', 0);
+            performSearch('');
+        });
+    }
+
+    if (searchChips.length) {
+        searchChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                const value = chip.dataset.searchValue || chip.textContent || '';
+                if (!value) return;
+                if (searchInput) {
+                    searchInput.value = value;
+                }
+                setActiveChip(value);
+                performSearch(value);
+                if (searchInput) searchInput.focus();
+            });
+        });
     }
 
     // On search pages, load JSON index once, with fallback
@@ -915,15 +1037,22 @@ document.addEventListener('DOMContentLoaded', () => {
             errorState.appendChild(detailEl);
             searchResult.innerHTML = '';
             searchResult.appendChild(errorState);
+        } else if (searchResult) {
+            performSearch('');
         }
     };
     loadSearchData();
 
     function performSearch(queryFromParam) {
-        const query = (queryFromParam ?? (searchInput ? searchInput.value : '')).toLowerCase().trim();
+        const rawFromParam = typeof queryFromParam === 'string' ? queryFromParam : undefined;
+        const rawInput = searchInput ? searchInput.value : '';
+        const raw = rawFromParam != null ? rawFromParam : rawInput;
+        const trimmed = raw.trim();
+        const query = trimmed.toLowerCase();
         if (!searchResult) return; // Nowhere to render
         searchResult.innerHTML = '';
         searchResult.classList.remove('search-has-results');
+        setActiveChip(trimmed);
 
         const renderState = (title, detail, modifier = '') => {
             const wrapper = document.createElement('div');
@@ -946,6 +1075,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!query) {
             renderState('Start typing to search.', 'We will surface doctors, departments, and services that match.');
+            updateResultsMeta('', 0);
             return;
         }
 
@@ -986,6 +1116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 renderState('No results found.', 'Try adjusting your spelling or searching for a broader term.');
             }
+            updateResultsMeta(trimmed, 0);
             return;
         }
 
@@ -1023,18 +1154,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         searchResult.classList.add('search-has-results');
+        updateResultsMeta(trimmed, results.length);
     }
 
     // On search pages, typing Enter or clicking Search should (re)render results inline
-    if (searchBtn && searchInput && isSearchPage) {
+    if (isSearchPage) {
         const triggerSearch = () => performSearch();
-        searchBtn.addEventListener('click', triggerSearch);
-        searchInput.addEventListener('keypress', (event) => {
+        if (pageSearchForm) {
+            pageSearchForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                triggerSearch();
+            });
+        }
+        if (searchBtn && searchBtn !== headerSearchBtn) {
+            searchBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                triggerSearch();
+            });
+        }
+        if (searchInput) {
+            searchInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 triggerSearch();
             }
-        });
+            });
+        }
     }
 });
 
