@@ -12,14 +12,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="home-page">
   <header>
-  <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
+    <div class="header-inner">
+      <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
 
-  <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
-    ☰
-  </button>
-    <nav>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+        ☰
+      </button>
+      <nav>
       <ul id="primary-navigation" class="nav-links">
 
         <li><a href="index.html">Home</a></li>
@@ -34,7 +35,6 @@
           </ul>
         </li>
   <li><a href="departments.html">Departments</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
@@ -45,40 +45,115 @@
   <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
       </div>
+      <div class="header-actions">
+        <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
+      </div>
     </nav>
+    </div>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
-  <main>
-    <section>
-  <h2>Welcome to the Starlight Children’s Hospital</h2>
-      <img src="images/team_up.png" alt="Starlight Children’s Hospital Team" />
-    <section>
-            <h3>About Us</h3>
-            <p>We are dedicated to providing the best health care for your children.</p>
+  <main class="home-main">
+    <section class="home-hero">
+      <div class="home-hero-copy">
+        <span class="home-hero-tagline">Super Care for Super Kids!</span>
+        <h2>Welcome to the Starlight Children’s Hospital</h2>
+        <p>Every visit keeps our young heroes confident, cared for, and ready for their next adventure.</p>
+      </div>
+      <div class="home-hero-media">
+        <div class="home-hero-frame">
+          <img src="images/team_up.png" alt="A team of superhero kids celebrating together" />
+        </div>
+      </div>
     </section>
-    <section>
-            <h3>Our Services</h3>
-            <ul>
-                <li>Pediatric Consultations</li>
-                <li>Vaccinations</li>
-                <li>Health Check-ups</li>
-                <li>Emergency Care</li>
-            </ul>
+
+    <section class="home-about">
+      <h3>About Us</h3>
+      <p>We are dedicated to providing the best health care for your children.</p>
+      <p>Starlight Children’s Hospital brings together pediatric specialists, child-life experts, and family support teams under one colorful roof. From routine checkups to complex treatment plans, every service is tailored to the unique needs of growing heroes and the loved ones who cheer them on.</p>
+      <p>Our campus is home to themed recovery suites, sensory-friendly play zones, and a 24/7 family resource center that helps parents navigate insurance, school coordination, and follow-up care. We partner closely with community clinics and schools to ensure care continues long after a hospital visit.</p>
+      <p>Whether a child needs preventive screenings, chronic condition management, or urgent care, Starlight provides compassionate, evidence-based medicine in a space designed to keep spirits high and imaginations brighter than ever.</p>
+    </section>
+    <section class="emergency-info" aria-labelledby="home-emergency-heading">
+      <div class="warning-box">
+        <h3 id="home-emergency-heading">⚠️ In Case of Emergency</h3>
+        <p><strong>Use our appointment tools for routine visits only.</strong></p>
+        <p>If an emergency arises, please reach out immediately:</p>
+        <ul>
+          <li><strong>24/7 Hotline:</strong> <a href="tel:+11234567890">+1 (123) 456-7890</a></li>
+          <li><strong>Emergency Services:</strong> <a href="tel:911">911</a></li>
+        </ul>
+        <p class="disclaimer-note">Life-threatening symptoms require urgent medical attention—head straight to the nearest emergency department.</p>
+      </div>
+    </section>
+  <section id="health-updates" class="home-updates">
+      <h3>Health Updates</h3>
+      <div id="aq-card" class="aq-card" aria-live="polite">
+        <div class="aq-card-header">
+          <h4 class="aq-card-title">Air Quality</h4>
+          <button id="aq-refresh" class="aq-refresh-btn" type="button" aria-label="Refresh Prague air quality">↻ Refresh</button>
+        </div>
+  <p class="aq-intro">Captain Care made this checkpoint for Prague sidekicks—if your lungs are sneaky ninjas or still growing strong, these clues tell you whether to power up for outside adventures or plan an indoor mission.</p>
+  <div id="aq-summary" class="aq-summary">Loading...</div>
+        <div id="aq-details" class="aq-details hidden"></div>
+        <p id="aq-updated" class="aq-updated" aria-live="polite">Last updated: —</p>
+      </div>
+    </section>
+    <section class="services-overview">
+      <h3>Our Services</h3>
+      <ul>
+        <li>Pediatric Consultations</li>
+        <li>Vaccinations</li>
+        <li>Health Check-ups</li>
+        <li>Emergency Care</li>
+      </ul>
+    </section>
 
   </main>
 
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-  <li><a href="doctors.html">Doctors</a></li>
-  <li><a href="departments.html">Departments</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-hero-text">Making healthcare heroic for kids since 2000. Where every child is a superhero!</p>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="departments.html">Departments</a></li>
+          <li><a href="doctors.html">Doctors</a></li>
+          <li><a href="booking.html">Appointments</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Our Departments</h4>
+        <ul class="footer-list">
+          <li><a href="departments.html#dept-pediatrics">Pediatrics</a></li>
+          <li><a href="departments.html#dept-cardiology">Cardiology</a></li>
+          <li><a href="departments.html#dept-orthopedics">Orthopedics</a></li>
+          <li><a href="departments.html#dept-oncology">Oncology</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-list footer-contact">
+          <li><a href="tel:+11234567890">Call: +1 (123) 456-7890</a></li>
+          <li><a href="mailto:care@starlighthospital.org">Email: care@starlighthospital.org</a></li>
+          <li>Visit: 123 Nova Star Way, Prague</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-middle">
+      <p class="footer-legal">© 2025 Starlight Children's Hospital. Concept student project created for learning and inspiration.</p>
+      <p class="footer-credits">Crafted with care by <strong>Aleyna T.</strong>, <strong>Zoe K.</strong>, and <strong>Martina R.</strong>.</p>
+    </div>
+    <nav class="footer-bottom" aria-label="Legal links">
+      <a href="#">Privacy Policy</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Terms of Service</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Accessibility</a>
     </nav>
-    <p>© 2025 Student Project by xxxxxxx & xxxxxxx</p>
   </footer>
   <script src="script.js"></script>
 </body>
