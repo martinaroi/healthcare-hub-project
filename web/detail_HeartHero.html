@@ -8,15 +8,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="heart-hero">
+<body class="heart-hero doctor-page--heart">
   <header>
-    <h1>Starlight Children’s Hospital</h1>
+    <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
 
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+      ☰
+    </button>
     <nav>
-      <ul>
+      <ul id="primary-navigation" class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
+        <li class="has-submenu">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
+          <ul class="submenu" aria-label="Doctors">
+            <li><a href="doctors.html">All Doctors (Overview)</a></li>
+            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+            <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+            <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
+          </ul>
+        </li>
+        <li><a href="departments.html">Departments</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
@@ -27,78 +39,201 @@
         <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
       </div>
+      <div class="header-actions">
+        <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
+      </div>
     </nav>
   </header>
 
-  <main>
-    <article class="doctor-detail">
-      <header>
+  <main class="doctor-page doctor-page--heart">
+    <section class="doctor-page__hero doctor-page__card">
+      <div class="doctor-page__hero-copy">
+        <p class="doctor-page__hero-eyebrow">Pediatric Cardiology</p>
         <h2>Dr. Heart Hero</h2>
-        <p>Pediatric Cardiology — “Keeping every heartbeat strong.”</p>
-      </header>
-
-      <figure>
-        <img src="images/heart_hero.png" alt="Dr. Heart Hero illustration" />
+        <p>
+          Dr. Heart Hero explains every heartbeat like a favorite song. She transforms monitors into rhythm games
+          and helps families understand diagnoses with warmth, clarity, and a dash of playful science.
+        </p>
+        <div class="doctor-page__hero-actions">
+          <a href="booking.html" class="doctor-page__cta-btn" aria-label="Book a visit with Dr. Heart Hero">❤️ Book a Heart Check</a>
+          <a href="departments.html#dept-cardiology" class="doctor-page__cta-secondary">Visit Cardiology Hub</a>
+        </div>
+      </div>
+      <figure class="doctor-page__hero-figure">
+        <img src="images/heart_hero.png" alt="Illustration of Dr. Heart Hero" />
         <figcaption>Dr. Heart Hero, Cardiology Specialist</figcaption>
       </figure>
+    </section>
 
-      <section class="bio">
-        <h3>About</h3>
-        <p>
-          Dr. Heart Hero is the hospital’s most caring cardiologist, 
-          known for explaining the magic of the human heart in ways every child can understand.
-          She ensures young patients feel brave and supported through every check-up.
-        </p>
-      </section>
+    <section class="doctor-page__about doctor-page__card">
+      <h3>About Dr. Heart Hero</h3>
+      <p>
+        Patients call her the “rhythm whisperer.” She breaks down complex procedures into kindness-filled stories
+        and invites kids to help track their own heartbeats during visits. Parents appreciate her weekly pulse plans
+        and after-care checklists that keep everyone confident between appointments.
+      </p>
+      <div class="doctor-page__badge-list" aria-label="Heart Hero specialties">
+        <span class="doctor-page__badge">Congenital heart care</span>
+        <span class="doctor-page__badge">Rhythm education</span>
+        <span class="doctor-page__badge">Family coaching</span>
+      </div>
+    </section>
 
-      <section class="department">
-        <h3>Department</h3>
-        <p>
-          The Pediatric Cardiology Department focuses on heart health, diagnostics, and 
-          post-treatment rehabilitation for children with congenital and acquired heart conditions.
-        </p>
-      </section>
+    <section class="doctor-page__department doctor-page__card">
+      <h3>Cardio Harmony Lab</h3>
+      <p>
+        The Pediatric Cardiology team coordinates diagnostics, interventions, and recovery under one roof. Heart Hero
+        partners with imaging experts and physiotherapists so families get answers, action plans, and encouragement in
+        a single visit.
+      </p>
+      <p class="doctor-page__note">Telemetry-friendly rooms available. Bring device logs or smartwatch data for review.</p>
+    </section>
 
-      <section class="fun-fact">
-        <h3>Fun Facts for Kids</h3>
-        <ul>
-          <li>Your heart beats over 100,000 times a day!</li>
-          <li>The sound of your heartbeat is made by your valves opening and closing.</li>
-          <li>Dr. Heart Hero can detect a “musical” rhythm in every heartbeat.</li>
-        </ul>
-      </section>
+    <section class="doctor-page__funfacts doctor-page__card">
+      <h3>Fun Facts</h3>
+      <ul>
+        <li>Your heart beats around 100,000 times a day—and Heart Hero can hear the unique rhythm of each child.</li>
+        <li>The “lub-dub” sound is valves opening and closing; Heart Hero’s headset lets kids listen in real time.</li>
+        <li>She sends patients home with heart-song playlists to practice steady breathing.</li>
+      </ul>
+    </section>
 
-      <section class="schedule">
-        <h3>Clinic Schedule</h3>
-        <ul>
-          <li>Monday: 13:00–15:00</li>
-          <li>Wednesday: 09:00–10:30</li>
-          <li>Thursday: 13:00–14:30</li>
-          <li>Weekends: Closed</li>
-        </ul>
-      </section>
+    <section class="doctor-page__tips doctor-page__card">
+      <h3>Healthy Heart Tips</h3>
+      <ul>
+        <li>Run, dance, or play tag for 10 minutes after homework to keep your pulse happy.</li>
+        <li>Choose three rainbow-colored fruits or veggies at meals for natural cardio power.</li>
+        <li>Practice slow “inhale 4, exhale 6” breathing before bedtime for a calmer heartbeat.</li>
+      </ul>
+    </section>
 
-      <section class="tips">
-        <h3>Healthy Heart Tips</h3>
-        <p>Run, laugh, and eat colorful fruits every day to keep your heart happy!</p>
-      </section>
+    <section class="doctor-page__schedule doctor-page__card">
+      <h3>Clinic Schedule</h3>
+      <ul>
+        <li>
+          <span class="doctor-page__schedule-day">Monday</span>
+          <span class="doctor-page__schedule-hours">13:00–15:00</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Wednesday</span>
+          <span class="doctor-page__schedule-hours">09:00–10:30</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Thursday</span>
+          <span class="doctor-page__schedule-hours">13:00–14:30</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Friday</span>
+          <span class="doctor-page__schedule-status">Telehealth consults by request</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Weekend</span>
+          <span class="doctor-page__schedule-status is-closed">Closed</span>
+        </li>
+      </ul>
+    </section>
 
-      <section class="book-visit">
-        <a href="booking.html" class="button">Book a Visit</a>
-      </section>
-    </article>
+    <section class="doctor-feature-grid" data-theme="heart" aria-labelledby="heart-hero-experience">
+      <h3 id="heart-hero-experience">Heart Hero Command Center</h3>
+      <p class="doctor-feature-subtitle">
+        Each zone pairs cardiology care with playful discoveries so kids feel brave, informed, and in tune with their
+        heartbeat.
+      </p>
+      <div class="doctor-feature-grid__layout">
+        <article class="doctor-feature-card doctor-feature-card--wide">
+          <h4>Heartbeat Sound Studio</h4>
+          <p>Kids tap drums while monitors show how their heart rhythm keeps the beat.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Rhythm Light Wall</h4>
+          <p>Pulsing LEDs visualize breathing exercises for calming an excited pulse.</p>
+        </article>
+        <article class="doctor-feature-card doctor-feature-card--tall">
+          <h4>Valve Voyage Simulator</h4>
+          <p>Interactive models demonstrate how valves open and close using kid-friendly language.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Family Harmony Lounge</h4>
+          <p>Caregivers review medication trackers and emergency plans with cardiology coaches.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Cardio Quest Arcade</h4>
+          <p>Game modules reward gentle stretches and balance moves that boost circulation.</p>
+        </article>
+        <article class="doctor-feature-card doctor-feature-card--wide">
+          <h4>Recovery Trail Map</h4>
+          <p>A magnetic timeline highlights milestones from diagnostics to follow-up care.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Courage Cape Rack</h4>
+          <p>Choose a cape that matches your mood before procedures or tests.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Pulse Practice Pod</h4>
+          <p>Finger sensors teach how to count a pulse and notice when to slow down.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Heart Fuel Snack Bar</h4>
+          <p>Sample fruit-and-grain combos that keep the cardiovascular system energized.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="doctor-page__cta doctor-page__card">
+      <h3>Prepare for Your Visit</h3>
+      <p>Bring medication lists, recent activity notes, and a favorite song suggestion. Heart Hero will turn it into a
+        rhythm lesson!</p>
+      <div class="doctor-page__cta-actions">
+        <a href="booking.html" class="doctor-page__cta-btn">Schedule a Visit</a>
+        <a href="contact.html" class="doctor-page__cta-secondary">Speak with a Cardio Nurse</a>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-hero-text">Making healthcare heroic for kids since 2000. Where every child is a superhero!</p>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="departments.html">Departments</a></li>
+        <div class="footer-middle">
+          <p class="footer-legal">© 2025 Starlight Children's Hospital. Concept student project created for learning and inspiration.</p>
+          <p class="footer-credits">Crafted with care by <strong>Aleyna T.</strong>, <strong>Zoe K.</strong>, and <strong>Martina R.</strong>.</p>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Our Departments</h4>
+        <ul class="footer-list">
+          <li><a href="departments.html#dept-pediatrics">Pediatrics</a></li>
+          <li><a href="departments.html#dept-cardiology">Cardiology</a></li>
+          <li><a href="departments.html#dept-orthopedics">Orthopedics</a></li>
+          <li><a href="departments.html#dept-oncology">Oncology</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-list footer-contact">
+          <li><a href="tel:+11234567890">Call: +1 (123) 456-7890</a></li>
+          <li><a href="mailto:care@starlighthospital.org">Email: care@starlighthospital.org</a></li>
+          <li>Visit: 123 Nova Star Way, Prague</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-middle">
+        <p class="footer-legal">© 2025 Starlight Children's Hospital. All rights reserved. Making heroes healthy! ⭐</p>
+    </div>
+    <nav class="footer-bottom" aria-label="Legal links">
+      <a href="#">Privacy Policy</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Terms of Service</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Accessibility</a>
     </nav>
-    <p>© 2025 Student Project by *****</p>
   </footer>
+  <script src="script.js"></script>
 </body>
 </html>
