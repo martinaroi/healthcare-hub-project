@@ -10,12 +10,13 @@
 
 <body class="doctor-page--iron">
   <header>
-    <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
+    <div class="header-inner">
+      <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
 
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
-      ☰
-    </button>
-    <nav>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+        ☰
+      </button>
+      <nav>
       <ul id="primary-navigation" class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li class="has-submenu">
@@ -35,14 +36,17 @@
         <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
       <div id="search-section">
-        <input type="text" id="search-input" placeholder="Search..." />
-        <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
+        <form id="search-form" class="search-form" action="search.html" method="get" role="search">
+          <input type="search" id="search-input" name="q" placeholder="Search..." aria-label="Search site" />
+          <button id="search-btn" class="icon-btn" type="submit" aria-label="Search" title="Search">🔍</button>
+        </form>
         <div id="search-results"></div>
       </div>
       <div class="header-actions">
         <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
       </div>
     </nav>
+    </div>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
