@@ -8,17 +8,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
-  <body class="star-healer">
-
+<body class="star-healer doctor-page--star">
   <header>
-    <h1>Starlight Children’s Hospital</h1>
+    <img src="images/starlight_hospital.png" alt="Starlight Children’s Hospital Logo" class="logo" />
 
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+      ☰
+    </button>
     <nav>
-      <ul>
+      <ul id="primary-navigation" class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
+        <li class="has-submenu">
+          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
+          <ul class="submenu" aria-label="Doctors">
+            <li><a href="doctors.html">All Doctors (Overview)</a></li>
+            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+            <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
+            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+            <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
+          </ul>
+        </li>
+        <li><a href="departments.html">Departments</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="font-switcher">
@@ -26,83 +36,197 @@
       </div>
       <div id="search-section">
         <input type="text" id="search-input" placeholder="Search..." />
-  <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
+        <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
         <div id="search-results"></div>
+      </div>
+      <div class="header-actions">
+        <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
       </div>
     </nav>
   </header>
 
-  <main>
-    <article class="doctor-detail">
-      <header>
+  <main class="doctor-page doctor-page--star">
+    <section class="doctor-page__hero doctor-page__card">
+      <div class="doctor-page__hero-copy">
+        <p class="doctor-page__hero-eyebrow">Pediatric Oncology</p>
         <h2>Dr. Star Healer</h2>
-        <p>Pediatric Oncology — “Guiding every child to shine again.”</p>
-      </header>
-
-      <figure>
-        <img src="images/oncology.png" alt="Dr. Star Healer illustration" />
+        <p>
+          Star Healer lights the path through treatment with compassion, clarity, and a sprinkle of cosmic sparkle.
+          She helps families understand every phase and celebrates each brave milestone.
+        </p>
+        <div class="doctor-page__hero-actions">
+          <a href="booking.html" class="doctor-page__cta-btn" aria-label="Book a visit with Dr. Star Healer">✨ Plan a Star Session</a>
+          <a href="departments.html#dept-oncology" class="doctor-page__cta-secondary">Oncology Resources</a>
+        </div>
+      </div>
+      <figure class="doctor-page__hero-figure">
+        <img src="images/star_healer.png" alt="Illustration of Dr. Star Healer" />
         <figcaption>Dr. Star Healer, Oncology Specialist</figcaption>
       </figure>
+    </section>
 
-      <section class="bio">
-        <h3>About</h3>
-        <p>
-          Dr. Star Healer brings hope and brightness to every treatment room. 
-          Her gentle humor and care make difficult therapies feel less scary 
-          and more empowering for children and their families.
-        </p>
-      </section>
+    <section class="doctor-page__about doctor-page__card">
+      <h3>About Dr. Star Healer</h3>
+      <p>
+        Known for her calming voice and imaginative metaphors, Star Healer helps kids visualize treatments as starlit
+        quests. She coordinates with psychosocial teams to keep spirits high and questions answered.
+      </p>
+      <div class="doctor-page__badge-list" aria-label="Star Healer specialties">
+        <span class="doctor-page__badge">Integrative therapy</span>
+        <span class="doctor-page__badge">Family resilience coaching</span>
+        <span class="doctor-page__badge">Survivorship planning</span>
+      </div>
+    </section>
 
-      <section class="department">
-        <h3>Department</h3>
-        <p>
-          The Pediatric Oncology Department helps young patients 
-          fight and recover from cancer with advanced therapies, 
-          psychological support, and family education.
-        </p>
-      </section>
+    <section class="doctor-page__department doctor-page__card">
+      <h3>Starlight Oncology Suite</h3>
+      <p>
+        Advanced therapies, art therapy, and child-life support meet in one coordinated space. Star Healer works with
+        hematologists, nutritionists, and mental health guides to tailor daily routines and treatment rhythms.
+      </p>
+      <p class="doctor-page__note">Quiet rooms and virtual classroom support available—ask the welcome desk to schedule.</p>
+    </section>
 
-      <section class="fun-fact">
-        <h3>Fun Facts for Kids</h3>
-        <ul>
-          <li>Dr. Star Healer’s lab coat sparkles under UV light!</li>
-          <li>Stars you see in the sky are millions of miles away — 
-              but Dr. Star Healer says every brave kid shines just as bright.</li>
-          <li>Her favorite snack is star-shaped fruit salad.</li>
-        </ul>
-      </section>
+    <section class="doctor-page__funfacts doctor-page__card">
+      <h3>Fun Facts</h3>
+      <ul>
+        <li>Her lab coat sparkles under UV light and shows a new constellation every week.</li>
+        <li>She nicknames infusion pumps after galaxies so kids can track their progress.</li>
+        <li>Favorite snack: star-shaped fruit salad sprinkled with lime zest.</li>
+      </ul>
+    </section>
 
-      <section class="tips">
-        <h3>Positive Energy Tips</h3>
-        <p>Smile at least five times a day — it’s the strongest medicine for courage!</p>
-      </section>
-      <section class="schedule">
-  <h3>Clinic Schedule</h3>
-  <ul>
-    <li>Monday: 13:00–15:00</li>
-    <li>Wednesday: 09:00–10:30</li>
-    <li>Thursday: 13:00–14:30</li>
-    <li>Weekends: Closed</li>
-  </ul>
-</section>
+    <section class="doctor-page__tips doctor-page__card">
+      <h3>Positive Energy Tips</h3>
+      <ul>
+        <li>Smile at least five times a day—Star Healer calls it the brightest medicine.</li>
+        <li>Create a “gratitude galaxy” drawing before bedtime to focus on wins.</li>
+        <li>Keep a playlist of calming songs for infusion days or longer appointments.</li>
+      </ul>
+    </section>
 
+    <section class="doctor-page__schedule doctor-page__card">
+      <h3>Clinic Schedule</h3>
+      <ul>
+        <li>
+          <span class="doctor-page__schedule-day">Monday</span>
+          <span class="doctor-page__schedule-hours">13:00–15:00</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Wednesday</span>
+          <span class="doctor-page__schedule-hours">09:00–10:30</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Thursday</span>
+          <span class="doctor-page__schedule-hours">13:00–14:30</span>
+        </li>
+        <li>
+          <span class="doctor-page__schedule-day">Weekend</span>
+          <span class="doctor-page__schedule-status is-closed">Closed</span>
+        </li>
+      </ul>
+    </section>
 
-      <section class="book-visit">
-        <a href="booking.html" class="button">Book a Visit</a>
-      </section>
-    </article>
+    <section class="doctor-feature-grid" data-theme="star" aria-labelledby="star-healer-experience">
+      <h3 id="star-healer-experience">Starlight Recovery Constellation</h3>
+      <p class="doctor-feature-subtitle">
+        Each zone pairs medical expertise with imagination so treatments feel hopeful and empowering.
+      </p>
+      <div class="doctor-feature-grid__layout">
+        <article class="doctor-feature-card doctor-feature-card--wide">
+          <h4>Star Map Planner</h4>
+          <p>Illuminated charts show treatment milestones with celebratory constellations.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Courage Capsule Pod</h4>
+          <p>Cozy reclining nook with guided imagery headsets for infusions or longer visits.</p>
+        </article>
+        <article class="doctor-feature-card doctor-feature-card--tall">
+          <h4>Glow Garden Path</h4>
+          <p>Walkable light trail encourages gentle stretches between therapies.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Family Beacon Desk</h4>
+          <p>Resource librarians help plan school coordination, meal support, and travel logistics.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Creative Calm Studio</h4>
+          <p>Paint-with-light and music-mixing tools channel feelings into art therapy projects.</p>
+        </article>
+        <article class="doctor-feature-card doctor-feature-card--wide">
+          <h4>Hope Broadcast Wall</h4>
+          <p>Messages from recovered patients play alongside live starfield animations.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Comfort Creature Library</h4>
+          <p>Adopt a plush star companion to travel with you for each appointment.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Energy Bracelet Booth</h4>
+          <p>Color-changing bracelets track hydration, rest, and snack reminders.</p>
+        </article>
+        <article class="doctor-feature-card">
+          <h4>Virtual Galaxy Visits</h4>
+          <p>Connect with tutors and friends through themed video calls set among nebula backdrops.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="doctor-page__cta doctor-page__card">
+      <h3>Before You Arrive</h3>
+      <p>Pack a comfort item, questions for the care team, and a notebook for tracking how you feel. Star Healer will
+        help chart the course.</p>
+      <div class="doctor-page__cta-actions">
+        <a href="booking.html" class="doctor-page__cta-btn">Book a Visit</a>
+        <a href="contact.html" class="doctor-page__cta-secondary">Call the Support Line</a>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="doctors.html">Doctors</a></li>
-        <li><a href="booking.html">Book Visit</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-hero-text">Making healthcare heroic for kids since 2000. Where every child is a superhero!</p>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Quick Links</h4>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="departments.html">Departments</a></li>
+          <li><a href="doctors.html">Doctors</a></li>
+          <li><a href="booking.html">Appointments</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Our Departments</h4>
+        <ul class="footer-list">
+          <li><a href="departments.html#dept-pediatrics">Pediatrics</a></li>
+          <li><a href="departments.html#dept-cardiology">Cardiology</a></li>
+          <li><a href="departments.html#dept-orthopedics">Orthopedics</a></li>
+          <li><a href="departments.html#dept-oncology">Oncology</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4 class="footer-heading">Contact Us</h4>
+        <ul class="footer-list footer-contact">
+          <li><a href="tel:+11234567890">Call: +1 (123) 456-7890</a></li>
+          <li><a href="mailto:care@starlighthospital.org">Email: care@starlighthospital.org</a></li>
+          <li>Visit: 123 Nova Star Way, Prague</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-middle">
+      <p class="footer-legal">© 2025 Starlight Children's Hospital. Concept student project created for learning and inspiration.</p>
+      <p class="footer-credits">Crafted with care by <strong>Aleyna T.</strong>, <strong>Zoe K.</strong>, and <strong>Martina R.</strong>.</p>
+    </div>
+    <nav class="footer-bottom" aria-label="Legal links">
+      <a href="#">Privacy Policy</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Terms of Service</a>
+      <span aria-hidden="true">•</span>
+      <a href="#">Accessibility</a>
     </nav>
-    <p>© 2025 Student Project *insert team name or something*</p>
   </footer>
+  <script src="script.js"></script>
 </body>
 </html>
