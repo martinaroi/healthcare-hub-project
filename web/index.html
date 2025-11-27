@@ -40,9 +40,11 @@
       <div class="font-switcher">
         <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
       </div>
-      <div id ="search-section">
-        <input type ="text" id="search-input" placeholder="Search..." />
-  <button id="search-btn" class="icon-btn" aria-label="Search" title="Search">🔍</button>
+      <div id="search-section">
+        <form id="search-form" class="search-form" action="search.html" method="get" role="search">
+          <input type="search" id="search-input" name="q" placeholder="Search..." aria-label="Search site" />
+          <button id="search-btn" class="icon-btn" type="submit" aria-label="Search" title="Search">🔍</button>
+        </form>
         <div id="search-results"></div>
       </div>
       <div class="header-actions">
@@ -86,17 +88,57 @@
         <p class="disclaimer-note">Life-threatening symptoms require urgent medical attention—head straight to the nearest emergency department.</p>
       </div>
     </section>
-  <section id="health-updates" class="home-updates">
-      <h3>Health Updates</h3>
-      <div id="aq-card" class="aq-card" aria-live="polite">
-        <div class="aq-card-header">
-          <h4 class="aq-card-title">Air Quality</h4>
-          <button id="aq-refresh" class="aq-refresh-btn" type="button" aria-label="Refresh Prague air quality">↻ Refresh</button>
+    <section id="health-updates" class="home-updates">
+      <div class="home-updates__intro">
+        <h3>Health Updates</h3>
+        <p>Fresh clues from Hero HQ so families can plan today’s adventures around Prague.</p>
+      </div>
+      <div class="home-updates__grid">
+        <article id="aq-card" class="aq-card updates-card updates-card--aq" aria-live="polite">
+          <header class="aq-card-header">
+            <div class="aq-card-titlewrap">
+              <h4 class="aq-card-title">Air Quality Radar</h4>
+              <p class="aq-card-subtitle">Live feed for Prague city center</p>
+            </div>
+            <button id="aq-refresh" class="aq-refresh-btn" type="button" aria-label="Refresh Prague air quality">↻ Refresh</button>
+          </header>
+          <p class="aq-intro">Captain Care set up this checkpoint for sidekicks—use it to decide if outdoor missions are a go or if it is time for an indoor build-and-create day.</p>
+          <div id="aq-summary" class="aq-summary">Loading...</div>
+          <div id="aq-details" class="aq-details hidden"></div>
+          <footer class="aq-card-footer">
+            <p id="aq-updated" class="aq-updated" aria-live="polite">Last updated: —</p>
+            <p class="aq-footnote">Tip: aim for mask-free play when the badge shows green or yellow.</p>
+          </footer>
+        </article>
+
+        <div class="home-updates__stack">
+          <article class="updates-card updates-card--tips" aria-labelledby="updates-tips-heading">
+            <h4 id="updates-tips-heading">Today’s Hero Tips</h4>
+            <ul class="updates-list">
+              <li><strong>Hydration checkpoint:</strong> pack a refillable bottle for every mission.</li>
+              <li><strong>Shield your skin:</strong> sunscreen and hats keep explorers comfy outdoors.</li>
+              <li><strong>Quiet recharge:</strong> the Galaxy Calm Room has open slots from 14:00–16:00.</li>
+            </ul>
+          </article>
+
+          <article class="updates-card updates-card--schedule" aria-labelledby="updates-events-heading">
+            <h4 id="updates-events-heading">Hero HQ Highlights</h4>
+            <ul class="updates-timeline">
+              <li>
+                <span class="updates-timeline__time">09:30</span>
+                <span class="updates-timeline__detail">Story Squad circle in the Recovery Lounge</span>
+              </li>
+              <li>
+                <span class="updates-timeline__time">13:15</span>
+                <span class="updates-timeline__detail">Mini movement class with Iron Bones</span>
+              </li>
+              <li>
+                <span class="updates-timeline__time">17:00</span>
+                <span class="updates-timeline__detail">Star Healer’s starlight meditation livestream</span>
+              </li>
+            </ul>
+          </article>
         </div>
-  <p class="aq-intro">Captain Care made this checkpoint for Prague sidekicks—if your lungs are sneaky ninjas or still growing strong, these clues tell you whether to power up for outside adventures or plan an indoor mission.</p>
-  <div id="aq-summary" class="aq-summary">Loading...</div>
-        <div id="aq-details" class="aq-details hidden"></div>
-        <p id="aq-updated" class="aq-updated" aria-live="polite">Last updated: —</p>
       </div>
     </section>
     <section class="services-overview">
