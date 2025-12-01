@@ -57,18 +57,18 @@
         <h1 id="search-panel-heading">Find the right hero in seconds</h1>
         <p class="search-intro">Look up doctors, departments, and services across Starlight Children’s Hospital in one friendly place.</p>
       </div>
-      <div class="search-panel__card">
-        <div class="search-bar">
+        <div class="search-panel__card">
+        <form id="search-page-form" class="search-bar" action="search.html" method="get" role="search">
           <span class="search-bar__icon" aria-hidden="true">🔍</span>
-          <input id="search-page-input" type="search" placeholder="Search doctors, specialties, or services" aria-label="Search hospital content" />
-          <button id="search-page-btn" type="button" class="icon-btn" aria-label="Search" title="Search">Search</button>
-        </div>
+          <input id="search-page-input" name="q" type="search" placeholder="Search doctors, specialties, or services" aria-label="Search hospital content" />
+          <button id="search-page-btn" type="submit" class="icon-btn" aria-label="Search" title="Search">Search</button>
+        </form>
         <p class="search-panel__hint">Tip: try keywords like Captain Care, cardiology, or vaccinations.</p>
         <div class="search-panel__divider" role="presentation" aria-hidden="true"></div>
         <div class="search-panel__results" role="region" aria-labelledby="search-results-heading">
           <header class="search-results-header">
             <h2 id="search-results-heading">Search Results</h2>
-            <p class="search-results-note">Results will appear here as soon as you search.</p>
+            <p class="search-results-note" data-search-count>Results will appear here as soon as you search.</p>
           </header>
           <div id="search-page-results" class="search-results" aria-live="polite"></div>
         </div>
