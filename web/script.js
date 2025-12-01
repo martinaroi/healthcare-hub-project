@@ -496,6 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dysToggle) {
         dysToggle.addEventListener('click', () => {
             const enabled = !document.body.classList.contains('dyslexia-font');
+            console.log('Dyslexia button clicked. Will set dyslexia-font:', enabled);
             applyDysSetting(enabled);
         });
     }
@@ -734,6 +735,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchClearBtn = document.querySelector('[data-search-clear]');
     const searchChips = Array.from(document.querySelectorAll('.search-chip'));
 
+    const SEARCH_INDEX_FALLBACK = [
+        { type: 'page', name: 'Home', url: 'index.html', description: 'Start at the Starlight hub with hero news and featured care.' },
+        { type: 'page', name: 'Doctors (Overview)', url: 'doctors.html', description: 'Browse every specialist and find the hero for your child.' },
+        { type: 'page', name: 'Departments', url: 'departments.html', description: 'Explore every service wing and their signature programs.' },
+        { type: 'page', name: 'Book Visit', url: 'booking.html', description: 'Schedule a visit with the right doctor and time slot.' },
+        { type: 'page', name: 'Contact', url: 'contact.html', description: 'Reach our support team, hotline, or find directions.' },
+        { type: 'doctor', name: 'Captain Care', specialty: 'Pediatrics', url: 'detail_CaptainCare.html', description: 'Playful pediatrician leading routine checkups and resilience coaching.' },
+        { type: 'doctor', name: 'Heart Hero', specialty: 'Cardiology', url: 'detail_HeartHero.html', description: 'Cardiology guardian focusing on heart health and recovery journeys.' },
+        { type: 'doctor', name: 'Iron Bones', specialty: 'Orthopedics', url: 'detail_IronBone.html', description: 'Orthopedics strategist guiding mobility boosts and healing missions.' },
+        { type: 'doctor', name: 'Star Healer', specialty: 'Oncology', url: 'detail_StarHealer.html', description: 'Oncology mentor championing personalized treatments and family support.' },
+        { type: 'department', name: 'Pediatrics', url: 'doctors.html?department=pediatrics', description: 'Primary care, growth tracking, and wellness coaching.' },
+        { type: 'department', name: 'Orthopedics', url: 'doctors.html?department=orthopedics', description: 'Mobility labs, sports injury care, and strength coaching.' },
+        { type: 'department', name: 'Cardiology', url: 'doctors.html?department=cardiology', description: 'Heart health diagnostics, monitoring, and recovery paths.' },
+        { type: 'department', name: 'Oncology', url: 'doctors.html?department=oncology', description: 'Compassionate cancer care with child-life support.' }
+    ];
+
     if (headerSearchSection && headerSearchBtn && headerSearchInput) {
         const mobileSearchQuery = window.matchMedia('(max-width: 900px)');
 
@@ -829,7 +846,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const goToSearchResults = (value) => {
             const trimmed = (value ?? '').trim();
             if (!trimmed) return;
-            window.location.href = `search.html?q=${encodeURIComponent(trimmed)}`;
+            window.location.assign(`search.html?q=${encodeURIComponent(trimmed)}`);
         };
 
         function initMobileSearchOverlay() {
@@ -846,14 +863,14 @@ document.addEventListener('DOMContentLoaded', () => {
             panel.className = 'mobile-search-panel';
             const mobileInputId = 'mobile-search-input';
             panel.innerHTML = `
-                <form class="mobile-search-form" novalidate>
+                <form class="mobile-search-form" action="search.html" method="get" role="search" novalidate>
                     <div class="mobile-search-panel__header">
                         <h2 class="mobile-search-panel__title">Search</h2>
                         <button type="button" class="mobile-search-dismiss" aria-label="Close search">Close</button>
                     </div>
                     <label class="mobile-search-label" for="${mobileInputId}">Search doctors or departments</label>
                     <div class="mobile-search-controls">
-                        <input id="${mobileInputId}" type="search" autocomplete="off" placeholder="Type to search" />
+                        <input id="${mobileInputId}" name="q" type="search" autocomplete="off" placeholder="Type to search" />
                         <button type="submit" class="mobile-search-submit">Search</button>
                     </div>
                 </form>
@@ -903,7 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.addEventListener('click', (event) => {
                 if (window.innerWidth > 900) return;
                 if (!panel.classList.contains('is-open')) return;
-                if (panel.contains(event.target) || event.target === fab) return;
+                if (panel.contains(event.target) || fab.contains(event.target)) return;
                 closePanel();
             });
 
@@ -921,6 +938,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!searchInput && !searchResult) return;
 
     let searchData = [];
+    let searchDataLoaded = false;
+    let queuedSearchQuery = null;
 
     const setActiveChip = (value) => {
         if (!searchChips.length) return;
@@ -935,8 +954,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!searchResultsCount) return;
         const hasQuery = !!displayQuery;
         if (!hasQuery) {
-            searchResultsCount.textContent = 'Start typing to explore our care network.';
+            searchResultsCount.textContent = searchDataLoaded
+                ? 'Start typing to explore our care network.'
+                : 'Preparing search tools...';
             if (searchClearBtn) searchClearBtn.classList.remove('is-visible');
+            return;
+        }
+
+        if (!searchDataLoaded) {
+            searchResultsCount.textContent = `Searching for "${displayQuery}"...`;
+            if (searchClearBtn) searchClearBtn.classList.add('is-visible');
             return;
         }
 
@@ -1006,24 +1033,42 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
             return res.json();
         };
+
+        let data = null;
         try {
-            let data = await tryLoad('data/search-index.json');
-            if (!Array.isArray(data) || data.length === 0) {
-                // Fallback to legacy search.json
-                data = await tryLoad('data/search.json');
+            const primary = await tryLoad('data/search-index.json');
+            if (Array.isArray(primary) && primary.length > 0) {
+                data = primary;
+            } else {
+                const legacy = await tryLoad('data/search.json');
+                if (Array.isArray(legacy) && legacy.length > 0) data = legacy;
             }
-            searchData = Array.isArray(data) ? data : [];
         } catch (err) {
             console.error('Error loading search data (with fallback):', err);
+        }
+
+        if (Array.isArray(data) && data.length > 0) {
+            searchData = data;
+        } else if (SEARCH_INDEX_FALLBACK.length > 0) {
+            searchData = SEARCH_INDEX_FALLBACK.slice();
+            console.info('Search index loaded from bundled fallback.');
+        } else {
             searchData = [];
         }
 
+        searchDataLoaded = true;
+
         // If there's a query param (?q=...) and we have a results container, auto-run
         const params = new URLSearchParams(window.location.search);
-        const qParam = params.get('q');
-        if (qParam && searchResult) {
-            performSearch(qParam);
-            if (searchInput) searchInput.value = qParam;
+        const qParam = (params.get('q') || '').trim();
+        const initialQuery = queuedSearchQuery && queuedSearchQuery.trim()
+            ? queuedSearchQuery.trim()
+            : qParam;
+        queuedSearchQuery = null;
+
+        if (initialQuery && searchResult) {
+            performSearch(initialQuery);
+            if (searchInput) searchInput.value = initialQuery;
         } else if (searchResult && searchData.length === 0) {
             const errorState = document.createElement('div');
             errorState.className = 'search-state search-state--error';
@@ -1037,6 +1082,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorState.appendChild(detailEl);
             searchResult.innerHTML = '';
             searchResult.appendChild(errorState);
+            if (searchResultsCount) searchResultsCount.textContent = 'Search is temporarily unavailable.';
         } else if (searchResult) {
             performSearch('');
         }
@@ -1072,6 +1118,18 @@ document.addEventListener('DOMContentLoaded', () => {
             searchResult.appendChild(wrapper);
             return wrapper;
         };
+
+        if (!searchDataLoaded) {
+            if (trimmed) {
+                queuedSearchQuery = trimmed;
+                renderState('Searching...', 'Hang tight while we load our hero directory.', 'search-state--loading');
+                updateResultsMeta(trimmed, 0);
+            } else {
+                renderState('Loading search...', 'Results will appear once everything is ready.');
+                updateResultsMeta('', 0);
+            }
+            return;
+        }
 
         if (!query) {
             renderState('Start typing to search.', 'We will surface doctors, departments, and services that match.');
