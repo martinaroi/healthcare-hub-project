@@ -48,12 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageHeader = menuToggle ? menuToggle.closest('header') : null;
     const navContainer = pageHeader ? pageHeader.querySelector('nav') : null;
     if (menuToggle && navLinks) {
+        menuToggle.setAttribute('aria-label', 'Open menu');
         menuToggle.addEventListener('click', () => {
             const isOpen = navLinks.classList.toggle('open');
             menuToggle.setAttribute('aria-expanded', String(isOpen));
             if (navContainer) navContainer.classList.toggle('is-open', isOpen);
             document.body.classList.toggle('nav-open', isOpen);
             if (pageHeader) pageHeader.classList.toggle('nav-open', isOpen);
+            menuToggle.textContent = isOpen ? '✕' : '☰';
+            menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
         });
 
         navLinks.querySelectorAll('a').forEach(link => {
@@ -64,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (navContainer) navContainer.classList.remove('is-open');
                     document.body.classList.remove('nav-open');
                     if (pageHeader) pageHeader.classList.remove('nav-open');
+                    menuToggle.textContent = '☰';
+                    menuToggle.setAttribute('aria-label', 'Open menu');
                 }
             });
         });
@@ -76,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (navContainer) navContainer.classList.remove('is-open');
                 document.body.classList.remove('nav-open');
                 if (pageHeader) pageHeader.classList.remove('nav-open');
+                menuToggle.textContent = '☰';
+                menuToggle.setAttribute('aria-label', 'Open menu');
             }
         };
 
