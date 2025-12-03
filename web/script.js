@@ -1072,7 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         searchDataLoaded = true;
 
-        // If there's a query param (?q=...) and we have a results container, auto-run
+        // If there's a query param and we have a results container, auto-run
         const params = new URLSearchParams(window.location.search);
         const qParam = (params.get('q') || '').trim();
         const initialQuery = queuedSearchQuery && queuedSearchQuery.trim()
@@ -1300,6 +1300,6 @@ function triggerStarFireworks() {
         }
     }
 }
-// --- AIR QUALITY (OpenAQ) ---
+
 
 
