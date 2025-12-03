@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const slotsWrap = picker.querySelector('.slots');
 
             // Week starts on Monday
-            const weekdays = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+            const weekdays = ['Mon','Tue','Wed','Thu','Fri'];
             const defaultSlots = ['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30'];
             // Per-doctor weekly schedule (Mon=1..Sun=0 for getDay())
             // Keys match the booking select values
@@ -220,12 +220,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const firstDay = new Date(year, month, 1);
                 // getDay(): 0=Sun..6=Sat; convert to Monday-first index (0=Mon..6=Sun)
-                const startWeekday = (firstDay.getDay() + 6) % 7;
+                let startWeekday = (firstDay.getDay() + 6) % 7;
                 const daysInMonth = new Date(year, month+1, 0).getDate();
 
-                // Leading blanks
+                if (startWeekday > 4) {
+                    startWeekday = 0;
+                }
+
                 for (let i=0; i<startWeekday; i++) {
                     const blank = document.createElement('div');
+                    blank.className = 'calendar-blank';
                     grid.appendChild(blank);
                 }
 
@@ -239,13 +243,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     const isWeekend = [0,6].includes(date.getDay());
                     const dayOfWeek = date.getDay(); // 0=Sun..6=Sat
                     
+                    if (isWeekend) {
+                        continue;
+                    }
+
                     // Check if selected doctor has availability on this day
                     const doctorKey = getSelectedDoctor();
                     const hasAvailability = doctorKey && schedules[doctorKey] && schedules[doctorKey][dayOfWeek] && schedules[doctorKey][dayOfWeek].length > 0;
                     
-                    if (isPast || isWeekend) {
+                    if (isPast) {
                         btn.disabled = true;
-                        if (isWeekend) btn.title = 'Weekends not available';
                     } else if (doctorKey && !hasAvailability) {
                         // Doctor selected but no availability this day
                         btn.classList.add('no-availability');
@@ -275,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
             function updateSlots() {
                 slotsWrap.innerHTML = '';
                 const info = document.createElement('div');
-                info.style.gridColumn = '1 / -1';
+                info.className = 'slots__message';
                 if (!selectedDate) {
                     info.textContent = 'Pick a date to see available times.';
                     slotsWrap.appendChild(info);
@@ -1214,7 +1221,6 @@ document.addEventListener('DOMContentLoaded', () => {
         searchResult.classList.add('search-has-results');
         updateResultsMeta(trimmed, results.length);
     }
-
     // On search pages, typing Enter or clicking Search should (re)render results inline
     if (isSearchPage) {
         const triggerSearch = () => performSearch();
