@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css?v=3" />
 </head>
 
-<body>
+<body class="doctors-page">
   <header>
     <div class="header-inner">
       <img src="images/starlight_hospital.png" alt="Starlight Children's Hospital Logo" class="logo" />
@@ -17,124 +17,132 @@
         ☰
       </button>
       <nav>
-      <ul id="primary-navigation" class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li class="has-submenu">
-          <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
-          <ul class="submenu" aria-label="Doctors">
-            <li><a href="doctors.html">All Doctors (Overview)</a></li>
-            <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
-            <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
-            <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
-            <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
-          </ul>
-        </li>
-        <li><a href="departments.html">Departments</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div class="font-switcher">
-        <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
-      </div>
-      <div id="search-section">
-        <form id="search-form" class="search-form" action="search.html" method="get" role="search">
-          <input type="search" id="search-input" name="q" placeholder="Search..." aria-label="Search site" />
-          <button id="search-btn" class="icon-btn" type="submit" aria-label="Search" title="Search">🔍</button>
-        </form>
-        <div id="search-results"></div>
-      </div>
-      <div class="header-actions">
-        <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
-      </div>
-    </nav>
+        <ul id="primary-navigation" class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li class="has-submenu">
+            <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">Doctors</button>
+            <ul class="submenu" aria-label="Doctors">
+              <li><a href="doctors.html">All Doctors (Overview)</a></li>
+              <li><a href="detail_CaptainCare.html">Captain Care (Pediatrics)</a></li>
+              <li><a href="detail_HeartHero.html">Heart Hero (Cardiology)</a></li>
+              <li><a href="detail_IronBone.html">Iron Bones (Orthopedics)</a></li>
+              <li><a href="detail_StarHealer.html">Star Healer (Oncology)</a></li>
+            </ul>
+          </li>
+          <li><a href="departments.html">Departments</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="font-switcher">
+          <button id="dyslexia-toggle" class="dyslexia-toggle" aria-pressed="false">Dyslexia</button>
+        </div>
+        <div id="search-section">
+          <form id="search-form" class="search-form" action="search.html" method="get" role="search">
+            <input type="search" id="search-input" name="q" placeholder="Search..." aria-label="Search site" />
+            <button id="search-btn" class="icon-btn" type="submit" aria-label="Search" title="Search">🔍</button>
+          </form>
+          <div id="search-results"></div>
+        </div>
+        <div class="header-actions">
+          <a href="booking.html" class="btn-book" aria-label="Book a visit">⭐ Book Visit</a>
+        </div>
+      </nav>
     </div>
   </header>
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
-  <main>
-    <section class="doctor-chooser">
-      <h2>Find a Doctor</h2>
+  <main class="doctors-main">
+    <section class="doctor-selector" aria-labelledby="doctor-selector-heading">
+      <input class="doctor-selector__input" type="radio" name="doctor-tab" id="doctor-tab-captain" value="captain" checked>
+      <input class="doctor-selector__input" type="radio" name="doctor-tab" id="doctor-tab-iron" value="iron">
+      <input class="doctor-selector__input" type="radio" name="doctor-tab" id="doctor-tab-heart" value="heart">
+      <input class="doctor-selector__input" type="radio" name="doctor-tab" id="doctor-tab-star" value="star">
 
-      <div class="doctor-picker-options">
-        <input type="radio" id="pick-captain" name="doctor-pick" value="captain-care" checked>
-        <label class="doc-option" for="pick-captain">
-          <span class="doc-option-text">Captain Care</span>
-        </label>
+      <div class="doctor-selector__intro">
+        <h1 id="doctor-selector-heading">Choose Your Hero Doctor</h1>
+        <p>Tap a doctor button to see their focus, fun facts, and a quick link to their full profile.</p>
+      </div>
 
-        <input type="radio" id="pick-iron" name="doctor-pick" value="iron-bones">
-        <label class="doc-option" for="pick-iron">
-          <span class="doc-option-text">Iron Bones</span>
-        </label>
+      <div class="doctor-selector__controls" aria-label="Doctors">
+        <label class="doctor-selector__btn" for="doctor-tab-captain" data-doctor="captain">Captain Care</label>
+        <label class="doctor-selector__btn" for="doctor-tab-iron" data-doctor="iron">Iron Bones</label>
+        <label class="doctor-selector__btn" for="doctor-tab-heart" data-doctor="heart">Heart Hero</label>
+        <label class="doctor-selector__btn" for="doctor-tab-star" data-doctor="star">Star Healer</label>
+      </div>
 
-        <input type="radio" id="pick-heart" name="doctor-pick" value="heart-hero">
-        <label class="doc-option" for="pick-heart">
-          <span class="doc-option-text">Heart Hero</span>
-        </label>
-
-        <input type="radio" id="pick-star" name="doctor-pick" value="star-healer">
-        <label class="doc-option" for="pick-star">
-          <span class="doc-option-text">Star Healer</span>
-        </label>
-
-        <div class="doctor-display">
-          <div class="doctor-arrows">
-            <!-- When Captain is selected: Prev goes to Star, Next to Iron -->
-            <label class="prev prev-from-captain" for="pick-star" aria-label="Previous doctor">‹</label>
-            <label class="next next-from-captain" for="pick-iron" aria-label="Next doctor">›</label>
-
-            <!-- When Iron is selected: show Prev (Captain) and Next (Heart) -->
-            <label class="prev prev-from-iron" for="pick-captain" aria-label="Previous doctor">‹</label>
-            <label class="next next-from-iron" for="pick-heart" aria-label="Next doctor">›</label>
-
-            <!-- When Heart is selected: show Prev (Iron) and Next (Star) -->
-            <label class="prev prev-from-heart" for="pick-iron" aria-label="Previous doctor">‹</label>
-            <label class="next next-from-heart" for="pick-star" aria-label="Next doctor">›</label>
-
-            <!-- When Star is selected: Prev (Heart) and Next (Captain) -->
-            <label class="prev prev-from-star" for="pick-heart" aria-label="Previous doctor">‹</label>
-            <label class="next next-from-star" for="pick-captain" aria-label="Next doctor">›</label>
+      <div class="doctor-selector__panels">
+        <article id="doctor-panel-captain" class="doctor-panel" data-doctor="captain">
+          <img src="images/captain_care.png" alt="Captain Care illustration" loading="lazy" />
+          <div class="doctor-panel__content">
+            <span class="doctor-panel__tag">Pediatrics</span>
+            <h2>Captain Care</h2>
+            <p>Captain Care turns checkups into playful missions and shares easy wins every family can celebrate.</p>
+            <ul>
+              <li>Growth, nutrition, and wellness tracking for kids.</li>
+              <li>Friendly vaccination coaching with rewards.</li>
+              <li>Family goal-setting with colourful mission plans.</li>
+            </ul>
+            <div class="doctor-panel__actions">
+              <a class="doctor-panel__primary" href="detail_CaptainCare.html">View full profile</a>
+              <a class="doctor-panel__secondary" href="departments.html#dept-pediatrics">Visit pediatrics</a>
+            </div>
           </div>
+        </article>
 
-          <div class="doctor-panels">
-            <article id="panel-captain" class="doctor-panel card">
-              <img src="images/captain_care.png" alt="Captain Care illustration" />
-              <div>
-                <h3>Captain Care — Pediatrics</h3>
-                <p>Pediatrics superhero—watches over young heroes with regular check-ups and vaccinations; heals with kindness and courage.</p>
-                <p><a class="doctor-panel__cta doctor-panel__cta--captain" href="detail_CaptainCare.html">Meet Captain Care &rarr;</a></p>
-              </div>
-            </article>
-
-            <article id="panel-iron" class="doctor-panel card">
-              <img src="images/irone_bones.png" alt="Iron Bones illustration" />
-              <div>
-                <h3>Iron Bones — Orthopedics</h3>
-                <p>Bones, muscles, and injury care—making bones as strong as steel.</p>
-                <p><a class="doctor-panel__cta doctor-panel__cta--iron" href="detail_IronBone.html">Go to Iron Bones &rarr;</a></p>
-              </div>
-            </article>
-
-            <article id="panel-heart" class="doctor-panel card">
-              <img src="images/heart_hero.png" alt="Heart Hero illustration" />
-              <div>
-                <h3>Heart Hero — Cardiology</h3>
-                <p>Heart check-ups and ECGs—super listens to every heartbeat.</p>
-                <p><a class="doctor-panel__cta doctor-panel__cta--heart" href="detail_HeartHero.html">Meet Heart Hero &rarr;</a></p>
-              </div>
-            </article>
-
-            <article id="panel-star" class="doctor-panel card">
-              <img src="images/star_healer.png" alt="Star Healer illustration" />
-              <div>
-                <h3>Star Healer — Oncology</h3>
-                <p>Cancer care—uses starlight to help cells grow healthy again.</p>
-                <p><a class="doctor-panel__cta doctor-panel__cta--star" href="detail_StarHealer.html">Shine with Star Healer &rarr;</a></p>
-              </div>
-            </article>
+        <article id="doctor-panel-iron" class="doctor-panel" data-doctor="iron">
+          <img src="images/irone_bones.png" alt="Iron Bones illustration" loading="lazy" />
+          <div class="doctor-panel__content">
+            <span class="doctor-panel__tag">Orthopedics</span>
+            <h2>Iron Bones</h2>
+            <p>Iron Bones rebuilds confidence with inventive rehab gear and celebrates every stride toward strength.</p>
+            <ul>
+              <li>Sports injury and fracture recovery support.</li>
+              <li>Custom braces, casts, and mobility gadgets.</li>
+              <li>Gamified rehab quests that make practice fun.</li>
+            </ul>
+            <div class="doctor-panel__actions">
+              <a class="doctor-panel__primary" href="detail_IronBone.html">View full profile</a>
+              <a class="doctor-panel__secondary" href="departments.html#dept-orthopedics">Visit orthopedics</a>
+            </div>
           </div>
-        </div>
+        </article>
+
+        <article id="doctor-panel-heart" class="doctor-panel" data-doctor="heart">
+          <img src="images/heart_hero.png" alt="Heart Hero illustration" loading="lazy" />
+          <div class="doctor-panel__content">
+            <span class="doctor-panel__tag">Cardiology</span>
+            <h2>Heart Hero</h2>
+            <p>Heart Hero explains every heartbeat like a favorite song and guides families through rhythm routines.</p>
+            <ul>
+              <li>Congenital heart care and imaging walkthroughs.</li>
+              <li>Kid-friendly pulse and breathing coaching.</li>
+              <li>Telemetry tips and tech for home monitoring.</li>
+            </ul>
+            <div class="doctor-panel__actions">
+              <a class="doctor-panel__primary" href="detail_HeartHero.html">View full profile</a>
+              <a class="doctor-panel__secondary" href="departments.html#dept-cardiology">Visit cardiology</a>
+            </div>
+          </div>
+        </article>
+
+        <article id="doctor-panel-star" class="doctor-panel" data-doctor="star">
+          <img src="images/star_healer.png" alt="Star Healer illustration" loading="lazy" />
+          <div class="doctor-panel__content">
+            <span class="doctor-panel__tag">Oncology</span>
+            <h2>Star Healer</h2>
+            <p>Star Healer lights the treatment path with cosmic calm, creative rituals, and family resilience.</p>
+            <ul>
+              <li>Integrative therapy and symptom care plans.</li>
+              <li>Family resilience and school coordination.</li>
+              <li>Hope-filled survivorship and celebration moments.</li>
+            </ul>
+            <div class="doctor-panel__actions">
+              <a class="doctor-panel__primary" href="detail_StarHealer.html">View full profile</a>
+              <a class="doctor-panel__secondary" href="departments.html#dept-oncology">Visit oncology</a>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
-    
   </main>
   
   <footer class="site-footer">
