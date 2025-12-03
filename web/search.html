@@ -51,28 +51,26 @@
   <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
 
   <main class="search-page">
-    <section class="search-panel" aria-labelledby="search-panel-heading">
-      <div class="search-panel__content">
-        <span class="search-panel__eyebrow">Hospital search hub</span>
-        <h1 id="search-panel-heading">Find the right hero in seconds</h1>
-        <p class="search-intro">Look up doctors, departments, and services across Starlight Children’s Hospital in one friendly place.</p>
+    <section class="search-hero" aria-labelledby="search-hero-heading">
+      <span class="search-hero__eyebrow">Hospital search hub</span>
+      <h1 id="search-hero-heading">Find the right hero in seconds</h1>
+      <p>Look up doctors, departments, and services across Starlight Children’s Hospital in one friendly place.</p>
+    </section>
+
+    <form id="search-page-form" class="search-form" action="search.html" method="get" role="search">
+      <label class="search-form__field" for="search-page-input">
+        <span class="search-form__icon" aria-hidden="true">🔍</span>
+        <input id="search-page-input" class="search-form__input" name="q" type="search" placeholder="Search doctors, specialties, or services" aria-label="Search hospital content" />
+      </label>
+      <button id="search-page-btn" type="submit" class="search-form__button" aria-label="Search" title="Search">Search</button>
+    </form>
+
+    <section class="search-results-section" role="region" aria-labelledby="search-results-heading">
+      <div class="search-results-header">
+        <h2 id="search-results-heading">Search Results</h2>
+        <p class="search-results-note" data-search-count>Results will appear here as soon as you search.</p>
       </div>
-        <div class="search-panel__card">
-        <form id="search-page-form" class="search-bar" action="search.html" method="get" role="search">
-          <span class="search-bar__icon" aria-hidden="true">🔍</span>
-          <input id="search-page-input" name="q" type="search" placeholder="Search doctors, specialties, or services" aria-label="Search hospital content" />
-          <button id="search-page-btn" type="submit" class="icon-btn" aria-label="Search" title="Search">Search</button>
-        </form>
-        <p class="search-panel__hint">Tip: try keywords like Captain Care, cardiology, or vaccinations.</p>
-        <div class="search-panel__divider" role="presentation" aria-hidden="true"></div>
-        <div class="search-panel__results" role="region" aria-labelledby="search-results-heading">
-          <header class="search-results-header">
-            <h2 id="search-results-heading">Search Results</h2>
-            <p class="search-results-note" data-search-count>Results will appear here as soon as you search.</p>
-          </header>
-          <div id="search-page-results" class="search-results" aria-live="polite"></div>
-        </div>
-      </div>
+      <div id="search-page-results" class="search-results" aria-live="polite"></div>
     </section>
   </main>
 
