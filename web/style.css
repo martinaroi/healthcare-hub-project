@@ -457,7 +457,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px clamp(2rem, 4vw, 3rem);
+  padding: 1rem;
   background-color: #ffffff;
   position: relative;
   z-index: 5;
@@ -2493,6 +2493,17 @@ body {
     color: #08396d;
 }
 
+/* ===== HEADER ===== */
+header {
+    width: 100%;
+    padding: 18px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+  box-shadow: none;
+}
+
 header nav a {
     margin-left: 24px;
     text-decoration: none;
@@ -2657,6 +2668,16 @@ body:not(.home-page) main ul {
 body:not(.home-page) main ul li {
   padding: 0.3rem 0;
   font-size: 1.05rem;
+}
+
+/* ---------- HEADER CLEANUP ---------- */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: none;
 }
 
 .logo {
@@ -4518,6 +4539,61 @@ header {
 }
 
 .nav-links a:hover {
+    color: #2563eb;
+}
+/* ---------------- EXQUISITE PROFESSIONAL HEADER ---------------- */
+
+header {
+    width: 100%;
+    padding: 18px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+  border-bottom: none;
+  box-shadow: none;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* Logo */
+.logo {
+  width: 110px;
+  margin: 0;
+  padding: 0;
+}
+
+/* NAVIGATION WRAPPER */
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* MAIN NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+  flex-direction: row;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAV TEXT (Home, Doctors, Departments...) */
+.nav-links a,
+.submenu-toggle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.nav-links a:hover,
+.submenu-toggle:hover {
     color: #2563eb;
 }
 
